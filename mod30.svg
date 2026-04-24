@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="250" viewBox="0 0 400 250">
+  <rect width="400" height="250" fill="#e8f0f8"/>
+  <rect x="40" y="60" width="320" height="110" rx="8" fill="#c8d8e8" stroke="#1a3a5c" stroke-width="2"/>
+  <rect x="40" y="60" width="320" height="25" rx="4" fill="#1a3a5c"/>
+  <line x1="40" y1="85" x2="360" y2="85" stroke="#2563a8" stroke-width="3"/>
+  <text x="200" y="78" text-anchor="middle" fill="white" font-family="Arial" font-size="13" font-weight="bold">M1 ARKO</text>
+  <text x="200" y="145" text-anchor="middle" fill="#1a3a5c" font-family="Arial" font-size="12" font-weight="600">MONOBLOCK</text>
+  <text x="200" y="165" text-anchor="middle" fill="#64748b" font-family="Arial" font-size="10">MOD30</text>
+  <text x="200" y="220" text-anchor="middle" fill="#94a3b8" font-family="Arial" font-size="10">Sustituir por foto real</text>
+  <rect x="5" y="5" width="390" height="240" rx="8" fill="none" stroke="#94a3b8" stroke-width="1" stroke-dasharray="6,3"/>
+</svg>
