@@ -13,6 +13,13 @@ PORCHE = (6.81, 2.90)      # ancho, fondo (norte)
 ROOF_H, VUELO = 1.60, 0.35
 # huecos fachada sur (x0, ancho, alto, antepecho) según hoja 07
 SUR = [(0.60, 1.20, 1.30, 0.90), (4.03, 0.80, 1.30, 0.90), (7.06, 1.20, 1.30, 0.90)]
+# huecos fachada norte (planta, x0, ancho, alto, antepecho, tipo)
+NORTE = [("PB", 1.50, 1.20, 1.30, 0.90, "V"), ("PB", 5.10, 1.00, 2.10, 0.0, "P0"),
+         ("PA", 3.20, 1.20, 2.10, 0.0, "B1"), ("PA", 6.00, 1.20, 2.10, 0.0, "B1")]
+PASOS_CEN = [(2.60, 0.90), (5.60, 0.90)]                      # muro central: x0, ancho (PB y PA)
+# puertas en tabiques: (planta, orientación del tabique, posición fija, inicio, ancho)
+PUERTAS_TAB = [("PB", "V", 3.20, 1.20, .80), ("PB", "V", 5.20, 1.20, .80), ("PA", "V", 3.20, 1.20, .80),
+               ("PA", "V", 5.20, 1.20, .80), ("PA", "V", 5.10, 5.00, .80)]
 Z_PB, Z_PA = 0.0, H_PB + T_FORJ
 Z_TOP = Z_PA + H_PA
 
@@ -41,18 +48,18 @@ for x0, w, h, sill in SUR:
     muros_pb = cut_hueco(muros_pb, x0, w, h, sill, Z_PB, 0, T_EXT)                 # ventanas PB
     balcon = x0 != 4.03                                                            # balconeras B1 en PA
     muros_pa = cut_hueco(muros_pa, x0, w, 2.10 if balcon else h, 0.0 if balcon else sill, Z_PA, 0, T_EXT)
-# puerta principal norte (P0) hacia porche y hueco de ventana oeste
-muros_pb = muros_pb.cut(box(5.10, D - T_EXT - .01, 0, 1.00, T_EXT + .02, 2.10))
-muros_pb = muros_pb.cut(box(1.50, D - T_EXT - .01, 0.9, 1.20, T_EXT + .02, 1.30))
-muros_pa = muros_pa.cut(box(3.20, D - T_EXT - .01, Z_PA, 1.20, T_EXT + .02, 2.10))
-muros_pa = muros_pa.cut(box(6.00, D - T_EXT - .01, Z_PA, 1.20, T_EXT + .02, 2.10))
+for pl, x0, w, h, sill, tipo in NORTE:
+    z0 = Z_PB if pl == "PB" else Z_PA
+    m = cut_hueco(muros_pb if pl == "PB" else muros_pa, x0, w, h, sill, z0, D - T_EXT, T_EXT)
+    if pl == "PB": muros_pb = m
+    else: muros_pa = m
 
 # ---- MURO CENTRAL: continuo desde cimentación hasta cubierta (planta baja + alta) ----
 muro_central = box(T_EXT, Y_CEN, 0, W - 2*T_EXT, T_CEN, Z_TOP)
 # pasos de puerta (P1 / hueco de salón) sin interrumpir el resto del muro
-for x0 in (2.60, 5.60):
-    muro_central = muro_central.cut(box(x0, Y_CEN - .01, 0, 0.90, T_CEN + .02, 2.05))
-    muro_central = muro_central.cut(box(x0, Y_CEN - .01, Z_PA, 0.90, T_CEN + .02, 2.05))
+for x0, w in PASOS_CEN:
+    muro_central = muro_central.cut(box(x0, Y_CEN - .01, 0, w, T_CEN + .02, 2.05))
+    muro_central = muro_central.cut(box(x0, Y_CEN - .01, Z_PA, w, T_CEN + .02, 2.05))
 
 # ---- tabiquería ligera ----
 Y_N = Y_CEN + T_CEN
@@ -62,6 +69,10 @@ tabiques = tabiques.union(box(3.20, T_EXT, Z_PA, T_TAB, Y_CEN - T_EXT, H_PA))
 tabiques = tabiques.union(box(5.20, T_EXT, Z_PA, T_TAB, Y_CEN - T_EXT, H_PA))
 tabiques = tabiques.union(box(5.10, Y_N, Z_PA, T_TAB, D - T_EXT - Y_N, H_PA))  # PA: estar|dormitorio
 tabiques = tabiques.union(box(T_EXT, Y_N + 1.90, 0, 2.20, T_TAB, H_PB))        # PB: aseo/escalera
+
+for pl, ori, pos, ini, w in PUERTAS_TAB:
+    z0 = Z_PB if pl == "PB" else Z_PA
+    tabiques = tabiques.cut(box(pos - .01, ini, z0, T_TAB + .02, w, 2.05))
 
 # ---- forjado (con hueco de escalera) y escalera ----
 forjado = box(0, 0, H_PB, W, D, T_FORJ).cut(box(0.80, Y_N + .5, H_PB - .01, 1.10, 2.50, T_FORJ + .02))
