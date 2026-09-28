@@ -13,6 +13,8 @@ LAYERS = {  # nombre: (color, grosor 1/100 mm, tipo de línea)
     "antepecho": (7, 35, "Continuous"), "forjado_cubierta": (5, 35, "Continuous"), "cubierta": (6, 35, "Continuous"),
     "HUECOS": (7, 25, "Continuous"), "CARPINTERIA": (4, 18, "Continuous"), "COTAS": (3, 13, "Continuous"),
     "TEXTO": (2, 13, "Continuous"), "ESCALERA_ALTA": (30, 18, "DASHED"), "CORTES": (1, 35, "DASHDOT"),
+    "RAYADO_MURO": (7, 9, "Continuous"), "RAYADO_MURO_CENTRAL": (1, 9, "Continuous"),
+    "RAYADO_FORJADO": (7, 9, "Continuous"), "RAYADO_OTROS": (8, 9, "Continuous"),
     "MARCO": (7, 70, "Continuous"), "TABLA": (7, 25, "Continuous")}
 
 PX = (c.W - c.PORCHE[0]) / 2
@@ -28,21 +30,68 @@ ROOMS = {
 STAIR = (0.80, Y_N + 0.5, 1.90, Y_N + 3.0)
 
 
+def _bucle(edges):
+    """Encadena las aristas (listas de puntos) de un wire en un bucle ordenado; None si no cierra."""
+    tol = 1e-6
+    pts = list(edges[0]); rest = [list(e) for e in edges[1:]]
+    while rest:
+        fin = pts[-1]; hit = None
+        for i, e in enumerate(rest):
+            if math.dist(e[0], fin) < tol: hit = (i, e); break
+            if math.dist(e[-1], fin) < tol: hit = (i, e[::-1]); break
+        if hit is None: return None
+        pts += hit[1][1:]; rest.pop(hit[0])
+    return pts if math.dist(pts[0], pts[-1]) < tol else None
+
+
 def contornos(solid, eje, valor):
-    """Polilíneas (m) del corte: eje 'z' planta; 'x'/'y' sección (giro para llevar el plano a z')."""
+    """Caras del corte; cada cara = lista de bucles (m): [exterior, huecos...].
+    eje 'z' planta; 'x'/'y' sección (giro para llevar el plano a z')."""
     s = solid
     if eje == "y": s = s.rotate((0, 0, 0), (1, 0, 0), 90)
     elif eje == "x": s = s.rotate((0, 0, 0), (0, 1, 0), -90)
     try:
-        caras = cq.Workplane("XY").add(s).section(valor).vals()
+        res = cq.Workplane("XY").add(s).section(valor).vals()
     except Exception:
         return []
+    def pol(e):
+        ts = [0, 1] if e.geomType() == "LINE" else [i / 16 for i in range(17)]
+        return [(e.positionAt(t).x, e.positionAt(t).y) for t in ts]
     out = []
-    for f in caras:
-        for e in f.Edges():
-            ts = [0, 1] if e.geomType() == "LINE" else [i / 16 for i in range(17)]
-            out.append([(e.positionAt(t).x, e.positionAt(t).y) for t in ts])
+    for r in res:
+        for f in r.Faces():
+            bucles = []
+            for w in [f.outerWire()] + list(f.innerWires()):
+                b = _bucle([pol(e) for e in w.Edges()])
+                if b: bucles.append(b)
+            if bucles: out.append(bucles)
     return out
+
+
+# material del corte -> (capa de rayado, patrón | None = sólido, ángulo, color sólido)
+RAYADO = {"muros_PB": ("RAYADO_MURO", "ANSI31", 45, None), "muros_PA": ("RAYADO_MURO", "ANSI31", 45, None),
+          "MURO_CENTRAL": ("RAYADO_MURO_CENTRAL", "ANSI37", 45, None),
+          "forjado_PB_PA": ("RAYADO_FORJADO", None, 0, 7), "forjado_cubierta": ("RAYADO_FORJADO", None, 0, 7),
+          "losa_terraza": ("RAYADO_FORJADO", None, 0, 7), "cimentacion": ("RAYADO_OTROS", None, 0, 8),
+          "tabiques": ("RAYADO_OTROS", None, 0, 7), "pilares": ("RAYADO_OTROS", None, 0, 7),
+          "antepecho": ("RAYADO_OTROS", None, 0, 7)}
+
+
+def rayar(msp, layer, patron, ang, color, bucles_dib, K):
+    h = msp.add_hatch(color=256, dxfattribs={"layer": layer})
+    if patron: h.set_pattern_fill(patron, scale=0.6 * K, angle=ang)
+    else: h.set_solid_fill(color=color)
+    for b in bucles_dib: h.paths.add_polyline_path(b, is_closed=True)
+
+
+def pintar(cx, nombre, sol, eje, valor, tf=lambda p: p):
+    """Dibuja el contorno del corte y su rayado."""
+    for bucles in contornos(sol.val(), eje, valor):
+        dib = [[cx.t(*tf(p)) for p in b[:-1]] for b in bucles]
+        for b in dib: cx.msp.add_lwpolyline(b, close=True, dxfattribs={"layer": nombre})
+        if nombre in RAYADO:
+            capa, pat, ang, col = RAYADO[nombre]
+            rayar(cx.msp, capa, pat, ang, col, dib, cx.K)
 
 
 class Ctx:
@@ -113,8 +162,7 @@ def puerta_tabique(cx, pos, ini, w, k):
 def dibujar_planta(cx, planta, titulo):
     z = 1.20 if planta == "PB" else c.Z_PA + 1.20
     for n, sol, _ in c.partes:
-        for pl in contornos(sol.val(), "z", z):
-            cx.poly(pl, n)
+        pintar(cx, n, sol, "z", z)
     # carpintería
     for x0, w, h, sill in c.SUR:
         tipo = "V" if (planta == "PB" or x0 == 4.03) else "B1"
@@ -162,8 +210,7 @@ def dibujar_seccion(cx, eje, valor, titulo):
     if eje == "x": tf = lambda p: (p[1], -p[0])
     else: tf = lambda p: (p[0], -p[1])
     for n, sol, _ in c.partes:
-        for pl in contornos(sol.val(), eje, valor):
-            cx.poly([tf(p) for p in pl], n)
+        pintar(cx, n, sol, eje, valor, tf)
     zc = c.Z_TOP + c.T_FORJ
     zs = [-c.H_CIM, 0, c.H_PB, c.Z_PA, c.Z_TOP, zc, zc + c.ROOF_H]
     if eje == "x":
@@ -236,6 +283,14 @@ def lamina(nombre):
                  "cimentación hasta la cubierta.", height=2.2, dxfattribs={"layer": "TEXTO", "insert": (300, fin - 8)})
     msp.add_text("Fondo del cuerpo (7.20 m), espesores y cimentación estimados. Carpintería: V ventana, B balconera, P0 entrada, P1/P2 interiores.",
                  height=2.2, dxfattribs={"layer": "TEXTO", "insert": (300, fin - 13)})
+    ly = fin - 30                                     # leyenda de rayados
+    msp.add_text("LEYENDA DE RAYADOS", height=3.0, dxfattribs={"layer": "TEXTO", "insert": (300, ly + 6)})
+    for i, (txt, key) in enumerate([("Muro de mampostería", "muros_PB"), ("Muro central de carga", "MURO_CENTRAL"),
+                                    ("Forjado / losa", "forjado_PB_PA"), ("Cimentación", "cimentacion")]):
+        capa, pat, ang, col = RAYADO[key]; xx = 300 + i * 62
+        rayar(msp, capa, pat, ang, col, [[(xx, ly - 8), (xx + 14, ly - 8), (xx + 14, ly - 1), (xx, ly - 1)]], 1)
+        msp.add_lwpolyline([(xx, ly - 8), (xx + 14, ly - 8), (xx + 14, ly - 1), (xx, ly - 1)], close=True, dxfattribs={"layer": "TABLA"})
+        msp.add_text(txt, height=2.2, dxfattribs={"layer": "TEXTO", "insert": (xx + 16, ly - 6)})
     x0, y0, x1, y1 = 640, 14, 825, 100                # cajetín
     msp.add_lwpolyline([(x0, y0), (x1, y0), (x1, y1), (x0, y1)], close=True, dxfattribs={"layer": "MARCO"})
     for yy in (32, 50, 68, 84): msp.add_line((x0, yy), (x1, yy), dxfattribs={"layer": "TABLA"})
