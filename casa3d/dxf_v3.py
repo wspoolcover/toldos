@@ -17,7 +17,7 @@ for n, v in {"parapeto_terraza": ("RAYADO_MURO", "ANSI31", 45, None), "parapeto_
 for k in h.STEEL:
     base.RAYADO["acero_" + k] = ("RAYADO_FORJADO", None, 0, 5); base.LAYERS["acero_" + k] = (5, 35, "Continuous")
 for n in ("escalera", "lucernario"): base.LAYERS.setdefault(n, (30, 18, "Continuous"))
-PLAN_SKIP = ("cimentacion", "forjado_PB_PA", "forjado_cubierta", "lucernario", "parapeto_cubierta")
+PLAN_SKIP = ("cimentacion", "forjado_PB_PA", "forjado_cubierta", "lucernario", "parapeto_cubierta", "cristal_PB", "cristal_PA", "mobiliario")
 Z_CUT = {"PB": 0.95, "PA": h.Z_PA + 1.20}
 
 
@@ -82,9 +82,9 @@ def planta_dist(cx, planta, titulo):
         if o[0] == planta: hueco(cx, o)
     x0, y0, x1, y1 = h.VOID
     if planta == "PB":
-        for i in range(9): cx.line((6.30, 11.75 - i * h.TREAD), (7.15, 11.75 - i * h.TREAD), "escalera")
-        for j in range(9): cx.line((5.35, 9.83 + j * h.TREAD), (6.20, 9.83 + j * h.TREAD), "escalera")
-        tx(cx, "SUBE", 6.72, 10.8, 1.2, 90)
+        for i in range(9): cx.line((8.15, 8.95 + i * h.TREAD), (9.00, 8.95 + i * h.TREAD), "escalera")
+        for j in range(9): cx.line((7.25, 10.83 - j * h.TREAD), (8.10, 10.83 - j * h.TREAD), "escalera")
+        tx(cx, "SUBE", 8.58, 9.9, 1.2, 90)
     else:
         cx.poly([(x0, y0), (x1, y0), (x1, y1), (x0, y1)], "ESCALERA_ALTA", True)
     cx.poly([(h.XE - h.W_SUR - 0.27, 7.60), (h.XI1 + h.T / 2, 7.60)], "VIGAS"); tx(cx, "viga de acero (antes muro)", 6.0, 7.30, 1.4)
@@ -133,7 +133,7 @@ def planta_estructura(cx, nivel, titulo):
 def seccion(cx, eje, valor, titulo):
     tf = (lambda p: (p[1], -p[0])) if eje == "x" else (lambda p: (p[0], -p[1]))
     for n, sol, _ in h.partes:
-        if n == "acero_viguetas_salon" and eje == "y" and False: continue
+        if n in ("mobiliario", "cristal_PB", "cristal_PA"): continue
         base.pintar(cx, n, sol, eje, valor, tf)
     xs = [tf(p)[0] for b in base.contornos(h.cimentacion.val(), eje, valor) for bb in b for p in bb]
     a, b = min(xs), max(xs)
@@ -198,8 +198,8 @@ def lamina_dist(nombre):
         else: seccion(cx, "y", 10.05, "SECCIÓN B-B' (dormitorio, escalera, baño)  1/75")
     fin = cuadro_salas(msp, 300, 282)
     notas(msp, 300, fin - 8, ["NOTAS: muros existentes de 0,55 m; medidas exteriores del croquis. Tabiques de 0,10 m.",
-        "Orientación según el propietario: parte alta del croquis = sur (cocina); derecha = este (otro terreno). Sin confirmar.",
-        "Escalera en U con hueco abierto y lucernario en cubierta para llevar luz a la planta baja.",
+        "Falta confirmar a qué lado del croquis queda el este (otro terreno con la salida del sol).",
+        "Norte abajo (calle y salón), sur arriba. Escalera en U con hueco y lucernario en cubierta.",
         "Se demuele el muro de fachada entre salón y casa y la pared central: los sustituyen vigas de acero (línea gruesa)."])
     doc.saveas(nombre); print(nombre)
 
