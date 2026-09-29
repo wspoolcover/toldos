@@ -7,6 +7,7 @@ from perfiles import SECC
 
 base.ESC = 75
 S75, FECHA = 1 / 75, "29/09/2026"
+base.LAYERS["VIGUETA_HORM"] = (8, 13, "Continuous")
 for n in ("VIGUETAS", "VIGAS", "PILARES", "ZAPATAS", "LUCERNARIO"):
     base.LAYERS[n] = {"VIGUETAS": (5, 25, "Continuous"), "VIGAS": (1, 60, "Continuous"), "PILARES": (1, 50, "Continuous"),
                       "ZAPATAS": (8, 18, "DASHED"), "LUCERNARIO": (4, 18, "DASHED")}[n]
@@ -104,6 +105,8 @@ def planta_estructura(cx, nivel, titulo):
         cats = ["viguetas_salon", "viguetas_casa", "vigas_forjado", "dinteles", "dintel"]; e = "IPE"
     else:
         cats = ["viguetas_cubierta", "vigas_cubierta"]; e = "IPE"
+    for (xa, ya, xb, yb) in h.HORMIGON_VIG["casa" if nivel == "L1" else "cubierta"]:      # viguetas pretensadas cada 71 cm
+        cx.poly([(xa, ya), (xb, yb)], "VIGUETA_HORM")
     for c in cats:
         for g in h.STEEL[c]:
             x0, y0, x1, y1, sec = g if len(g) == 5 else (g[0], g[1], g[0], g[1], g[2])
@@ -118,11 +121,11 @@ def planta_estructura(cx, nivel, titulo):
     cx.poly([(x0, y0), (x1, y0), (x1, y1), (x0, y1)], "LUCERNARIO" if nivel != "L1" else "ESCALERA_ALTA", True)
     tx(cx, "hueco de escalera" + (" + lucernario" if nivel != "L1" else ""), (x0 + x1) / 2, (y0 + y1) / 2, 1.5)
     if nivel == "L1":
-        sc = h.E["casa_vigueta"]; ss = h.E["salon_sistema"]
+        ss = h.E["salon_sistema"]; sc = h.E["casa_sistema"]
         tx(cx, f"vigueta {ss['vigueta']} y bovedilla {ss['forjado']} (luz 5,75)", 6.0, 3.5, 2.0); tx(cx, "TERRAZA SOBRE EL SALÓN", 6.0, 4.1, 2.6)
-        tx(cx, f"{sc['perfil']} @ {sc['sep']:.2f}", 1.9, 9.4, 1.8, 90); tx(cx, f"dintel {h.E['dintel']['perfil']}", 5.5, 0.95, 1.8)
+        tx(cx, f"vigueta {sc['vigueta']} cada 71 cm, {sc['forjado']}", 1.9, 12.0, 1.7, 90); tx(cx, f"dintel {h.E['dintel']['perfil']}", 5.5, 0.95, 1.8)
     else:
-        sq = h.E["cubierta_vigueta"]; tx(cx, f"{sq['perfil']} @ {sq['sep']:.2f}", 1.9, 9.4, 1.8, 90)
+        sq = h.E["casa_sistema"]; tx(cx, f"vigueta {sq['vigueta']} cada 71 cm, {sq['forjado']}", 1.9, 12.0, 1.7, 90)
         tx(cx, "CUBIERTA PLANA: piedra + paneles solares", 4.8, 8.4, 1.8)
     for lx in h.LINES_X:
         tx(cx, f"{h.E['viga_ns']['perfil']}", lx, h.Y_TOP + 0.35, 1.5, 90)
@@ -218,8 +221,7 @@ def lamina_estr(nombre):
     E = h.E
     filas = [("ELEMENTO", "PERFIL", "UDS/SEP"),
              ("Terraza salón: vigueta pretensada + bovedilla", E["salon_sistema"]["forjado"].replace("x", "×"), "40 m2"),
-             ("Viguetas forjado casa (E-O, luz 2,55)", E["casa_vigueta"]["perfil"], f"@{E['casa_vigueta']['sep']:.1f} m"),
-             ("Viguetas cubierta (E-O, luz 2,55)", E["cubierta_vigueta"]["perfil"], f"@{E['cubierta_vigueta']['sep']:.1f} m"),
+             ("Forjado casa y cubierta: vigueta pretensada + bovedilla", E["casa_sistema"]["forjado"].replace("x", "×"), "2 x 75 m2"),
              ("Vigas N-S forjado (continuas)", E["viga_ns"]["perfil"], "3 uds"), ("Vigas N-S cubierta (continuas)", E["viga_cub"]["perfil"], "3 uds"),
              ("Viga de borde del saliente (2 niveles)", E["viga_saliente"]["perfil"], "2 uds"), ("Viga de fachada (2 niveles)", E["viga_fachada"]["perfil"], "2 lineas"),
              ("Pilares (ocultos en muros/tabiques)", E["pilar"]["perfil"], "6 uds"), ("Dintel de la cristalera", E["dintel"]["perfil"], "1 ud"),

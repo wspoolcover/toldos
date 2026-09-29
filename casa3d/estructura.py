@@ -12,8 +12,9 @@ G_FORJ = 2.6            # chapa colaborante + hormigón 12 cm
 G_PAV, G_TAB = 1.2, 1.0 # pavimento interior, tabiquería ligera
 G_TERR = 2.2            # solado + aislamiento + impermeabilización + pendientes
 G_CUB = G_FORJ + 2.2 + 1.0 + 0.3   # forjado + aislamiento/pendientes/impermeabilización + piedra/grava + paneles solares
-G_HOUSE, G_TERRAZA = G_FORJ + G_PAV + G_TAB, G_FORJ + G_TERR
-G_CUB = G_FORJ + 2.2 + 1.0 + 0.3
+G_VIG = 2.02                                         # forjado (17+5)x71 con bovedilla de poliestireno (ficha Prearcon)
+G_HOUSE, G_TERRAZA = G_VIG + G_PAV + G_TAB, G_FORJ + G_TERR
+G_CUB = G_VIG + 2.2 + 1.0 + 0.3
 Q_HOUSE, Q_TERRAZA, Q_CUB = 2.0, 2.0, 1.0   # uso vivienda / terraza privada / cubierta accesible solo privadamente (nieve 0,5 no simultánea)
 GAMMA_MURO = 20.0       # kN/m³ mampostería
 
@@ -116,11 +117,20 @@ P(f"\nElegida: **(25+5)×71 con vigueta {t} y bovedilla de poliestireno** (peso 
 P(f"\nCoste orientativo por m² ({AREA_SAL:.0f} m²): acero (IPE 240 a 1,2 m: {kg_m2:.1f} kg/m² × 2,4-5,5 €/kg) + chapa colaborante 50-80 €/m² = **{c_ac[0]:.0f}-{c_ac[1]:.0f} €/m²**; vigueta y bovedilla, ya con viguetas: **{c_vg[0]}-{c_vg[1]} €/m²**. Ahorro estimado **{(c_ac[0]-c_vg[1])*AREA_SAL/1000:.1f}-{(c_ac[1]-c_vg[0])*AREA_SAL/1000:.1f} mil €** y unos {R['salon_vigueta']['perfil']}: {kg_m2 * AREA_SAL:,.0f} kg de acero menos.".replace(",", "."))
 R["salon_sistema"] = dict(tipo="vigueta", forjado="(25+5)x71", vigueta=t, bovedilla="poliestireno", peso=gf, canto=0.30, reaccion_kN_m=rv["R"], area=AREA_SAL, kg_evitados=kg_m2 * AREA_SAL)
 
-# 2) viguetas casa (luz máxima de bahía = 3,0)
-casa = elegir(max(BAYS), G_HOUSE, Q_HOUSE, IPE, [1.0, 1.2])
-P("\n## Planta alta de la casa: viguetas E-O (luz máx. 2,55 m)\n| Sección | Separación (m) | kg/m² | M/Mrd | Flecha total / límite (mm) |\n|---|---|---|---|---|")
-for kgm2, s, r in casa[:4]: P(f"| {r['name']} | {s:.1f} | {kgm2:.1f} | {r['rM']:.2f} | {r['d_tot_mm']:.1f} / {r['lim_tot_mm']:.1f} |")
-R["casa_vigueta"] = dict(perfil=casa[0][2]["name"], sep=casa[0][1], luz=max(BAYS))
+# 2) forjados de la casa y de la cubierta: vigueta pretensada y bovedilla (17+5)x71, apoyada en las vigas HEB (luz máx. 2,55 m)
+FICHA2 = {"T-1": (17.47, 21.60, 6.21), "T-2": (24.99, 24.64, 6.36)}
+def vig_casa(G, Q, L=max(BAYS), tipo="T-1"):
+    qd = GG * G + GQ * Q; Mu, Vu, EI = FICHA2[tipo]
+    M, V = qd * L**2 / 8, qd * L / 2
+    d = (5 * G * 1e-3 * L**4 / (384 * EI) * 3 + 5 * Q * 1e-3 * L**4 / (384 * EI)) * 1e3
+    return dict(G=G, qd=qd, rM=M / Mu, rV=V / Vu, d=d, lim=L / 300 * 1e3)
+rc, rq = vig_casa(G_HOUSE, Q_HOUSE), vig_casa(G_CUB, Q_CUB)
+P("\n## Forjados de la casa y de la cubierta: vigueta pretensada y bovedilla (luz máx. 2,55 m)\n")
+P("Forjado (17+5)×71 con bovedilla de poliestireno, 2,02 kN/m² ([ficha Prearcon T-18](https://prearcon.com/pdf/VIGUETA%20T18.pdf)); vigueta T-1: Mu = 17,5 kN·m/m, Vu = 21,6 kN/m, EI fisurada = 6,21 MN·m²/m. Las viguetas apoyan en el ala inferior de las vigas HEB y el hormigón las cubre, así que las vigas no se ven por debajo.\n")
+P("| Forjado | G total | M/Mu | V/Vu | Flecha con fluencia / límite (mm) |\n|---|---|---|---|---|")
+P(f"| Casa (planta alta) | {rc['G']:.2f} | {rc['rM']:.2f} | {rc['rV']:.2f} | {rc['d']:.1f} / {rc['lim']:.1f} |")
+P(f"| Cubierta plana (piedra y paneles solares) | {rq['G']:.2f} | {rq['rM']:.2f} | {rq['rV']:.2f} | {rq['d']:.1f} / {rq['lim']:.1f} |")
+R["casa_sistema"] = dict(tipo="vigueta", forjado="(17+5)x71", vigueta="T-1", bovedilla="poliestireno", peso=G_VIG, sep=0.71)
 
 # 3) vigas N-S nivel 1: una sola pieza continua sobre el pilar central (dos vanos)
 vig = next(r for r in (check_cont(n, SPAN_NS[0], SPAN_NS[1], max(TRIB), G_HOUSE, Q_HOUSE) for n in HEB) if r["ok"])
@@ -130,11 +140,7 @@ R["viga_ns"] = dict(perfil=vig["name"])
 R["lineas_x"] = LINES_X
 Rn1 = vig["RB"]
 
-# 4) cubierta plana no transitable (piedra + paneles solares): misma rejilla que el forjado
-cub = elegir(max(BAYS), G_CUB, Q_CUB, IPE, [1.0, 1.2])
-P("\n## Cubierta plana (piedra y paneles solares): viguetas E-O (luz 2,55 m)\n| Sección | Separación (m) | kg/m² | M/Mrd | Flecha total / límite (mm) |\n|---|---|---|---|---|")
-for kgm2, s_, r in cub[:4]: P(f"| {r['name']} | {s_:.1f} | {kgm2:.1f} | {r['rM']:.2f} | {r['d_tot_mm']:.1f} / {r['lim_tot_mm']:.1f} |")
-R["cubierta_vigueta"] = dict(perfil=cub[0][2]["name"], sep=cub[0][1], luz=max(BAYS))
+# 4) vigas N-S de cubierta (la cubierta lleva el mismo forjado de vigueta y bovedilla)
 vr = next(r for r in (check_cont(n, SPAN_NS[0], SPAN_NS[1], max(TRIB), G_CUB, Q_CUB) for n in HEB) if r["ok"])
 P(f"\nVigas N-S de cubierta (continuas): **{vr['name']}** (M/Mrd {vr['rM']:.2f}, flecha {vr['d_tot_mm']:.1f}/{vr['lim_tot_mm']:.1f} mm).")
 R["viga_cub"] = dict(perfil=vr["name"])

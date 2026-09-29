@@ -13,7 +13,7 @@ NB_MAIN = [(0, Y_JUNC), (XE, Y_JUNC), (XE, Y_TOP), (0, Y_TOP)]
 NB_PA = [(0, Y_JUNC), (XE, Y_JUNC), (XE, Y_E1), (XE + SAL_PA, Y_E1), (XE + SAL_PA, Y_E2), (XE, Y_E2), (XE, Y_TOP), (0, Y_TOP)]
 SB = [(XE - W_FRONT, 0), (XE, 0), (XE, Y_JUNC), (XE - W_SUR, Y_JUNC)]
 T, TP, T_BUMP = 0.55, 0.10, 0.30
-H_CIM, T_LOSA = 0.60, 0.15
+H_CIM, T_LOSA = 0.60, 0.22            # forjado (17+5) de vigueta pretensada
 Z_PA, H_PA = 3.26, 2.70
 Z_TOP = Z_PA + H_PA
 XI1, YI1 = XE - T, Y_TOP - T
@@ -132,26 +132,25 @@ def add(cat, sec, L, solid, geom):
     sols[cat].append(solid); STEEL[cat].append(geom); KG[sec] = KG.get(sec, 0) + SECC[sec][7] * L
 
 BAY_X = [T / 2, *LINES_X, XE - T / 2]; Y_END = Y_TOP - T / 2
-sv, sc, sq = E["salon_vigueta"], E["casa_vigueta"], E["cubierta_vigueta"]
-zt1, zt2 = Z_PA - T_LOSA, Z_TOP - T_LOSA
+sv = E.get("salon_vigueta")
+zt1, zt2 = Z_PA - 0.05, Z_TOP - 0.05                 # vigas HEB embebidas en el forjado: cara superior a 5 cm de la cota de suelo
 SISTEMA_SALON = E.get("salon_sistema", {}).get("tipo", "acero")
-for y in ([] if SISTEMA_SALON == "vigueta" else [1.0 + k * sv["sep"] for k in range(int((Y_JUNC - 1.0) / sv["sep"]) + 1)] + [6.75]):
+for y in ([] if SISTEMA_SALON == "vigueta" or sv is None else [1.0 + k * sv["sep"] for k in range(int((Y_JUNC - 1.0) / sv["sep"]) + 1)] + [6.75]):
     if y > Y_JUNC - 0.35 and y != 6.75: continue
     x0, x1 = (XE - W_FRONT) + ((XE - W_SUR) - (XE - W_FRONT)) * y / Y_JUNC + T / 2, XE - T / 2
     add("viguetas_salon", sv["perfil"], x1 - x0, viga_x(sv["perfil"], x0, x1, y, zt1), (x0, y, x1, y, sv["perfil"]))
 
-def viguetas(cat, spec, ztop):
-    for k in range(int((YI1 - (Y_JUNC + T) - 0.45) / spec["sep"]) + 1):
-        y = Y_JUNC + T + 0.45 + k * spec["sep"]
-        if y > YI1 - 0.2: continue
-        for a, b in zip(BAY_X, BAY_X[1:]):
-            if VOID[1] - 0.05 <= y <= VOID[3] + 0.05 and a >= LINES_X[2] - 1e-6: continue          # hueco de escalera
-            if a >= LINES_X[2] - 1e-6 and Y_E1 - 0.10 <= y <= Y_E2 + 0.10: b = 9.15                 # en el saliente no hay muro: apoyan en su viga de borde
-            add(cat, spec["perfil"], b - a, viga_x(spec["perfil"], a, b, y, ztop), (a, y, b, y, spec["perfil"]))
-    for y in (9.35, 10.35):                                                                           # viguetas del saliente del baño
-        x1 = XE + SAL - T / 2 if cat == "viguetas_casa" else XE + SAL_PA - T_BUMP / 2
-        add(cat, spec["perfil"], x1 - 9.15, viga_x(spec["perfil"], 9.15, x1, y, ztop), (9.15, y, x1, y, spec["perfil"]))
-viguetas("viguetas_casa", sc, zt1); viguetas("viguetas_cubierta", sq, zt2)
+HORMIGON_VIG = {"casa": [], "cubierta": []}         # viguetas pretensadas cada 71 cm (solo para dibujar en planta)
+sep = E["casa_sistema"]["sep"]
+for k in ("casa", "cubierta"):
+    n = int((YI1 - (Y_JUNC + T) - 0.30) / sep) + 1
+    for i in range(n):
+        y = Y_JUNC + T + 0.30 + i * sep
+        if y > YI1 - 0.15: continue
+        for a_, b_ in zip(BAY_X, BAY_X[1:]):
+            if VOID[1] - 0.05 <= y <= VOID[3] + 0.05 and a_ >= LINES_X[2] - 1e-6: continue
+            if a_ >= LINES_X[2] - 1e-6 and Y_E1 - 0.10 <= y <= Y_E2 + 0.10: b_ = 9.15
+            HORMIGON_VIG[k].append((a_, y, b_, y))
 for lx in LINES_X:
     add("vigas_forjado", E["viga_ns"]["perfil"], Y_END - COL_Y[0], viga_y(E["viga_ns"]["perfil"], COL_Y[0], Y_END, lx, zt1), (lx, COL_Y[0], lx, Y_END, E["viga_ns"]["perfil"]))
     add("vigas_cubierta", E["viga_cub"]["perfil"], Y_END - COL_Y[0], viga_y(E["viga_cub"]["perfil"], COL_Y[0], Y_END, lx, zt2), (lx, COL_Y[0], lx, Y_END, E["viga_cub"]["perfil"]))
@@ -177,7 +176,7 @@ def comp(lst): return cq.Workplane("XY").newObject([cq.Compound.makeCompound([s.
 acero = {k: comp(v) for k, v in sols.items() if v}
 
 # ---------------- hormigón: forjado del salón (vigueta y bovedilla), zunchos perimetrales y riostras de cimentación ----------------
-forjado_salon = prisma(SB, Z_PA - 0.30, 0.15, -T / 2)
+forjado_salon = prisma(SB, Z_PA - 0.30, 0.30 - T_LOSA, -T / 2)
 def zuncho(pts, z_top): return prisma(pts, z_top - 0.25, 0.30, 0.01).cut(prisma(pts, z_top - 0.26, 0.32, -(T - 0.01)))
 zuncho_forjado, zuncho_cubierta = zuncho(PTS, Z_PA), zuncho(NB_MAIN, Z_TOP)
 ries = [box(T / 2, cy - .20, -0.50, XE - T, .40, .40) for cy in COL_Y] + [box(lx - .20, COL_Y[0], -0.50, .40, COL_Y[1] - COL_Y[0], .40) for lx in LINES_X]
