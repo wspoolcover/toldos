@@ -4,6 +4,17 @@
   "sep": 1.2,
   "luz": 5.75
  },
+ "salon_sistema": {
+  "tipo": "vigueta",
+  "forjado": "(25+5)x71",
+  "vigueta": "T-2",
+  "bovedilla": "poliestireno",
+  "peso": 2.51,
+  "canto": 0.3,
+  "reaccion_kN_m": 26.9056875,
+  "area": 40.0,
+  "kg_evitados": 1023.3333333333333
+ },
  "casa_vigueta": {
   "perfil": "IPE 120",
   "sep": 1.2,

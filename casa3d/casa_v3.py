@@ -134,7 +134,8 @@ def add(cat, sec, L, solid, geom):
 BAY_X = [T / 2, *LINES_X, XE - T / 2]; Y_END = Y_TOP - T / 2
 sv, sc, sq = E["salon_vigueta"], E["casa_vigueta"], E["cubierta_vigueta"]
 zt1, zt2 = Z_PA - T_LOSA, Z_TOP - T_LOSA
-for y in [1.0 + k * sv["sep"] for k in range(int((Y_JUNC - 1.0) / sv["sep"]) + 1)] + [6.75]:
+SISTEMA_SALON = E.get("salon_sistema", {}).get("tipo", "acero")
+for y in ([] if SISTEMA_SALON == "vigueta" else [1.0 + k * sv["sep"] for k in range(int((Y_JUNC - 1.0) / sv["sep"]) + 1)] + [6.75]):
     if y > Y_JUNC - 0.35 and y != 6.75: continue
     x0, x1 = (XE - W_FRONT) + ((XE - W_SUR) - (XE - W_FRONT)) * y / Y_JUNC + T / 2, XE - T / 2
     add("viguetas_salon", sv["perfil"], x1 - x0, viga_x(sv["perfil"], x0, x1, y, zt1), (x0, y, x1, y, sv["perfil"]))
@@ -175,6 +176,13 @@ add("dintel", d, 4.05, viga_x(d, 3.50, 7.55, T / 2, 2.55 + SECC[d][0] / 1000), (
 def comp(lst): return cq.Workplane("XY").newObject([cq.Compound.makeCompound([s.val() for s in lst])])
 acero = {k: comp(v) for k, v in sols.items() if v}
 
+# ---------------- hormigón: forjado del salón (vigueta y bovedilla), zunchos perimetrales y riostras de cimentación ----------------
+forjado_salon = prisma(SB, Z_PA - 0.30, 0.15, -T / 2)
+def zuncho(pts, z_top): return prisma(pts, z_top - 0.25, 0.30, 0.01).cut(prisma(pts, z_top - 0.26, 0.32, -(T - 0.01)))
+zuncho_forjado, zuncho_cubierta = zuncho(PTS, Z_PA), zuncho(NB_MAIN, Z_TOP)
+ries = [box(T / 2, cy - .20, -0.50, XE - T, .40, .40) for cy in COL_Y] + [box(lx - .20, COL_Y[0], -0.50, .40, COL_Y[1] - COL_Y[0], .40) for lx in LINES_X]
+riostras = comp(ries)
+
 # ---------------- mobiliario y chimenea (solo para ver el conjunto) ----------------
 MOB = [box(6.45, 1.05, 0, .75, 3.30, .85), box(5.05, 3.65, 0, 1.40, .70, .45), box(5.05, 1.05, 0, 1.40, .70, .45), box(5.35, 2.05, 0, .80, 1.35, .40),   # sofá en U y mesa baja
        box(3.60, 1.60, .70, .16, 1.90, 1.00),                                                                                                          # pantalla
@@ -188,7 +196,7 @@ chimenea = comp([box(3.50, 8.75, 0, 1.15, .80, 1.25), box(3.70, 8.95, 1.25, .50,
 
 partes = [("cimentacion", cimentacion, (.55, .55, .55)), ("muros_PB", muros_pb, (.85, .80, .70)), ("muros_PA", muros_pa, (.85, .80, .70)),
           ("parapeto_terraza", parapeto_terraza, (.85, .80, .70)), ("parapeto_cubierta", parapeto_cubierta, (.85, .80, .70)),
-          ("forjado_PB_PA", forjado, (.70, .70, .72)), ("forjado_cubierta", losa_cubierta, (.70, .70, .72)),
+          ("forjado_PB_PA", forjado, (.70, .70, .72)), ("forjado_salon", forjado_salon, (.66, .66, .68)), ("zuncho_forjado", zuncho_forjado, (.45, .45, .48)), ("zuncho_cubierta", zuncho_cubierta, (.45, .45, .48)), ("riostras", riostras, (.5, .5, .5)), ("forjado_cubierta", losa_cubierta, (.70, .70, .72)),
           ("tabiques_PB", tab_pb, (.95, .95, .92)), ("tabiques_PA", tab_pa, (.95, .95, .92)), ("murete_pasillo", murete, (.90, .88, .80)),
           ("escalera", escalera, (.60, .45, .30)), ("lucernario", lucernario, (.55, .75, .90)),
           ("cristal_PB", cristal_pb, (.55, .75, .90)), ("cristal_PA", cristal_pa, (.55, .75, .90)),

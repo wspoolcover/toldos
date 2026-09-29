@@ -14,6 +14,19 @@ Acero S275JR (fy = 275 MPa), γM0 = γM1 = 1,05, ELU 1,35 G + 1,50 Q, flecha tot
 | IPE 240 | 1.2 | 25.6 | 0.51 | 14.7 / 19.2 |
 | IPE 220 | 1.0 | 26.2 | 0.54 | 17.3 / 19.2 |
 
+## Terraza sobre el salón: alternativa de forjado de vigueta pretensada y bovedilla (datos de fabricante)
+
+Ficha técnica de [Prefabricados Arcón, forjado T-18](https://prearcon.com/pdf/VIGUETA%20T18.pdf): forjado (25+5)×71, peso 3,71 kN/m² con bovedilla de hormigón o 2,51 con bovedilla de poliestireno. El fabricante debe confirmar la luz de 5,75 m con su ficha de autorización de uso.
+
+| Forjado (25+5)×71 | Peso propio | G total | M/Mu | V/Vu | Flecha con fluencia / límite (mm) |
+|---|---|---|---|---|---|
+| bovedilla de hormigón, vigueta T-3 | 3.71 | 5.91 | 0.89 | 0.82 | 15.2 / 19.2 |
+| bovedilla de poliestireno, vigueta T-2 | 2.51 | 4.71 | 0.96 | 0.78 | 12.7 / 19.2 |
+
+Elegida: **(25+5)×71 con vigueta T-2 y bovedilla de poliestireno** (peso 2.51 kN/m², más ligera que la solución de acero con chapa). Reacción en cada muro ≈ 27 kN/m (con IPE 240 y chapa serían unos 27 kN/m).
+
+Coste orientativo por m² (40 m²): acero (IPE 240 a 1.2 m: 25.6 kg/m² × 2.4-5.5 €/kg) + chapa colaborante 50-80 €/m² = **111-221 €/m²**; vigueta y bovedilla. ya con viguetas: **55-85 €/m²**. Ahorro estimado **1.1-6.6 mil €** y unos IPE 240: 1.023 kg de acero menos.
+
 ## Planta alta de la casa: viguetas E-O (luz máx. 2,55 m)
 | Sección | Separación (m) | kg/m² | M/Mrd | Flecha total / límite (mm) |
 |---|---|---|---|---|
@@ -69,5 +82,16 @@ Las viguetas apoyan en placas de reparto sobre un zuncho perimetral que ata los 
 - Uniones, anclajes, protección contra fuego (R60 en vivienda de 2 plantas según CTE DB-SI) y comprobación de pandeo lateral.
 - Cálculo de la chapa colaborante, del anclaje de los paneles solares al viento y de la impermeabilización con los fabricantes.
 - Este documento no sustituye al proyecto de estructura visado.
+
+## Sismo: comprobación orientativa (Albox está en zona sísmica)
+Peso sísmico del edificio ≈ **4222 kN** (muros 2812, forjados 698, cubierta 551, sobrecarga casi permanente 113, acero 49).
+Aceleración básica supuesta ab = 0.16 g (Almería capital: 0,14 g según la [tabla de municipios de NCSE-02](https://normatia.com/es/recursos/emplazamiento/zona-sismica/); Albox no aparece en esa tabla: hay que mirar el Anexo 1 de la norma).
+Con un coeficiente sísmico de 0.20-0.25 (suposición conservadora para mampostería) el cortante en la base sería ≈ **844-1055 kN**.
+- **Dirección N-S:** muros existentes de unos 45 m × 0,55 m → tensión tangencial ≈ 0.04 MPa.
+- **Dirección E-O:** solo resisten el muro del fondo y los tramos del oeste (unos 16 m), porque el salón tiene la fachada acristalada y la línea de la viga de fachada no es muro → tensión ≈ 0.12 MPa.
+Referencia de resistencia a cortante de mampostería antigua en buen estado: unos 0,05-0,15 MPa (hay que ensayarla).
+**Conclusión:** en la dirección E-O el margen es justo. Antes de construir un técnico debe hacer el cálculo sísmico y definir el refuerzo: por ejemplo cruces de acero en dos paños de la línea de fachada, pantallas de hormigón armado de 15-20 cm en los tabiques de la suite o mallazo con mortero en las caras de los muros. Ya está previsto: zunchos de hormigón en cada nivel, riostras de cimentación entre zapatas y forjados que hacen de diafragma.
+
+
 ## Acero del modelo 3D (sin uniones ni placas)
-Total ≈ 6.080 kg: HEB 140 1.704 kg · IPE 120 1.367 kg · HEB 120 1.265 kg · IPE 240 1.105 kg · HEB 160 505 kg · IPE 100 137 kg. Ver `abaratar.md`.
+Total ≈ 4977 kg (HEB 140: 1704 kg, IPE 120: 1367 kg, HEB 120: 1265 kg, HEB 160: 505 kg, IPE 100: 137 kg). Ver `abaratar.md`.

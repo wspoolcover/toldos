@@ -25,8 +25,8 @@ def panel(ax, nivel, titulo):
         a = SECC[sec][0] / 2000; ax.add_patch(Rectangle((lx - 0.12, cy - 0.12), 0.24, 0.24, fc=COLOR[sec], ec="#000", lw=.9, zorder=6))
     ex = h.E; s_h = ex["casa_vigueta"]
     if nivel == "forjado":
-        ax.text(6.2, 3.7, f"{ex['salon_vigueta']['perfil']} cada {ex['salon_vigueta']['sep']:.1f} m\n(terraza sobre el salón, luz 5,75 m)", ha="center", fontsize=8, color=COLOR[ex['salon_vigueta']['perfil']], weight="bold")
-        ax.text(4.5, 0.9 if False else 8.0, "", fontsize=6)
+        ss = ex["salon_sistema"]
+        ax.text(6.2, 3.7, "TERRAZA SOBRE EL SALÓN\nforjado de vigueta pretensada y bovedilla\n" + ss["forjado"].replace("x", "×") + f" cm · vigueta {ss['vigueta']} · luz 5,75 m", ha="center", fontsize=8, color="#555", weight="bold")
         ax.text(4.9, 7.72, f"viga de fachada {ex['viga_fachada']['perfil']}", fontsize=6.5, color=COLOR[ex['viga_fachada']['perfil']], ha="center", va="top")
         ax.text(5.5, 1.45, f"dintel {ex['dintel']['perfil']} sobre la cristalera", fontsize=6.5, color=COLOR[ex['dintel']['perfil']], ha="center")
     ax.text(1.9, 13.5, f"{s_h['perfil']} cada {s_h['sep']:.1f} m", fontsize=7.5, rotation=90, color=COLOR[s_h['perfil']], weight="bold", ha="center")

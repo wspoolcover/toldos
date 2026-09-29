@@ -90,6 +90,32 @@ P("## Terraza sobre el salón: viguetas E-O (luz 5,75 m)\n| Sección | Separaci�
 for kgm2, s, r in sal[:4]: P(f"| {r['name']} | {s:.1f} | {kgm2:.1f} | {r['rM']:.2f} | {r['d_tot_mm']:.1f} / {r['lim_tot_mm']:.1f} |")
 R["salon_vigueta"] = dict(perfil=sal[0][2]["name"], sep=sal[0][1], luz=L_SAL)
 
+# 1b) alternativa: forjado de vigueta pretensada y bovedilla (ficha Prearcon T-18, forjado (25+5)*71, por metro de ancho)
+#     Mu: T-1 28,9 · T-2 40,3 · T-3 50,8 · T-4 60,5 kN·m/m; Vu 29,8-47,9 kN/m; rigidez fisurada EI ≈ 17,8-18,8 MN·m²/m; peso 3,71 (bovedilla de hormigón) o 2,51 kN/m² (poliestireno)
+FICHA = {"T-2": (40.27, 34.29, 18.10), "T-3": (50.80, 38.60, 18.44), "T-4": (60.49, 43.04, 18.78)}
+AREA_SAL = 40.0                                      # m² aprox. de terraza sobre el salón y el pasillo (entre ejes de muros)
+def vigueta(g_forj, tipo):
+    G = g_forj + G_TERR; qd = GG * G + GQ * Q_TERRAZA
+    M, V = qd * L_SAL**2 / 8, qd * L_SAL / 2
+    Mu, Vu, EI = FICHA[tipo]
+    dG = 5 * G * 1e-3 * L_SAL**4 / (384 * EI); dQ = 5 * Q_TERRAZA * 1e-3 * L_SAL**4 / (384 * EI)   # m, flecha instantánea (sección fisurada)
+    d_lp = (dG * 3 + dQ) * 1e3                                                                     # con fluencia (factor 2 sobre la carga permanente)
+    return dict(G=G, qd=qd, M=M, V=V, rM=M / Mu, rV=V / Vu, d_lp=d_lp, lim=L_SAL / 300 * 1e3, R=qd * L_SAL / 2, ok=(M <= Mu and V <= Vu and d_lp <= L_SAL / 300 * 1e3))
+P("\n## Terraza sobre el salón: alternativa de forjado de vigueta pretensada y bovedilla (datos de fabricante)\n")
+P("Ficha técnica de [Prefabricados Arcón, forjado T-18](https://prearcon.com/pdf/VIGUETA%20T18.pdf): forjado (25+5)×71, peso 3,71 kN/m² con bovedilla de hormigón o 2,51 con bovedilla de poliestireno. El fabricante debe confirmar la luz de 5,75 m con su ficha de autorización de uso.\n")
+P("| Forjado (25+5)×71 | Peso propio | G total | M/Mu | V/Vu | Flecha con fluencia / límite (mm) |\n|---|---|---|---|---|---|")
+ops = {}
+for nom, gf in (("bovedilla de hormigón", 3.71), ("bovedilla de poliestireno", 2.51)):
+    for t in ("T-2", "T-3", "T-4"):
+        r = vigueta(gf, t)
+        if r["ok"]: ops[nom] = (t, gf, r); P(f"| {nom}, vigueta {t} | {gf:.2f} | {r['G']:.2f} | {r['rM']:.2f} | {r['rV']:.2f} | {r['d_lp']:.1f} / {r['lim']:.1f} |"); break
+t, gf, rv = ops["bovedilla de poliestireno"]
+kg_m2 = SECC[R["salon_vigueta"]["perfil"]][7] / R["salon_vigueta"]["sep"]
+c_ac = (kg_m2 * 2.4 + 50, kg_m2 * 5.5 + 80); c_vg = (55, 85)
+P(f"\nElegida: **(25+5)×71 con vigueta {t} y bovedilla de poliestireno** (peso {gf:.2f} kN/m², más ligera que la solución de acero con chapa). Reacción en cada muro ≈ {rv['R']:.0f} kN/m (con IPE 240 y chapa serían unos 27 kN/m).")
+P(f"\nCoste orientativo por m² ({AREA_SAL:.0f} m²): acero (IPE 240 a 1,2 m: {kg_m2:.1f} kg/m² × 2,4-5,5 €/kg) + chapa colaborante 50-80 €/m² = **{c_ac[0]:.0f}-{c_ac[1]:.0f} €/m²**; vigueta y bovedilla, ya con viguetas: **{c_vg[0]}-{c_vg[1]} €/m²**. Ahorro estimado **{(c_ac[0]-c_vg[1])*AREA_SAL/1000:.1f}-{(c_ac[1]-c_vg[0])*AREA_SAL/1000:.1f} mil €** y unos {R['salon_vigueta']['perfil']}: {kg_m2 * AREA_SAL:,.0f} kg de acero menos.".replace(",", "."))
+R["salon_sistema"] = dict(tipo="vigueta", forjado="(25+5)x71", vigueta=t, bovedilla="poliestireno", peso=gf, canto=0.30, reaccion_kN_m=rv["R"], area=AREA_SAL, kg_evitados=kg_m2 * AREA_SAL)
+
 # 2) viguetas casa (luz máxima de bahía = 3,0)
 casa = elegir(max(BAYS), G_HOUSE, Q_HOUSE, IPE, [1.0, 1.2])
 P("\n## Planta alta de la casa: viguetas E-O (luz máx. 2,55 m)\n| Sección | Separación (m) | kg/m² | M/Mrd | Flecha total / límite (mm) |\n|---|---|---|---|---|")

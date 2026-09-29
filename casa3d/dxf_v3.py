@@ -17,6 +17,8 @@ for n, v in {"parapeto_terraza": ("RAYADO_MURO", "ANSI31", 45, None), "parapeto_
 for k in h.STEEL:
     base.RAYADO["acero_" + k] = ("RAYADO_FORJADO", None, 0, 5); base.LAYERS["acero_" + k] = (5, 35, "Continuous")
 for n in ("escalera", "lucernario"): base.LAYERS.setdefault(n, (30, 18, "Continuous"))
+for n in ("forjado_salon", "zuncho_forjado", "zuncho_cubierta", "riostras"):
+    base.LAYERS[n] = (8, 35, "Continuous"); base.RAYADO[n] = ("RAYADO_FORJADO", None, 0, 8)
 PLAN_SKIP = ("cimentacion", "forjado_PB_PA", "forjado_cubierta", "lucernario", "parapeto_cubierta", "cristal_PB", "cristal_PA", "mobiliario")
 Z_CUT = {"PB": 0.95, "PA": h.Z_PA + 1.20}
 
@@ -116,8 +118,8 @@ def planta_estructura(cx, nivel, titulo):
     cx.poly([(x0, y0), (x1, y0), (x1, y1), (x0, y1)], "LUCERNARIO" if nivel != "L1" else "ESCALERA_ALTA", True)
     tx(cx, "hueco de escalera" + (" + lucernario" if nivel != "L1" else ""), (x0 + x1) / 2, (y0 + y1) / 2, 1.5)
     if nivel == "L1":
-        sv, sc = h.E["salon_vigueta"], h.E["casa_vigueta"]
-        tx(cx, f"{sv['perfil']} @ {sv['sep']:.2f}  (luz 5,75)", 6.0, 3.5, 2.2); tx(cx, "TERRAZA SOBRE EL SALÓN", 6.0, 4.1, 2.6)
+        sc = h.E["casa_vigueta"]; ss = h.E["salon_sistema"]
+        tx(cx, f"vigueta {ss['vigueta']} y bovedilla {ss['forjado']} (luz 5,75)", 6.0, 3.5, 2.0); tx(cx, "TERRAZA SOBRE EL SALÓN", 6.0, 4.1, 2.6)
         tx(cx, f"{sc['perfil']} @ {sc['sep']:.2f}", 1.9, 9.4, 1.8, 90); tx(cx, f"dintel {h.E['dintel']['perfil']}", 5.5, 0.95, 1.8)
     else:
         sq = h.E["cubierta_vigueta"]; tx(cx, f"{sq['perfil']} @ {sq['sep']:.2f}", 1.9, 9.4, 1.8, 90)
@@ -215,7 +217,7 @@ def lamina_estr(nombre):
         else: seccion(cx, "x", 6.25, "SECCIÓN A-A' (con estructura)  1/75")
     E = h.E
     filas = [("ELEMENTO", "PERFIL", "UDS/SEP"),
-             ("Viguetas terraza salón (E-O, luz 5,75)", E["salon_vigueta"]["perfil"], f"@{E['salon_vigueta']['sep']:.1f} m"),
+             ("Terraza salón: vigueta pretensada + bovedilla", E["salon_sistema"]["forjado"].replace("x", "×"), "40 m2"),
              ("Viguetas forjado casa (E-O, luz 2,55)", E["casa_vigueta"]["perfil"], f"@{E['casa_vigueta']['sep']:.1f} m"),
              ("Viguetas cubierta (E-O, luz 2,55)", E["cubierta_vigueta"]["perfil"], f"@{E['cubierta_vigueta']['sep']:.1f} m"),
              ("Vigas N-S forjado (continuas)", E["viga_ns"]["perfil"], "3 uds"), ("Vigas N-S cubierta (continuas)", E["viga_cub"]["perfil"], "3 uds"),
