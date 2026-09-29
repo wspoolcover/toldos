@@ -1,0 +1,58 @@
+# Predimensionado de estructura de acero (PRELIMINAR)
+
+Acero S275JR (fy = 275 MPa), γM0 = γM1 = 1,05, ELU 1,35 G + 1,50 Q, flecha total L/300 y de sobrecarga L/400 (CTE DB-SE).
+
+| Carga | G (kN/m²) | Q (kN/m²) |
+|---|---|---|
+| Forjado de la casa (planta alta) | 4.8 | 2.0 |
+| Terraza transitable sobre el salón | 4.8 | 2.0 |
+| Cubierta plana no transitable (piedra + paneles solares) | 6.1 | 1.0 (mantenimiento; nieve 0,5 supuesta) |
+
+## Terraza sobre el salón: viguetas E-O (luz 5,75 m)
+| Sección | Separación (m) | kg/m² | M/Mrd | Flecha total / límite (mm) |
+|---|---|---|---|---|
+| IPE 220 | 1.0 | 26.2 | 0.54 | 17.3 / 19.2 |
+| IPE 220 | 0.9 | 29.1 | 0.49 | 15.6 / 19.2 |
+
+## Planta alta de la casa: viguetas E-O (luz máx. 2,55 m)
+| Sección | Separación (m) | kg/m² | M/Mrd | Flecha total / límite (mm) |
+|---|---|---|---|---|
+| IPE 120 | 1.0 | 10.4 | 0.49 | 5.7 / 8.5 |
+| IPE 120 | 0.9 | 11.6 | 0.44 | 5.1 / 8.5 |
+
+## Vigas N-S del forjado (líneas x = 3,10; 5,30 y 7,20; vano 4.20 m, ancho tributario 2.38 m)
+
+Sección: **HEB 160**. M/Mrd = 0.55; V/Vrd = 0.25; flecha 12.8 mm (límite 14.0). Reacción máx. por apoyo ≈ 48 kN.
+
+## Cubierta plana (piedra y paneles solares): viguetas E-O (luz 2,55 m)
+| Sección | Separación (m) | kg/m² | M/Mrd | Flecha total / límite (mm) |
+|---|---|---|---|---|
+| IPE 120 | 1.0 | 10.4 | 0.50 | 5.9 / 8.5 |
+| IPE 120 | 0.9 | 11.6 | 0.45 | 5.4 / 8.5 |
+
+Vigas N-S de cubierta: **HEB 160** (M/Mrd 0.56, flecha 13.4/14.0 mm).
+
+## Dintel sobre la cristalera (luz 4.00 m; muro y antepecho 13.8 kN/m)
+
+Sección: **HEB 160** (M/Mrd 0.51, flecha 11.0/13.3 mm). Se aloja en el espesor del muro con placas de apoyo de 0,20 m en cada extremo.
+
+## Pilares HEB (6 uds., x = 3,10; 5,30 y 7,20; y = 7,60 y 11,80; ocultos en muros y tabiques; altura ≈ 5,6 m)
+
+Carga axial de cálculo máx. ≈ 203 kN (pilar central) y ≈ 103 kN (pilar sur). Sección: **HEB 120**, N/Nb,Rd = 0.55 (pandeo eje débil, Lcr = 3,3 m).
+
+Zapatas aisladas bajo pilares (σ adm. supuesta 150 kPa, **pendiente de estudio geotécnico**): ≈ 1.3 × 1.3 m, canto 0,60 m.
+
+## Apoyo en los muros de mampostería (50-60 cm)
+
+Carga lineal en cabeza de muro de la casa ≈ 24 kN/m + peso propio ≈ 83 kN/m → tensión en base ≈ 0.20 MPa (referencia orientativa 0,3-0,5 MPa: **hay que ensayar la mampostería**).
+Las viguetas apoyan en placas de reparto sobre un zuncho perimetral (perfil UPN 160 o zuncho de hormigón) que ata los muros y hace de diafragma.
+
+## Pendiente de confirmar por un técnico
+- Sismo (NCSE-02, zona sísmica de Almería) y arriostramiento de los muros de mampostería.
+- Estudio geotécnico y zapatas definitivas; estado real de los muros (grietas, humedad, calidad de la piedra).
+- Uniones, anclajes, protección contra fuego (R60 en vivienda de 2 plantas según CTE DB-SI) y comprobación de pandeo lateral.
+- Cálculo de la chapa colaborante, del anclaje de los paneles solares al viento y de la impermeabilización con los fabricantes.
+- Este documento no sustituye al proyecto de estructura visado.
+## Acero del modelo 3D (sin uniones ni placas)
+IPE 220: 1.101 kg · IPE 120: 1.379 kg · IPE 100: 90 kg · HEB 160: 2.324 kg · HEB 120: 905 kg · **Total ≈ 5.800 kg** (unos 40 kg por m² de planta construida en dos plantas y terraza).
+Para el precio, pide presupuesto a un taller con este listado y con los planos `lamina_A1_v3_estructura.dxf`.
