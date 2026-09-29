@@ -87,6 +87,7 @@ def planta_dist(cx, planta, titulo):
         tx(cx, "SUBE", 6.72, 10.8, 1.2, 90)
     else:
         cx.poly([(x0, y0), (x1, y0), (x1, y1), (x0, y1)], "ESCALERA_ALTA", True)
+    cx.poly([(h.XE - h.W_SUR - 0.27, 7.60), (h.XI1 + h.T / 2, 7.60)], "VIGAS"); tx(cx, "viga de acero (antes muro)", 6.0, 7.30, 1.4)
     salas(cx, planta); cotas_perimetro(cx); flecha_norte(cx)
     if planta == "PB":
         cx.line((6.25, -0.35), (6.25, h.Y_TOP + 0.35), "CORTES"); cx.line((-0.35, 10.05), (h.XE + h.SAL + 0.35, 10.05), "CORTES")
@@ -199,7 +200,7 @@ def lamina_dist(nombre):
     notas(msp, 300, fin - 8, ["NOTAS: muros existentes de 0,55 m; medidas exteriores del croquis. Tabiques de 0,10 m.",
         "Orientación según el propietario: parte alta del croquis = sur (cocina); derecha = este (otro terreno). Sin confirmar.",
         "Escalera en U con hueco abierto y lucernario en cubierta para llevar luz a la planta baja.",
-        "Huecos, puertas y ventanas: propuesta a validar. Suelos y forjados según hoja de estructura."])
+        "Se demuele el muro de fachada entre salón y casa y la pared central: los sustituyen vigas de acero (línea gruesa)."])
     doc.saveas(nombre); print(nombre)
 
 

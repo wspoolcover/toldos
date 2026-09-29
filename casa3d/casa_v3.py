@@ -25,9 +25,7 @@ LINES_X, COL_Y = E["lineas_x"], [7.60, 11.80]
 # ori 'H': muro a lo largo de x, ocupa y in [pos, pos+t]; 'V': a lo largo de y, ocupa x in [pos, pos+t]. sw: giro de hoja (+ / -).
 OPEN = [
  ("PB", "H", 0.0, T, 3.85, 3.35, "V", 0, "CR", 0.10, 2.45), ("PB", "H", 0.0, T, 7.55, 1.40, "P2", 1, "P0", 0, 2.20),
- ("PB", "H", Y_FAC0, T, 7.90, 1.00, "L", 0, "", 0, 2.40), ("PB", "H", Y_FAC0, T, 1.20, 1.40, "V", 0, "V", 0.90, 1.30),
- ("PA", "H", Y_FAC0, T, 7.55, 1.40, "P2", 1, "T", 0, 2.20), ("PA", "H", Y_FAC0, T, 3.80, 1.20, "B", 1, "B1", 0, 2.20),
- ("PA", "H", Y_FAC0, T, 1.20, 1.40, "V", 0, "V", 0.90, 1.30),
+ ("PB", "H", Y_FAC0, T, 1.20, 1.40, "V", 0, "V", 0.90, 1.30), ("PA", "H", Y_FAC0, T, 1.20, 1.40, "V", 0, "V", 0.90, 1.30),
  ("PB", "H", YI1, T, 6.00, 1.60, "V", 0, "V", 0.90, 1.30), ("PB", "H", YI1, T, 3.60, 1.00, "V", 0, "V", 0.90, 1.30),
  ("PB", "H", YI1, T, 1.00, 0.80, "V", 0, "V", 1.50, 0.60), ("PA", "H", YI1, T, 1.50, 1.40, "V", 0, "V", 0.90, 1.30),
  ("PA", "H", YI1, T, 6.00, 1.60, "V", 0, "V", 0.90, 1.30),
@@ -87,9 +85,9 @@ ZAP = E["zapata"]["lado"]
 for lx in LINES_X:
     for cy in COL_Y: cimentacion = cimentacion.union(box(lx - ZAP / 2, cy - ZAP / 2, -H_CIM, ZAP, ZAP, H_CIM))
 
-muros_pb = anillo(PTS, 0, Z_PA, T).union(box(XE - W_SUR, Y_FAC0, 0, XI1 - (XE - W_SUR), T, Z_PA))
+muros_pb = anillo(PTS, 0, Z_PA, T)     # el muro de fachada existente (y 7,32-7,87) se demuele y se sustituye por viga de acero
 muros_pb = cortar(muros_pb, "PB", 0)
-muros_pa = cortar(anillo(NB, Z_PA, H_PA, T), "PA", Z_PA)
+muros_pa = cortar(anillo(NB, Z_PA, H_PA, T), "PA", Z_PA).cut(box(XE - W_SUR, Y_FAC0 - .01, Z_PA - .01, XI1 - (XE - W_SUR), T + .02, H_PA + .02))   # sin muro de fachada: cierre acristalado
 parapeto_terraza = anillo(SB, Z_PA, 1.00, 0.30).cut(box(XE - W_SUR - 1, Y_JUNC - .2, Z_PA - .1, W_SUR + 2, .5, 2))
 parapeto_cubierta = anillo(NB, Z_TOP, 0.50, 0.30)
 
@@ -177,6 +175,11 @@ hb = SECC[E["viga_cub"]["perfil"]][0] / 1000
 for lx in LINES_X:
     for cy in COL_Y:
         add("pilares", E["pilar"]["perfil"], zt2 - hb, pilar(E["pilar"]["perfil"], lx, cy, 0, zt2 - hb), (lx, cy, E["pilar"]["perfil"]))
+vfp = E["viga_fachada"]["perfil"]
+nodos = [XE - W_SUR - 0.27, *LINES_X, XI1 + T / 2]
+for cat, zt in (("vigas_forjado", zt1), ("vigas_cubierta", zt2)):
+    for a, b in zip(nodos, nodos[1:]):
+        add(cat, vfp, b - a, viga_x(vfp, a, b, 7.60, zt), (a, 7.60, b, 7.60, vfp))
 d = E["dintel"]["perfil"]
 add("dintel", d, 4.0, viga_x(d, 3.85 - 0.20, 7.20 + 0.20, T / 2, 2.55 + SECC[d][0] / 1000), (3.65, T / 2, 7.40, T / 2, d))
 

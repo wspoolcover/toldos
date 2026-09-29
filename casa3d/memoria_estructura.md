@@ -36,6 +36,10 @@ Vigas N-S de cubierta: **HEB 160** (M/Mrd 0.56, flecha 13.4/14.0 mm).
 
 Sección: **HEB 160** (M/Mrd 0.51, flecha 11.0/13.3 mm). Se aloja en el espesor del muro con placas de apoyo de 0,20 m en cada extremo.
 
+## Viga de fachada (sustituye al muro entre salón y casa, en cada planta; luz 2.30 m entre pilares)
+
+Sección: **HEB 120** (M/Mrd 0.26, flecha 2.5/7.7 mm). Cada planta lleva su viga; los pilares HEB 120 en x = 3,10; 5,30 y 7,20 quedan vistos en el borde del salón.
+
 ## Pilares HEB (6 uds., x = 3,10; 5,30 y 7,20; y = 7,60 y 11,80; ocultos en muros y tabiques; altura ≈ 5,6 m)
 
 Carga axial de cálculo máx. ≈ 203 kN (pilar central) y ≈ 103 kN (pilar sur). Sección: **HEB 120**, N/Nb,Rd = 0.55 (pandeo eje débil, Lcr = 3,3 m).
@@ -54,5 +58,5 @@ Las viguetas apoyan en placas de reparto sobre un zuncho perimetral (perfil UPN 
 - Cálculo de la chapa colaborante, del anclaje de los paneles solares al viento y de la impermeabilización con los fabricantes.
 - Este documento no sustituye al proyecto de estructura visado.
 ## Acero del modelo 3D (sin uniones ni placas)
-IPE 220: 1.101 kg · IPE 120: 1.379 kg · IPE 100: 90 kg · HEB 160: 2.324 kg · HEB 120: 905 kg · **Total ≈ 5.800 kg** (unos 40 kg por m² de planta construida en dos plantas y terraza).
-Para el precio, pide presupuesto a un taller con este listado y con los planos `lamina_A1_v3_estructura.dxf`.
+IPE 220: 1.101 kg · IPE 120: 1.379 kg · IPE 100: 90 kg · HEB 160: 2.324 kg · HEB 120: 1.262 kg · **Total ≈ 6.150 kg**.
+Para el precio, pide presupuesto a un taller con este listado y con `lamina_A1_v3_estructura.dxf`.

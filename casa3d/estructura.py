@@ -118,6 +118,15 @@ P(f"\n## Dintel sobre la cristalera (luz {Ld:.2f} m; muro y antepecho {g_muro:.1
 P(f"Sección: **{lint['name']}** (M/Mrd {lint['rM']:.2f}, flecha {lint['d_tot_mm']:.1f}/{lint['lim_tot_mm']:.1f} mm). Se aloja en el espesor del muro con placas de apoyo de 0,20 m en cada extremo.")
 R["dintel"] = dict(perfil=lint["name"], luz=Ld)
 
+# 5b) viga que sustituye al muro de fachada existente (y = 7,60; luces de 2,2 m entre pilares; recibe franja de forjado y antepecho de terraza)
+vf = None
+for n in list(HEB)[1:]:                                  # mínimo constructivo HEB 120
+    r = check_viga(n, max(BAYS[1], 2.30), 0.9, G_HOUSE, Q_HOUSE, extra_line_G=0.30 * 1.0 * GAMMA_MURO)
+    if r["ok"]: vf = r; break
+P(f"\n## Viga de fachada (sustituye al muro entre salón y casa, en cada planta; luz {max(BAYS[1], 2.30):.2f} m entre pilares)\n")
+P(f"Sección: **{vf['name']}** (M/Mrd {vf['rM']:.2f}, flecha {vf['d_tot_mm']:.1f}/{vf['lim_tot_mm']:.1f} mm). Cada planta lleva su viga; los pilares HEB 120 en x = 3,10; 5,30 y 7,20 quedan vistos en el borde del salón.")
+R["viga_fachada"] = dict(perfil=vf["name"])
+
 # 6) pilares
 N_c2 = 1.05 * (Rn1 + Rc) + 1.35 * 33.7 * 9.81 / 1000 * 5.6          # pilar central (mayor carga) + peso propio
 N_c1 = 1.05 * (Rn1 / 2 + Rc / 2) + 1.35 * 33.7 * 9.81 / 1000 * 5.6
