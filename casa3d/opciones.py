@@ -7,7 +7,10 @@ from matplotlib.patches import Polygon as MPoly, Rectangle, Arc
 from shapely.geometry import Polygon, box as sbox
 
 PTS = [(3.15, 0), (9.55, 0), (9.55, 8.30), (12.05, 8.30), (12.05, 11.80), (9.55, 11.80), (9.55, 16.30), (0, 16.30), (0, 7.32), (2.87, 7.32)]
-OUT = Polygon(PTS); INN = OUT.buffer(-0.55, join_style=2)
+OUT = Polygon(PTS)
+NB_FULL = [(0, 7.32), (9.55, 7.32), (9.55, 8.30), (12.05, 8.30), (12.05, 11.80), (9.55, 11.80), (9.55, 16.30), (0, 16.30)]
+SB_ = [(3.15, 0), (9.55, 0), (9.55, 7.32), (2.87, 7.32)]
+INN = Polygon(NB_FULL).buffer(-0.55, join_style=2).union(Polygon(SB_).buffer(-0.25, join_style=2))   # casa existente 0,55 m; salón de ladrillo 0,25 m
 OUT_PA = OUT.intersection(sbox(-1, -1, 10.85, 20)); INN_PA = INN.intersection(sbox(-1, -1, 10.55, 20))   # planta alta: el baño solo entra la mitad hacia el vecino
 COL = {"sala": "#fff3c4", "priv": "#d6e6f5", "humedo": "#cfe8d5", "cocina": "#f9d9b8", "circ": "#e6e6e6", "esc": "#d9c3a5", "terraza": "#f4f4f4"}
 
@@ -15,16 +18,16 @@ COL = {"sala": "#fff3c4", "priv": "#d6e6f5", "humedo": "#cfe8d5", "cocina": "#f9
 def R(x0, y0, x1, y1): return [(x0, y0), (x1, y0), (x1, y1), (x0, y1)]
 
 # salón: se adelanta un poco hacia la sala de estar (rincón de la chimenea)
-SALON_PB = [(3.68, 0.55), (7.45, 0.55), (7.45, 7.87), (5.55, 7.87), (5.55, 9.55), (3.45, 9.55), (3.45, 7.87), (3.42, 7.87)]
-SALON_PA = R(3.68, 0.55, 7.45, 7.32)
+SALON_PB = [(3.40, 0.25), (7.75, 0.25), (7.75, 7.87), (5.55, 7.87), (5.55, 9.55), (3.45, 9.55), (3.45, 7.87), (3.12, 7.87)]
+SALON_PA = [(3.40, 0.25), (9.30, 0.25), (9.30, 7.32), (3.12, 7.32)]
 HUB = [(3.45, 9.65), (5.65, 9.65), (5.65, 7.87), (7.15, 7.87), (7.15, 11.75), (3.45, 11.75)]
 
-PB = [("Salón con comedor", "sala", SALON_PB, (5.45, 4.6)), ("Pasillo de entrada\n(murete a media altura)", "circ", R(7.55, 0.55, 9.00, 7.87)),
+PB = [("Salón con comedor", "sala", SALON_PB, (5.45, 4.6)), ("Pasillo de entrada\n(murete a media altura)", "circ", [(7.85, 0.25), (9.30, 0.25), (9.30, 7.32), (9.00, 7.32), (9.00, 7.87), (7.85, 7.87)]),
       ("Entrada", "circ", R(7.25, 7.87, 9.00, 8.95)), ("Escalera", "esc", R(7.25, 8.95, 9.00, 11.75)), ("Baño grande", "humedo", R(9.10, 8.85, 11.50, 11.25)),
       ("Sala de estar\ny paso", "sala", HUB, (5.15, 10.7)), ("Cocina", "cocina", R(5.05, 11.85, 9.00, 15.75)),
       ("Dormitorio principal", "priv", R(0.55, 11.85, 4.95, 15.75), (3.35, 14.55)), ("Vestidor", "priv", R(0.55, 9.45, 3.35, 11.75), (2.35, 10.6)),
       ("Baño", "humedo", R(0.55, 7.87, 3.35, 9.35), (1.95, 9.05))]
-PB_DOORS = [(7.55, 0.55, "H", 1.40, 1, 1),            # puerta de entrada de 1,40, pegada al muro este, abre hacia dentro
+PB_DOORS = [(7.85, 0.25, "H", 1.40, 1, 1),            # puerta de entrada de 1,40, pegada al muro este, abre hacia dentro
             (9.05, 9.20, "V", 0.80, 0, 1), (5.30, 11.75, "H", 1.80, 0, 0),
             (3.35, 10.20, "V", 0.90, 0, -1),           # de la sala directamente al vestidor
             (1.50, 9.35, "H", 0.80, 0, -1),            # vestidor -> baño (a la izquierda)
@@ -64,8 +67,8 @@ def r(ax, x, y, dx, dy, fc="#fff", hatch=None, z=5): ax.add_patch(Rectangle((x, 
 
 def muebles_pb(ax):
     # salón: sofá en U abierto hacia la pantalla, mesa baja, pantalla grande en el muro oeste, chimenea en el rincón, mesa de comedor
-    r(ax, 6.45, 1.05, 0.75, 3.30, "#c9b79c"); r(ax, 5.05, 3.65, 1.40, 0.70, "#c9b79c"); r(ax, 5.05, 1.05, 1.40, 0.70, "#c9b79c")       # sofá en U
-    r(ax, 5.35, 2.05, 0.80, 1.35, "#efe6d6")                                                                                              # mesa baja
+    r(ax, 6.75, 1.05, 0.75, 3.30, "#c9b79c"); r(ax, 5.35, 3.65, 1.40, 0.70, "#c9b79c"); r(ax, 5.35, 1.05, 1.40, 0.70, "#c9b79c")       # sofá en U
+    r(ax, 5.65, 2.05, 0.80, 1.35, "#efe6d6")                                                                                              # mesa baja
     r(ax, 3.60, 1.60, 0.16, 1.90, "#222"); ax.text(3.98, 3.60, "pantalla", fontsize=6.3, color="#333", va="bottom", zorder=8)              # televisión
     r(ax, 3.50, 8.75, 1.15, 0.80, "#d8d0c8"); r(ax, 3.65, 8.98, 0.85, 0.35, "#f4a742"); ax.text(4.05, 8.62, "chimenea", fontsize=6.3, color="#a33", ha="center", va="top", zorder=8)
     r(ax, 4.55, 5.25, 1.00, 2.05, "#e8d5c0")
@@ -82,7 +85,7 @@ def muebles_pb(ax):
 def dibujar(ax, rooms, doors, planta, abiertos=()):
     out, inn = (OUT, INN) if planta == "PB" else (OUT_PA, INN_PA)
     ax.add_patch(MPoly(list(out.exterior.coords), closed=True, fc="#8d8d8d", ec="#222", lw=1.6, zorder=1))
-    ax.add_patch(MPoly(list(inn.exterior.coords), closed=True, fc="white", ec="none", zorder=2))
+    for g in getattr(inn, "geoms", [inn]): ax.add_patch(MPoly(list(g.exterior.coords), closed=True, fc="white", ec="none", zorder=2))
     ax.add_patch(Rectangle((10.85, 8.30), 1.20, 3.50, fc="#f0e0e0" if planta == "PA" else "none", ec="#a33", ls="--", lw=.9, zorder=1 if planta == "PA" else 4))
     ax.text(11.45, 10.05 if planta == "PA" else 8.05, "casa vecina\n(1.ª planta)" + ("\nsobre el baño\nde abajo" if planta == "PA" else "\nencima de esta mitad"), ha="center", va="center" if planta == "PA" else "top", fontsize=5.8, color="#a33")
     circ = total = 0
@@ -97,9 +100,9 @@ def dibujar(ax, rooms, doors, planta, abiertos=()):
         if tipo not in ("terraza", "esc"): total += a
     if planta == "PB":
         muebles_pb(ax)
-        ax.add_patch(Rectangle((7.45, 0.55), 0.10, 6.77, fc="#666", ec="#222", zorder=4)); ax.text(7.33, 3.6, "murete media altura", rotation=90, ha="right", va="center", fontsize=6.5, zorder=9)
-        ax.add_patch(Rectangle((3.70, 0.0), 3.65, 0.55, fc="#bfe3f8", ec="#2f8fd0", lw=1.4, zorder=6))
-        ax.text(5.5, -0.15, "cristalera de suelo a techo (3,65 m) junto a la puerta", ha="center", va="top", fontsize=6.6, color="#1f6fa8", zorder=8)
+        ax.add_patch(Rectangle((7.75, 0.25), 0.10, 7.07, fc="#666", ec="#222", zorder=4)); ax.text(7.65, 3.6, "murete media altura", rotation=90, ha="right", va="center", fontsize=6.5, zorder=9)
+        ax.add_patch(Rectangle((3.55, 0.0), 4.00, 0.25, fc="#bfe3f8", ec="#2f8fd0", lw=1.4, zorder=6))
+        ax.text(5.5, -0.15, "cristalera de suelo a techo (4,00 m) junto a la puerta", ha="center", va="top", fontsize=6.6, color="#1f6fa8", zorder=8)
         for (x, y, w) in VENTANAS: ax.add_patch(Rectangle((x, y), w, 0.55 if y > 10 else -0.55, fc="#bfe3f8", ec="#2f8fd0", lw=1.0, zorder=6))
         for (x, y, w) in VENTANAS_E: ax.add_patch(Rectangle((x, y), 0.55, w, fc="#bfe3f8", ec="#2f8fd0", lw=1.0, zorder=6))
     for (x0, y0, x1, y1) in abiertos: ax.plot([x0, x1], [y0, y1], color="white", lw=5, solid_capstyle="butt", zorder=7)
@@ -120,6 +123,6 @@ if __name__ == "__main__":
     ax1 = fig.add_axes([0.02, 0.10, 0.46, 0.80]); ax2 = fig.add_axes([0.51, 0.10, 0.46, 0.80])
     c1, t1 = dibujar(ax1, PB, PB_DOORS, "PB", PB_OPEN); c2, t2 = dibujar(ax2, PA, PA_DOORS, "PA", PA_OPEN)
     fig.text(0.02, 0.06, "\n".join("• " + t for t in IDEAS), fontsize=8.6, va="top")
-    fig.text(0.98, 0.012, f"Circulación: {c1 + c2:.1f} m² · Norte hacia abajo (calle y salón); sur arriba (fondo) · Medidas orientativas", fontsize=8, va="bottom", ha="right", color="#555")
+    fig.text(0.98, 0.012, f"Circulación: {c1 + c2:.1f} m² · Norte abajo (calle) · sur arriba (fondo) · Medidas orientativas", fontsize=8, va="bottom", ha="right", color="#555")
     fig.savefig("distribucion.png", dpi=110)
     print(f"circulación {c1 + c2:.1f} m²; útil PB {t1:.1f}, PA {t2:.1f}")

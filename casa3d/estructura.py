@@ -147,14 +147,14 @@ R["viga_cub"] = dict(perfil=vr["name"])
 Rc = vr["RB"]
 
 # 5) dintel de la cristalera (luz libre 3,60 + 2 x 0,20 de apoyo)
-Ld = 4.1
-g_muro = 0.55 * 0.71 * GAMMA_MURO + 0.30 * 1.0 * GAMMA_MURO      # muro sobre hueco hasta la terraza + antepecho
-eq_G = 0.45 * G_TERRAZA; eq_Q = 0.45 * Q_TERRAZA
+Ld = 4.4                                             # cristalera de 4,00 m + apoyos
+g_muro = 0.25 * 0.71 * 18.0 + 0.25 * 1.0 * 18.0       # muro de ladrillo de 25 cm sobre el hueco hasta la terraza + antepecho
+eq_G = 0.45 * (2.51 + G_TERR); eq_Q = 0.45 * Q_TERRAZA
 lint = None
 for n in HEB:
     r = check_viga(n, Ld, 0.0, 0.0, 0.0, extra_line_G=g_muro + eq_G, extra_line_Q=eq_Q)
     if r["ok"]: lint = r; break
-P(f"\n## Dintel sobre la cristalera (luz {Ld:.2f} m; muro y antepecho {g_muro:.1f} kN/m)\n")
+P(f"\n## Dintel sobre la cristalera (luz {Ld:.2f} m; muro de ladrillo de 25 cm y antepecho {g_muro:.1f} kN/m)\n")
 P(f"Sección: **{lint['name']}** (M/Mrd {lint['rM']:.2f}, flecha {lint['d_tot_mm']:.1f}/{lint['lim_tot_mm']:.1f} mm). Se aloja en el espesor del muro con placas de apoyo de 0,20 m en cada extremo.")
 R["dintel"] = dict(perfil=lint["name"], luz=Ld)
 
@@ -199,6 +199,16 @@ SIG = 150.0                                                          # kPa admis
 zap = math.ceil(math.sqrt(N_c2 / 1.35 * 1.05 / SIG) * 10) / 10 + 0.2
 P(f"\nZapatas aisladas bajo pilares (σ adm. supuesta 150 kPa, **pendiente de estudio geotécnico**): ≈ {zap:.1f} × {zap:.1f} m, canto 0,60 m.")
 R["zapata"] = dict(lado=zap, canto=0.60, sigma=SIG)
+
+# 6b) cimentación existente bajo los muros de ladrillo del salón (zapata corrida de 60 cm de ancho, terreno supuesto de 150 kPa)
+R_s = R["salon_sistema"]["reaccion_kN_m"]; R_serv = (R["salon_sistema"]["peso"] + G_TERR + Q_TERRAZA) * L_SAL / 2
+carga_muro = 0.25 * 4.26 * 18.0                          # muro de 25 cm hasta el antepecho (3,26 + 1,00 m)
+q_serv = R_serv + carga_muro + 0.25 * 0.25 * 25
+sigma_c = q_serv / 0.60
+P("\n## Cimentación existente de los muros del salón (ladrillo de 25 cm, zapata de 60 cm)\n")
+P(f"Carga de servicio por metro de muro ≈ {q_serv:.0f} kN/m (forjado {R_serv:.0f} + muro y antepecho {carga_muro:.0f} + zuncho) → presión sobre el terreno ≈ **{sigma_c:.0f} kPa** con 0,60 m de ancho, frente a 150 kPa supuestos: **cumple** con margen si el terreno es normal (falta el estudio geotécnico). Si los 60 cm fueran de profundidad y no de ancho, habría que medir el ancho.")
+P("Muro de ladrillo de 25 cm y 3,3 m de altura entre cimentación y forjado: esbeltez 13, admisible con zuncho arriba. Pilares de atado de hormigón (unos 25×25 cm) en las esquinas y cada 3,5-4 m (≈ 3 por muro lateral) para el sismo.")
+R["cimentacion_salon"] = dict(ancho=0.60, q_serv=q_serv, sigma=sigma_c)
 
 # 7) apoyos en muros existentes
 qw_house = (GG * G_HOUSE + GQ * Q_HOUSE) * BAYS[0] / 2 + (GG * G_CUB + GQ * Q_CUB) * BAYS[0] / 2

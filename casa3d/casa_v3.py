@@ -13,6 +13,8 @@ NB_MAIN = [(0, Y_JUNC), (XE, Y_JUNC), (XE, Y_TOP), (0, Y_TOP)]
 NB_PA = [(0, Y_JUNC), (XE, Y_JUNC), (XE, Y_E1), (XE + SAL_PA, Y_E1), (XE + SAL_PA, Y_E2), (XE, Y_E2), (XE, Y_TOP), (0, Y_TOP)]
 SB = [(XE - W_FRONT, 0), (XE, 0), (XE, Y_JUNC), (XE - W_SUR, Y_JUNC)]
 T, TP, T_BUMP = 0.55, 0.10, 0.30
+T_S = 0.25                                           # muros nuevos de ladrillo del salón (cimentación de 0,60 m ya hecha)
+NB_FULL = [(0, Y_JUNC), (XE, Y_JUNC), (XE, Y_E1), (XE + SAL, Y_E1), (XE + SAL, Y_E2), (XE, Y_E2), (XE, Y_TOP), (0, Y_TOP)]
 H_CIM, T_LOSA = 0.60, 0.22            # forjado (17+5) de vigueta pretensada
 Z_PA, H_PA = 3.26, 2.70
 Z_TOP = Z_PA + H_PA
@@ -23,7 +25,7 @@ LINES_X, COL_Y = E["lineas_x"], [7.60, 11.80]
 
 # ---- huecos: (planta, ori, pos, t, ini, w, tipo, sw, etiqueta, antepecho, alto) ----
 OPEN = [
- ("PB", "H", 0.0, T, 3.70, 3.65, "V", 0, "CR", 0.0, 2.55), ("PB", "H", 0.0, T, 7.55, 1.40, "P2", 1, "P0", 0, 2.20),
+ ("PB", "H", 0.0, T_S, 3.55, 4.00, "V", 0, "CR", 0.0, 2.55), ("PB", "H", 0.0, T_S, 7.85, 1.40, "P2", 1, "P0", 0, 2.20),
  ("PB", "H", Y_FAC0, T, 1.20, 1.20, "V", 0, "V", 1.50, 0.60), ("PA", "H", Y_FAC0, T, 1.20, 1.40, "V", 0, "V", 0.90, 1.30),
  ("PB", "H", YI1, T, 1.00, 1.20, "V", 0, "V", 0.90, 1.30), ("PB", "H", YI1, T, 3.00, 1.20, "V", 0, "V", 0.90, 1.30),
  ("PB", "H", YI1, T, 5.55, 1.20, "V", 0, "V", 0.90, 1.30), ("PB", "H", YI1, T, 7.50, 1.00, "P", -1, "P0", 0, 2.10),
@@ -41,11 +43,11 @@ TAB = [("PB", 3.35, 7.87, TP, 3.88), ("PB", 0.55, 9.35, 2.80, TP), ("PB", 0.55, 
        ("PB", 7.15, 8.95, TP, 2.80), ("PB", 9.00, 8.85, TP, 2.40), ("PB", 3.45, 9.55, 2.10, TP),
        ("PA", 3.35, 7.87, TP, 3.88), ("PA", 0.55, 11.75, 8.45, TP), ("PA", 4.95, 11.85, TP, 3.90), ("PA", 7.15, 8.95, TP, 2.80), ("PA", 9.00, 8.85, TP, 2.40)]
 ROOMS = [
- ("PB", "Salón con comedor", [(3.68, 0.55, 7.45, 7.87), (3.45, 7.87, 5.55, 9.55)]), ("PB", "Pasillo entrada", [(7.55, 0.55, 9.00, 7.87)]),
+ ("PB", "Salón con comedor", [(3.30, 0.25, 7.75, 7.87), (3.45, 7.87, 5.55, 9.55)]), ("PB", "Pasillo entrada", [(7.85, 0.25, 9.30, 7.87)]),
  ("PB", "Entrada", [(7.25, 7.87, 9.00, 8.95)]), ("PB", "Escalera", [(7.25, 8.95, 9.00, 11.75)]), ("PB", "Baño grande", [(9.10, 8.85, 11.50, 11.25)]),
  ("PB", "Sala de estar y paso", [(3.45, 9.65, 7.15, 11.75), (5.65, 7.87, 7.15, 9.65)]), ("PB", "Cocina", [(5.05, 11.85, 9.00, 15.75)]),
  ("PB", "Dormitorio principal", [(0.55, 11.85, 4.95, 15.75)]), ("PB", "Vestidor", [(0.55, 9.45, 3.35, 11.75)]), ("PB", "Baño principal", [(0.55, 7.87, 3.35, 9.35)]),
- ("PA", "Terraza sobre salón", [(3.68, 0.55, 7.45, 7.32)]), ("PA", "Sala familiar", [(3.45, 7.87, 7.15, 11.75)]), ("PA", "Entrada", [(7.25, 7.87, 9.00, 8.95)]),
+ ("PA", "Terraza sobre salón", [(3.30, 0.25, 9.30, 7.32)]), ("PA", "Sala familiar", [(3.45, 7.87, 7.15, 11.75)]), ("PA", "Entrada", [(7.25, 7.87, 9.00, 8.95)]),
  ("PA", "Baño", [(9.10, 8.85, 10.55, 11.25)]), ("PA", "Dormitorio 1", [(0.55, 7.87, 3.35, 11.75)]), ("PA", "Dormitorio 2", [(0.55, 11.85, 4.95, 15.75)]),
  ("PA", "Dormitorio 3 / despacho", [(5.05, 11.85, 9.00, 15.75)]), ("PA", "Hueco escalera", [(7.25, 8.95, 9.00, 11.75)])]
 
@@ -72,18 +74,21 @@ def cortar(solid, planta, z0):
 
 # ---------------- obra ----------------
 ZAP = E["zapata"]["lado"]
-cimentacion = prisma(PTS, -H_CIM, H_CIM, (1.10 - T) / 2).cut(prisma(PTS, -H_CIM - .01, H_CIM + .02, -(T + (1.10 - T) / 2)))
+cimentacion = prisma(NB_FULL, -H_CIM, H_CIM, (1.10 - T) / 2).cut(prisma(NB_FULL, -H_CIM - .01, H_CIM + .02, -(T + (1.10 - T) / 2)))
+cimentacion = cimentacion.union(prisma(SB, -H_CIM, H_CIM, (0.60 - T_S) / 2).cut(prisma(SB, -H_CIM - .01, H_CIM + .02, -(T_S + (0.60 - T_S) / 2))))   # zapata corrida de 0,60 m ya hecha bajo los muros del salón
 for lx in LINES_X:
     for cy in COL_Y: cimentacion = cimentacion.union(box(lx - ZAP / 2, cy - ZAP / 2, -H_CIM, ZAP, ZAP, H_CIM))
 
-muros_pb = cortar(anillo(PTS, 0, Z_PA, T).union(box(XE - W_SUR, Y_FAC0, 0, 3.45 - (XE - W_SUR), T, Z_PA)), "PB", 0)
+_casa = anillo(NB_FULL, 0, Z_PA, T).cut(box(3.45, Y_FAC0 - .01, -.01, XI1 - 3.45, T + .02, Z_PA + .02))     # el muro de fachada existente se sustituye por viga
+_salon = anillo(SB, 0, Z_PA, T_S).cut(box(XE - W_SUR - 1, Y_JUNC - T_S - .01, -.01, W_SUR + 2, T_S + .02, Z_PA + .02))
+muros_pb = cortar(_casa.union(_salon), "PB", 0)
 # planta alta: casa sin muro de fachada (cierre acristalado), saliente de baño con muros ligeros y solo la mitad de fondo
 pa = anillo(NB_MAIN, Z_PA, H_PA, T).cut(box(3.45, Y_FAC0 - .01, Z_PA - .01, XI1 - 3.45, T + .02, H_PA + .02))
 pa = pa.cut(box(XI1 - .01, Y_E1, Z_PA - .01, T + .02, Y_E2 - Y_E1, H_PA + .02))
 for (x, y, dx, dy) in [(XI1, Y_E1, XE + SAL_PA - XI1, T_BUMP), (XI1, Y_E2 - T_BUMP, XE + SAL_PA - XI1, T_BUMP), (XE + SAL_PA - T_BUMP, Y_E1, T_BUMP, Y_E2 - Y_E1)]:
     pa = pa.union(box(x, y, Z_PA, dx, dy, H_PA))
 muros_pa = cortar(pa, "PA", Z_PA)
-parapeto_terraza = anillo(SB, Z_PA, 1.00, 0.30).cut(box(XE - W_SUR - 1, Y_JUNC - .2, Z_PA - .1, W_SUR + 2, .5, 2))
+parapeto_terraza = anillo(SB, Z_PA, 1.00, T_S).cut(box(XE - W_SUR - 1, Y_JUNC - .2, Z_PA - .1, W_SUR + 2, .5, 2))
 parapeto_cubierta = anillo(NB_PA, Z_TOP, 0.50, 0.30)
 
 def losa(pts, z_top, hueco):
@@ -92,7 +97,7 @@ def losa(pts, z_top, hueco):
 forjado = losa(PTS, Z_PA, VOID)
 losa_cubierta = losa(NB_PA, Z_TOP, VOID)
 lucernario = box(VOID[0] - .05, VOID[1] - .05, Z_TOP, VOID[2] - VOID[0] + .10, VOID[3] - VOID[1] + .10, .05)
-cristal_pb = box(3.70, 0.24, 0.0, 3.65, 0.04, 2.55)
+cristal_pb = box(3.55, 0.10, 0.0, 4.00, 0.04, 2.55)
 cristal_pa = box(3.45, Y_FAC0 + 0.25, Z_PA, XI1 - 3.45, 0.04, H_PA - T_LOSA)   # cierre acristalado de la casa hacia la terraza
 
 def tabiques(pl):
@@ -103,7 +108,7 @@ def tabiques(pl):
         b = box(x, y, z0, dx, dy, h); s = b if s is None else s.union(b)
     return cortar(s, pl, z0)
 tab_pb, tab_pa = tabiques("PB"), tabiques("PA")
-murete = box(7.45, T, 0, TP, Y_JUNC - T, 1.00)
+murete = box(7.75, T_S, 0, TP, Y_JUNC - T_S, 1.00)
 
 # escalera en U: pie al sur de la entrada (y 8.95); sube por el lado este, gira arriba y vuelve por el oeste hasta la planta alta
 RISE, TREAD = Z_PA / 16, 0.24
@@ -164,21 +169,23 @@ vs = E["viga_saliente"]["perfil"]
 for cat, zt in (("vigas_forjado", zt1), ("vigas_cubierta", zt2)):
     add(cat, vs, Y_E2 - Y_E1 + 0.40, viga_y(vs, Y_E1 - 0.20, Y_E2 + 0.20, 9.15, zt), (9.15, Y_E1 - 0.20, 9.15, Y_E2 + 0.20, vs))
 for pl, ori, pos, t, ini, w_, tipo, sw, tag, sill, hh in OPEN:                                        # dinteles de huecos en muros de 0,55 m
-    if t != T or tipo == "L" or tag == "CR": continue
+    if t < 0.2 or tipo == "L" or tag == "CR": continue
     k = "1.2" if w_ <= 1.2 else ("1.4" if w_ <= 1.4 else "1.6"); sec = E["dinteles"][k]
     z = (0 if pl == "PB" else Z_PA) + sill + hh + SECC[sec][0] / 1000
-    if ori == "H": add("dinteles", sec, w_ + 0.4, viga_x(sec, ini - 0.2, ini + w_ + 0.2, pos + T / 2, z), (ini - 0.2, pos + T / 2, ini + w_ + 0.2, pos + T / 2, sec))
-    else: add("dinteles", sec, w_ + 0.4, viga_y(sec, ini - 0.2, ini + w_ + 0.2, pos + T / 2, z), (pos + T / 2, ini - 0.2, pos + T / 2, ini + w_ + 0.2, sec))
+    if ori == "H": add("dinteles", sec, w_ + 0.4, viga_x(sec, ini - 0.2, ini + w_ + 0.2, pos + t / 2, z), (ini - 0.2, pos + t / 2, ini + w_ + 0.2, pos + t / 2, sec))
+    else: add("dinteles", sec, w_ + 0.4, viga_y(sec, ini - 0.2, ini + w_ + 0.2, pos + t / 2, z), (pos + t / 2, ini - 0.2, pos + t / 2, ini + w_ + 0.2, sec))
 d = E["dintel"]["perfil"]
-add("dintel", d, 4.05, viga_x(d, 3.50, 7.55, T / 2, 2.55 + SECC[d][0] / 1000), (3.50, T / 2, 7.55, T / 2, d))
+add("dintel", d, 4.40, viga_x(d, 3.35, 7.75, T_S / 2, 2.55 + SECC[d][0] / 1000), (3.35, T_S / 2, 7.75, T_S / 2, d))
 
 def comp(lst): return cq.Workplane("XY").newObject([cq.Compound.makeCompound([s.val() for s in lst])])
 acero = {k: comp(v) for k, v in sols.items() if v}
 
 # ---------------- hormigón: forjado del salón (vigueta y bovedilla), zunchos perimetrales y riostras de cimentación ----------------
-forjado_salon = prisma(SB, Z_PA - 0.30, 0.30 - T_LOSA, -T / 2)
+forjado_salon = prisma(SB, Z_PA - 0.30, 0.30 - T_LOSA, -T_S / 2)
 def zuncho(pts, z_top): return prisma(pts, z_top - 0.25, 0.30, 0.01).cut(prisma(pts, z_top - 0.26, 0.32, -(T - 0.01)))
-zuncho_forjado, zuncho_cubierta = zuncho(PTS, Z_PA), zuncho(NB_MAIN, Z_TOP)
+def zuncho_t(pts, z_top, t): return prisma(pts, z_top - 0.25, 0.30, 0.01).cut(prisma(pts, z_top - 0.26, 0.32, -(t - 0.01)))
+zuncho_forjado = zuncho_t(NB_FULL, Z_PA, T).cut(box(3.45, Y_FAC0 - .01, Z_PA - .3, XI1 - 3.45, T + .02, .5)).union(zuncho_t(SB, Z_PA, T_S).cut(box(XE - W_SUR - 1, Y_JUNC - T_S - .01, Z_PA - .3, W_SUR + 2, T_S + .02, .5)))
+zuncho_cubierta = zuncho(NB_MAIN, Z_TOP)
 ries = [box(T / 2, cy - .20, -0.50, XE - T, .40, .40) for cy in COL_Y] + [box(lx - .20, COL_Y[0], -0.50, .40, COL_Y[1] - COL_Y[0], .40) for lx in LINES_X]
 riostras = comp(ries)
 

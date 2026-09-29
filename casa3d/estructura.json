@@ -36,7 +36,7 @@
  },
  "dintel": {
   "perfil": "HEB 160",
-  "luz": 4.1
+  "luz": 4.4
  },
  "viga_fachada": {
   "perfil": "HEB 120"
@@ -60,6 +60,11 @@
   "lado": 1.3,
   "canto": 0.6,
   "sigma": 150.0
+ },
+ "cimentacion_salon": {
+  "ancho": 0.6,
+  "q_serv": 40.02375,
+  "sigma": 66.70625
  },
  "muro": {
   "sigma_MPa": 0.19211359090909094

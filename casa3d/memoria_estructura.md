@@ -42,9 +42,9 @@ Sección: **HEB 140**. M/Mrd = 0.68 en el apoyo central; V/Vrd = 0.37; flecha 8.
 
 Vigas N-S de cubierta (continuas): **HEB 140** (M/Mrd 0.70, flecha 8.4/14.0 mm).
 
-## Dintel sobre la cristalera (luz 4.10 m; muro y antepecho 13.8 kN/m)
+## Dintel sobre la cristalera (luz 4.40 m; muro de ladrillo de 25 cm y antepecho 7.7 kN/m)
 
-Sección: **HEB 160** (M/Mrd 0.53, flecha 12.2/13.7 mm). Se aloja en el espesor del muro con placas de apoyo de 0,20 m en cada extremo.
+Sección: **HEB 160** (M/Mrd 0.40, flecha 10.4/14.7 mm). Se aloja en el espesor del muro con placas de apoyo de 0,20 m en cada extremo.
 
 ## Viga de fachada (sustituye al muro entre salón y casa, en cada planta; luz 2.30 m entre pilares)
 
@@ -68,6 +68,11 @@ Carga axial de cálculo máx. ≈ 221 kN (pilar central) y ≈ 90 kN (pilar sur)
 
 Zapatas aisladas bajo pilares (σ adm. supuesta 150 kPa, **pendiente de estudio geotécnico**): ≈ 1.3 × 1.3 m, canto 0,60 m.
 
+## Cimentación existente de los muros del salón (ladrillo de 25 cm, zapata de 60 cm)
+
+Carga de servicio por metro de muro ≈ 40 kN/m (forjado 19 + muro y antepecho 19 + zuncho) → presión sobre el terreno ≈ **67 kPa** con 0,60 m de ancho, frente a 150 kPa supuestos: **cumple** con margen si el terreno es normal (falta el estudio geotécnico). Si los 60 cm fueran de profundidad y no de ancho, habría que medir el ancho.
+Muro de ladrillo de 25 cm y 3,3 m de altura entre cimentación y forjado: esbeltez 13, admisible con zuncho arriba. Pilares de atado de hormigón (unos 25×25 cm) en las esquinas y cada 3,5-4 m (≈ 3 por muro lateral) para el sismo.
+
 ## Apoyo en los muros de mampostería (50-60 cm)
 
 Carga lineal en cabeza de muro de la casa ≈ 23 kN/m + peso propio ≈ 83 kN/m → tensión en base ≈ 0.19 MPa (referencia orientativa 0,3-0,5 MPa: **hay que ensayar la mampostería**).
@@ -81,14 +86,14 @@ Las viguetas apoyan en placas de reparto sobre un zuncho perimetral que ata los 
 - Este documento no sustituye al proyecto de estructura visado.
 
 ## Sismo: comprobación orientativa (Albox está en zona sísmica)
-Peso sísmico del edificio ≈ **4206 kN** (muros 2809, forjados 698, cubierta 551, sobrecarga casi permanente 113, acero 35).
+Peso sísmico del edificio ≈ **3861 kN** (muros 2464, forjados 698, cubierta 551, sobrecarga casi permanente 113, acero 36).
 Aceleración básica supuesta ab = 0.16 g (Almería capital: 0,14 g según la [tabla de municipios de NCSE-02](https://normatia.com/es/recursos/emplazamiento/zona-sismica/); Albox no aparece en esa tabla: hay que mirar el Anexo 1 de la norma).
-Con un coeficiente sísmico de 0.20-0.25 (suposición conservadora para mampostería) el cortante en la base sería ≈ **841-1051 kN**.
-- **Dirección N-S:** muros existentes de unos 45 m × 0,55 m → tensión tangencial ≈ 0.04 MPa.
-- **Dirección E-O:** solo resisten el muro del fondo y los tramos del oeste (unos 16 m), porque el salón tiene la fachada acristalada y la línea de la viga de fachada no es muro → tensión ≈ 0.12 MPa.
+Con un coeficiente sísmico de 0.20-0.25 (suposición conservadora para mampostería) el cortante en la base sería ≈ **772-965 kN**.
+- **Dirección N-S:** muros de la casa (0,55 m) y de ladrillo del salón (0,25 m), 11.6 m² de sección → tensión tangencial ≈ 0.08 MPa.
+- **Dirección E-O:** solo resisten el muro del fondo y los tramos del oeste (unos 16 m), porque el salón tiene la fachada acristalada y la línea de la viga de fachada no es muro → tensión ≈ 0.11 MPa.
 Referencia de resistencia a cortante de mampostería antigua en buen estado: unos 0,05-0,15 MPa (hay que ensayarla).
 **Conclusión:** en la dirección E-O el margen es justo. Antes de construir un técnico debe hacer el cálculo sísmico y definir el refuerzo: por ejemplo cruces de acero en dos paños de la línea de fachada, pantallas de hormigón armado de 15-20 cm en los tabiques de la suite o mallazo con mortero en las caras de los muros. Ya está previsto: zunchos de hormigón en cada nivel, riostras de cimentación entre zapatas y forjados que hacen de diafragma.
 
 
 ## Acero del modelo 3D (sin uniones ni placas)
-Total ≈ 3615 kg (HEB 140: 1966 kg, HEB 120: 1281 kg, HEB 160: 173 kg, IPE 100: 137 kg, IPE 120: 58 kg). Ver `abaratar.md`.
+Total ≈ 3630 kg (HEB 140: 1966 kg, HEB 120: 1281 kg, HEB 160: 187 kg, IPE 100: 137 kg, IPE 120: 58 kg). Ver `abaratar.md`.
