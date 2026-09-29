@@ -63,13 +63,14 @@ OPCIONES = {
   doorsPB=COMUN_DOORS + [(3.35, 9.50, "V", 0.90, 0, -1), (3.70, 11.75, "H", 0.80, 0, 1), (1.95, 14.40, "V", 0.80, 0, 1), (0.80, 14.05, "H", 0.80, 0, -1)],
   abPB=[(3.55, 7.87, 7.05, 7.87), (7.20, 7.97, 7.20, 8.90)], muebles=muebles_1, PA=BASE_PA, doorsPA=DOORS_PA, abPA=[(7.20, 7.97, 7.20, 8.90)]),
  "2": dict(
-  titulo="Opción 2 — suite en línea como tu referencia y oficina al norte",
+  titulo="Opción 2 — suite en línea y oficina acristalada al sur",
+  vidrios=[("hueco", 3.20, 15.75, 1.70, 0.55, "cristalera de suelo a techo"), ("linea", 5.00, 12.00, 5.00, 15.60), ("linea", 3.15, 12.00, 3.15, 15.60)],
   ideas=["Suite en línea: dormitorio de 13 m² → paso de vestidor con armarios a ambos lados → baño de 5,8 m² con bañera y doble lavabo.",
-         "La oficina (7 m²) queda junto a la cocina, con puerta desde la sala de estar.",
+         "La oficina (7 m²) es un cuarto acristalado: cristalera de suelo a techo en la fachada sur y tabiques de vidrio hacia la cocina y la suite para que pase la luz.",
          "La sala de estar se estrecha un poco (12 m²) pero sigue abierta al salón entero. Arriba igual que la opción 1."],
   PB=COMUN_PB + [("Sala de estar\ny comedor", "sala", R(4.05, 7.87, 7.15, 11.75)), ("Dormitorio\nprincipal", "priv", R(0.55, 7.87, 3.95, 11.75), (2.65, 10.45)),
                  ("Vestidor", "priv", R(0.55, 11.85, 3.05, 13.35), (1.8, 12.6)), ("Baño principal", "humedo", R(0.55, 13.45, 3.05, 15.75), (1.9, 14.4)),
-                 ("Oficina", "priv", R(3.15, 11.85, 4.95, 15.75))],
+                 ("Oficina\nacristalada", "priv", R(3.15, 11.85, 4.95, 15.75))],
   doorsPB=COMUN_DOORS + [(3.95, 9.50, "V", 0.90, 0, -1), (1.50, 11.75, "H", 0.80, 0, 1), (1.50, 13.35, "H", 0.80, 0, 1), (4.15, 11.75, "H", 0.80, 0, 1)],
   abPB=[(4.15, 7.87, 7.05, 7.87), (7.20, 7.97, 7.20, 8.90)], muebles=muebles_2, PA=BASE_PA, doorsPA=DOORS_PA, abPA=[(7.20, 7.97, 7.20, 8.90)]),
 }
@@ -106,6 +107,7 @@ LABEL_POS = {"Dormitorio\nprincipal": (3.9, 12.75), "Vestidor": (1.95, 10.65), "
 
 
 MUEBLES = None
+VIDRIOS = []
 
 
 def dibujar(ax, rooms, doors, planta, abiertos=()):
@@ -130,6 +132,10 @@ def dibujar(ax, rooms, doors, planta, abiertos=()):
         ax.add_patch(Rectangle((7.45, 0.55), 0.10, 6.77, fc="#666", ec="#222", zorder=4)); ax.text(7.33, 3.6, "murete media altura", rotation=90, ha="right", va="center", fontsize=6.5)
         ax.text(3.6, 7.65, "abierto: salón y comedor", fontsize=6.5, style="italic", zorder=6)
     if planta == "PB" and MUEBLES: MUEBLES(ax)
+    if planta == "PB":
+        for v in VIDRIOS:
+            if v[0] == "hueco": ax.add_patch(Rectangle((v[1], v[2]), v[3], v[4], fc="#bfe3f8", ec="#2f8fd0", lw=1.2, zorder=6)); ax.text(v[1] + v[3] / 2, v[2] + v[4] + 0.15, v[5], ha="center", va="bottom", fontsize=6.5, color="#1f6fa8", zorder=8)
+            else: ax.plot([v[1], v[3]], [v[2], v[4]], color="#2f8fd0", lw=3, zorder=6, solid_capstyle="butt")
     for (x0, y0, x1, y1) in abiertos: ax.plot([x0, x1], [y0, y1], color="white", lw=5, solid_capstyle="butt", zorder=7)
     for d in doors: door(ax, d)
     ax.set_xlim(-0.6, 12.6); ax.set_ylim(-0.6, 16.9); ax.set_aspect("equal"); ax.axis("off")
@@ -139,7 +145,7 @@ def dibujar(ax, rooms, doors, planta, abiertos=()):
 
 if __name__ == "__main__":
     for k, o in OPCIONES.items():
-        MUEBLES = o["muebles"]
+        MUEBLES = o["muebles"]; VIDRIOS = o.get("vidrios", [])
         fig = plt.figure(figsize=(13, 9.5)); fig.suptitle(o["titulo"], fontsize=14, weight="bold", x=0.02, ha="left")
         ax1 = fig.add_axes([0.02, 0.10, 0.46, 0.80]); ax2 = fig.add_axes([0.51, 0.10, 0.46, 0.80])
         c1, t1 = dibujar(ax1, o["PB"], o["doorsPB"], "PB", o["abPB"]); c2, t2 = dibujar(ax2, o["PA"], o["doorsPA"], "PA", o["abPA"])
