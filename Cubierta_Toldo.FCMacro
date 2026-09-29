@@ -1,0 +1,322 @@
+# ============================================================================
+# MODELO 3D PARAMÉTRICO: CUBIERTA ALUMINIO CON PANEL SÁNDWICH
+# FreeCAD Python Script
+# ============================================================================
+
+import FreeCAD as App
+import Part
+from FreeCAD import Vector
+import math
+
+# ============================================================================
+# PARÁMETROS PRINCIPALES (MODIFICAR AQUÍ SEGÚN NECESIDAD)
+# ============================================================================
+
+# Dimensiones generales [mm]
+ANCHO = 3300              # Ancho frontal (eje Y)
+LARGO = 6380              # Largo principal (eje X) - cambiar a 6700 si es necesario
+LARGO_ALT = 6700          # Largo alternativo (guardar como referencia)
+ALTURA_FRONTAL = 2500     # Altura pilar frontal [mm]
+ALTURA_TRASERA = 2900     # Altura pilar trasero [mm]
+ANCHO_INTERIOR = 2660     # Ancho útil interior entre pilares laterales [mm]
+
+# Estructura
+PERFIL = 80               # Perfil cuadrado aluminio: 80×80 mm
+ESPESOR_PANEL = 40        # Espesor panel sándwich [mm]
+
+# Separación entre pilares/travesaños
+ESPACIADO_TRANSVERSAL = 1000  # Separación entre travesaños transversales [mm]
+ESPACIADO_FRONTAL = 800       # Distancia frontal-trasera del eje a eje [mm]
+
+# Colores (RGB 0-1)
+COLOR_ALUMINIO = (0.5, 0.5, 0.5)    # Gris antracita (RAL 7016)
+COLOR_PANEL = (1.0, 1.0, 1.0)       # Blanco
+
+# ============================================================================
+# FUNCIÓN AUXILIAR: Crear perfil rectangular hueco (80×80 sólido)
+# ============================================================================
+
+def crear_perfil_aluminio(origen, direccion, largo):
+    """
+    Crea un perfil cuadrado sólido 80×80 mm.
+    origen: Vector inicio
+    direccion: Vector unitario de dirección (X, Y o Z)
+    largo: Longitud en mm
+    Retorna un Part.Shape
+    """
+    # Crear un cuadrado de 80×80
+    cara = Part.makePolygon([
+        Vector(0, 0, 0),
+        Vector(PERFIL, 0, 0),
+        Vector(PERFIL, PERFIL, 0),
+        Vector(0, PERFIL, 0),
+        Vector(0, 0, 0)
+    ])
+    perfil_2d = Part.Face(cara)
+
+    # Extruir en la dirección especificada
+    extrusión = perfil_2d.extrude(direccion * largo)
+
+    # Trasladar al origen
+    extrusión = extrusión.translate(origen - Vector(0, 0, 0))
+
+    return extrusión
+
+# ============================================================================
+# FUNCIÓN AUXILIAR: Asignar color a un objeto FreeCAD
+# ============================================================================
+
+def asignar_color(obj, rgb):
+    """Asigna color RGB a un objeto FreeCAD."""
+    obj.ViewObject.ShapeColor = rgb
+
+# ============================================================================
+# CREAR DOCUMENTO NUEVO
+# ============================================================================
+
+doc = App.newDocument("Cubierta_Toldo")
+App.setActiveDocument(doc.Name)
+
+# ============================================================================
+# CREAR GRUPOS PRINCIPALES
+# ============================================================================
+
+grupo_estructura = doc.addObject("App::DocumentObjectGroup", "ESTRUCTURA_ALUMINIO")
+grupo_pilares = doc.addObject("App::DocumentObjectGroup", "PILARES")
+grupo_vigas = doc.addObject("App::DocumentObjectGroup", "VIGAS")
+grupo_travesanos = doc.addObject("App::DocumentObjectGroup", "TRAVESANOS")
+grupo_paneles = doc.addObject("App::DocumentObjectGroup", "PANELES_SANDWICH")
+
+# Asignar grupos a estructura
+grupo_estructura.addObject(grupo_pilares)
+grupo_estructura.addObject(grupo_vigas)
+grupo_estructura.addObject(grupo_travesanos)
+
+# ============================================================================
+# 1. CREAR PILARES VERTICALES
+# ============================================================================
+
+# Pilares frontales
+pilar_frontal_izq = doc.addObject("Part::Feature", "Pilar_Frontal_Izquierdo")
+pilar_frontal_izq.Shape = crear_perfil_aluminio(
+    Vector(0, 0, 0),
+    Vector(0, 0, 1),
+    ALTURA_FRONTAL
+)
+asignar_color(pilar_frontal_izq, COLOR_ALUMINIO)
+grupo_pilares.addObject(pilar_frontal_izq)
+
+pilar_frontal_der = doc.addObject("Part::Feature", "Pilar_Frontal_Derecho")
+pilar_frontal_der.Shape = crear_perfil_aluminio(
+    Vector(0, ANCHO, 0),
+    Vector(0, 0, 1),
+    ALTURA_FRONTAL
+)
+asignar_color(pilar_frontal_der, COLOR_ALUMINIO)
+grupo_pilares.addObject(pilar_frontal_der)
+
+# Pilares traseros (más altos, con pendiente)
+pilar_trasero_izq = doc.addObject("Part::Feature", "Pilar_Trasero_Izquierdo")
+pilar_trasero_izq.Shape = crear_perfil_aluminio(
+    Vector(LARGO - PERFIL, 0, 0),
+    Vector(0, 0, 1),
+    ALTURA_TRASERA
+)
+asignar_color(pilar_trasero_izq, COLOR_ALUMINIO)
+grupo_pilares.addObject(pilar_trasero_izq)
+
+pilar_trasero_der = doc.addObject("Part::Feature", "Pilar_Trasero_Derecho")
+pilar_trasero_der.Shape = crear_perfil_aluminio(
+    Vector(LARGO - PERFIL, ANCHO, 0),
+    Vector(0, 0, 1),
+    ALTURA_TRASERA
+)
+asignar_color(pilar_trasero_der, COLOR_ALUMINIO)
+grupo_pilares.addObject(pilar_trasero_der)
+
+# Pilares intermedios (opcional, para mayor rigidez)
+num_pilares_intermedios = int(LARGO / ESPACIADO_TRANSVERSAL) - 1
+for i in range(1, num_pilares_intermedios + 1):
+    x_pilar = i * ESPACIADO_TRANSVERSAL
+    if x_pilar < LARGO - PERFIL:
+        # Altura interpolada (pendiente lineal)
+        altura_interp = ALTURA_FRONTAL + (ALTURA_TRASERA - ALTURA_FRONTAL) * (x_pilar / LARGO)
+
+        pilar_int_izq = doc.addObject("Part::Feature", f"Pilar_Intermedio_{i}_Izquierdo")
+        pilar_int_izq.Shape = crear_perfil_aluminio(
+            Vector(x_pilar, 0, 0),
+            Vector(0, 0, 1),
+            altura_interp
+        )
+        asignar_color(pilar_int_izq, COLOR_ALUMINIO)
+        grupo_pilares.addObject(pilar_int_izq)
+
+        pilar_int_der = doc.addObject("Part::Feature", f"Pilar_Intermedio_{i}_Derecho")
+        pilar_int_der.Shape = crear_perfil_aluminio(
+            Vector(x_pilar, ANCHO, 0),
+            Vector(0, 0, 1),
+            altura_interp
+        )
+        asignar_color(pilar_int_der, COLOR_ALUMINIO)
+        grupo_pilares.addObject(pilar_int_der)
+
+# ============================================================================
+# 2. CREAR VIGAS LONGITUDINALES (Eje X)
+# ============================================================================
+
+# Viga longitudinal inferior izquierda (en Y=0)
+viga_long_inf_izq = doc.addObject("Part::Feature", "Viga_Longitudinal_Inferior_Izquierda")
+viga_long_inf_izq.Shape = crear_perfil_aluminio(
+    Vector(0, 0, ALTURA_FRONTAL - PERFIL),
+    Vector(1, 0, 0),
+    LARGO
+)
+asignar_color(viga_long_inf_izq, COLOR_ALUMINIO)
+grupo_vigas.addObject(viga_long_inf_izq)
+
+# Viga longitudinal inferior derecha (en Y=ANCHO)
+viga_long_inf_der = doc.addObject("Part::Feature", "Viga_Longitudinal_Inferior_Derecha")
+# Altura interpolada: promedio entre frontal y trasera
+altura_media = (ALTURA_FRONTAL + ALTURA_TRASERA) / 2
+viga_long_inf_der.Shape = crear_perfil_aluminio(
+    Vector(0, ANCHO, ALTURA_FRONTAL - PERFIL),
+    Vector(1, 0, 0),
+    LARGO
+)
+asignar_color(viga_long_inf_der, COLOR_ALUMINIO)
+grupo_vigas.addObject(viga_long_inf_der)
+
+# Viga longitudinal superior (cubierta) - con pendiente
+# Esta viga irá en la parte superior, formando la pendiente
+# Se representa de forma simplificada como un perfil en cada extremo
+
+# ============================================================================
+# 3. CREAR TRAVESAÑOS TRANSVERSALES (Eje Y)
+# ============================================================================
+
+num_travesanos = int(LARGO / ESPACIADO_TRANSVERSAL) + 1
+for i in range(num_travesanos):
+    x_pos = i * ESPACIADO_TRANSVERSAL
+    if x_pos > LARGO:
+        x_pos = LARGO - PERFIL
+
+    # Altura en esta posición (interpolada)
+    altura_en_pos = ALTURA_FRONTAL + (ALTURA_TRASERA - ALTURA_FRONTAL) * (x_pos / LARGO)
+
+    travesano = doc.addObject("Part::Feature", f"Travesano_{i:02d}")
+    travesano.Shape = crear_perfil_aluminio(
+        Vector(x_pos, 0, altura_en_pos - PERFIL),
+        Vector(0, 1, 0),
+        ANCHO
+    )
+    asignar_color(travesano, COLOR_ALUMINIO)
+    grupo_travesanos.addObject(travesano)
+
+# ============================================================================
+# 4. CREAR VIGAS PERIMETRALES SUPERIORES (Marco superior)
+# ============================================================================
+
+# Viga delantera superior
+viga_delantera = doc.addObject("Part::Feature", "Viga_Delantera_Superior")
+viga_delantera.Shape = crear_perfil_aluminio(
+    Vector(0, 0, ALTURA_FRONTAL),
+    Vector(0, 1, 0),
+    ANCHO
+)
+asignar_color(viga_delantera, COLOR_ALUMINIO)
+grupo_vigas.addObject(viga_delantera)
+
+# Viga trasera superior
+viga_trasera = doc.addObject("Part::Feature", "Viga_Trasera_Superior")
+viga_trasera.Shape = crear_perfil_aluminio(
+    Vector(LARGO - PERFIL, 0, ALTURA_TRASERA),
+    Vector(0, 1, 0),
+    ANCHO
+)
+asignar_color(viga_trasera, COLOR_ALUMINIO)
+grupo_vigas.addObject(viga_trasera)
+
+# ============================================================================
+# 5. CREAR PANELES SÁNDWICH (Cubierta)
+# ============================================================================
+
+# Los paneles se distribuyen sobre la estructura principal
+# Crearemos paneles longitudinales con pendiente
+
+num_paneles_largo = int(LARGO / ESPACIADO_TRANSVERSAL)
+num_paneles_ancho = 1  # Un panel de ancho completo (o dividir si es muy grande)
+
+for i in range(num_paneles_largo):
+    x_start = i * ESPACIADO_TRANSVERSAL
+    x_end = min((i + 1) * ESPACIADO_TRANSVERSAL, LARGO - PERFIL)
+
+    # Altura en los extremos del panel (forma de pendiente)
+    h_start = ALTURA_FRONTAL + (ALTURA_TRASERA - ALTURA_FRONTAL) * (x_start / LARGO)
+    h_end = ALTURA_FRONTAL + (ALTURA_TRASERA - ALTURA_FRONTAL) * (x_end / LARGO)
+
+    largo_panel = x_end - x_start
+    ancho_panel = ANCHO - PERFIL
+
+    if largo_panel > 0 and ancho_panel > 0:
+        # Crear un panel rectangular inclinado
+        # Vértices del panel: considera la pendiente
+
+        # Punto frontal bajo-izquierda
+        p1 = Vector(x_start, 0, h_start)
+        # Punto frontal bajo-derecha
+        p2 = Vector(x_start, ancho_panel, h_start)
+        # Punto trasero alto-derecha
+        p3 = Vector(x_end, ancho_panel, h_end + ESPESOR_PANEL)
+        # Punto trasero alto-izquierda
+        p4 = Vector(x_end, 0, h_end + ESPESOR_PANEL)
+
+        # Crear cara superior del panel
+        cara_superior = Part.makePolygon([p1, p2, p3, p4, p1])
+        cara_superior = Part.Face(cara_superior)
+
+        # Extruir hacia abajo (espesor del panel)
+        panel = cara_superior.extrude(Vector(0, 0, -ESPESOR_PANEL))
+
+        panel_obj = doc.addObject("Part::Feature", f"Panel_{i:02d}")
+        panel_obj.Shape = panel
+        asignar_color(panel_obj, COLOR_PANEL)
+        grupo_paneles.addObject(panel_obj)
+
+# ============================================================================
+# 6. PANEL DE ENCUENTRO CON EDIFICACIÓN (Opcional)
+# ============================================================================
+
+# Panel trasero vertical (encuentro con edificio)
+panel_encuentro = Part.makeBox(
+    LARGO,           # Largo
+    ANCHO,           # Ancho
+    ESPESOR_PANEL,   # Espesor (delgado, es un panel)
+    Vector(0, 0, ALTURA_TRASERA)  # Posición
+)
+panel_encuentro_obj = doc.addObject("Part::Feature", "Panel_Encuentro_Edificio")
+panel_encuentro_obj.Shape = panel_encuentro
+asignar_color(panel_encuentro_obj, COLOR_PANEL)
+grupo_paneles.addObject(panel_encuentro_obj)
+
+# ============================================================================
+# RECOMPUTER Y VISUALIZAR
+# ============================================================================
+
+doc.recompute()
+App.activeDocument().recompute()
+
+print("=" * 70)
+print("✓ MODELO CREADO EXITOSAMENTE")
+print("=" * 70)
+print(f"Parámetros utilizados:")
+print(f"  Ancho (Y):              {ANCHO} mm")
+print(f"  Largo (X):              {LARGO} mm (alternativa: {LARGO_ALT} mm)")
+print(f"  Altura frontal:         {ALTURA_FRONTAL} mm")
+print(f"  Altura trasera:         {ALTURA_TRASERA} mm")
+print(f"  Perfil aluminio:        {PERFIL} × {PERFIL} mm (RAL 7016)")
+print(f"  Espesor panel sándwich: {ESPESOR_PANEL} mm")
+print(f"  Pendiente:              {ALTURA_TRASERA - ALTURA_FRONTAL} mm")
+print("=" * 70)
+print("\nPara modificar dimensiones, edita los parámetros al inicio del script")
+print("y ejecuta nuevamente.")
+print("=" * 70)
