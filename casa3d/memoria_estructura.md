@@ -32,9 +32,9 @@ Sección: **HEB 160**. M/Mrd = 0.55; V/Vrd = 0.25; flecha 12.8 mm (límite 14.0)
 
 Vigas N-S de cubierta: **HEB 160** (M/Mrd 0.56, flecha 13.4/14.0 mm).
 
-## Dintel sobre la cristalera (luz 4.00 m; muro y antepecho 13.8 kN/m)
+## Dintel sobre la cristalera (luz 4.10 m; muro y antepecho 13.8 kN/m)
 
-Sección: **HEB 160** (M/Mrd 0.51, flecha 11.0/13.3 mm). Se aloja en el espesor del muro con placas de apoyo de 0,20 m en cada extremo.
+Sección: **HEB 160** (M/Mrd 0.53, flecha 12.2/13.7 mm). Se aloja en el espesor del muro con placas de apoyo de 0,20 m en cada extremo.
 
 ## Viga de fachada (sustituye al muro entre salón y casa, en cada planta; luz 2.30 m entre pilares)
 
@@ -57,6 +57,3 @@ Las viguetas apoyan en placas de reparto sobre un zuncho perimetral (perfil UPN 
 - Uniones, anclajes, protección contra fuego (R60 en vivienda de 2 plantas según CTE DB-SI) y comprobación de pandeo lateral.
 - Cálculo de la chapa colaborante, del anclaje de los paneles solares al viento y de la impermeabilización con los fabricantes.
 - Este documento no sustituye al proyecto de estructura visado.
-## Acero del modelo 3D (sin uniones ni placas)
-IPE 220: 1.101 kg · IPE 120: 1.379 kg · IPE 100: 90 kg · HEB 160: 2.324 kg · HEB 120: 1.262 kg · **Total ≈ 6.150 kg**.
-Para el precio, pide presupuesto a un taller con este listado y con `lamina_A1_v3_estructura.dxf`.

@@ -107,7 +107,7 @@ R["viga_cub"] = dict(perfil=vr["name"])
 Rc = vr["R"] * (SPAN_NS[0] + SPAN_NS[1]) / SPAN_NS[0]
 
 # 5) dintel de la cristalera (luz libre 3,60 + 2 x 0,20 de apoyo)
-Ld = 4.0
+Ld = 4.1
 g_muro = 0.55 * 0.71 * GAMMA_MURO + 0.30 * 1.0 * GAMMA_MURO      # muro sobre hueco hasta la terraza + antepecho
 eq_G = 0.45 * G_TERRAZA; eq_Q = 0.45 * Q_TERRAZA
 lint = None
