@@ -1,5 +1,5 @@
 """Distribución propuesta (esquema en planta). Coordenadas del croquis en metros; muros existentes de 0,55 m.
-Arriba del croquis = fachada del fondo (ventanas, cocina, dormitorio principal); abajo = calle y entrada."""
+Abajo del croquis = NORTE (calle, entrada y salón); arriba = SUR (fachada del fondo: cocina y dormitorio principal)."""
 import math
 import matplotlib; matplotlib.use("Agg")
 import matplotlib.pyplot as plt
@@ -104,7 +104,9 @@ def dibujar(ax, rooms, doors, planta, abiertos=()):
         for (x, y, w) in VENTANAS_E: ax.add_patch(Rectangle((x, y), 0.55, w, fc="#bfe3f8", ec="#2f8fd0", lw=1.0, zorder=6))
     for (x0, y0, x1, y1) in abiertos: ax.plot([x0, x1], [y0, y1], color="white", lw=5, solid_capstyle="butt", zorder=7)
     for d in doors: door(ax, d)
-    ax.set_xlim(-0.6, 12.6); ax.set_ylim(-0.9, 16.9); ax.set_aspect("equal"); ax.axis("off")
+    ax.annotate("", xy=(-0.1, -0.6), xytext=(-0.1, 1.6), arrowprops=dict(arrowstyle="-|>", color="#222", lw=1.6), annotation_clip=False)
+    ax.text(-0.1, 1.85, "N", ha="center", fontsize=11, weight="bold"); ax.text(11.9, -0.4, "calle · NORTE", ha="right", fontsize=7, color="#555"); ax.text(11.9, 17.05, "fondo · SUR", ha="right", fontsize=7, color="#555")
+    ax.set_xlim(-0.6, 12.6); ax.set_ylim(-0.9, 17.3); ax.set_aspect("equal"); ax.axis("off")
     ax.set_title("PLANTA BAJA" if planta == "PB" else "PLANTA ALTA", fontsize=10, weight="bold")
     return circ, total
 
@@ -118,6 +120,6 @@ if __name__ == "__main__":
     ax1 = fig.add_axes([0.02, 0.10, 0.46, 0.80]); ax2 = fig.add_axes([0.51, 0.10, 0.46, 0.80])
     c1, t1 = dibujar(ax1, PB, PB_DOORS, "PB", PB_OPEN); c2, t2 = dibujar(ax2, PA, PA_DOORS, "PA", PA_OPEN)
     fig.text(0.02, 0.06, "\n".join("• " + t for t in IDEAS), fontsize=8.6, va="top")
-    fig.text(0.98, 0.012, f"Circulación: {c1 + c2:.1f} m² · Arriba del croquis = fachada del fondo · Medidas orientativas", fontsize=8, va="bottom", ha="right", color="#555")
+    fig.text(0.98, 0.012, f"Circulación: {c1 + c2:.1f} m² · Norte hacia abajo (calle y salón); sur arriba (fondo) · Medidas orientativas", fontsize=8, va="bottom", ha="right", color="#555")
     fig.savefig("distribucion.png", dpi=110)
     print(f"circulación {c1 + c2:.1f} m²; útil PB {t1:.1f}, PA {t2:.1f}")
