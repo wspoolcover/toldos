@@ -15,47 +15,40 @@ SALON = [(3.68, 0.55), (7.45, 0.55), (7.45, 7.87), (3.42, 7.87)]
 
 def R(x0, y0, x1, y1): return [(x0, y0), (x1, y0), (x1, y1), (x0, y1)]
 
-# ---- puertas: (x, y, 'H'|'V', ancho, extremo_bisagra 0|1, giro +1|-1) ----
-FRONT = (7.55, 0.55, "H", 1.40, 1, 1)         # puerta de entrada de 1,40 pegada al muro este, abre hacia dentro
-COMMON_PB = [FRONT, (3.35, 9.50, "V", 0.90, 0, -1), (3.60, 11.75, "H", 0.80, 0, 1), (0.90, 11.75, "H", 0.80, 0, 1), (0.90, 13.15, "H", 0.80, 0, 1)]
+# ---- puertas: (x, y, 'H'|'V', ancho, extremo_bisagra 0|1, giro +1|-1; giro 0 = paso libre) ----
+FRONT = (7.55, 0.55, "H", 1.40, 1, 1)          # puerta de entrada de 1,40 pegada al muro este, abre hacia dentro
+PTS_PA = [(3.15, 0), (9.55, 0), (9.55, 8.30), (10.85, 8.30), (10.85, 11.80), (9.55, 11.80), (9.55, 16.30), (0, 16.30), (0, 7.32), (2.87, 7.32)]
+from shapely.geometry import box as sbox
+OUT_PA = OUT.intersection(sbox(-1, -1, 10.85, 20)); INN_PA = INN.intersection(sbox(-1, -1, 10.55, 20))   # en planta alta el baño solo entra la mitad hacia el vecino
+SALON_L = [(6.00, 0.55), (7.45, 0.55), (7.45, 7.87), (3.42, 7.87), (3.57, 3.05), (6.00, 3.05)]           # salón con esquina de oficina
+BASE_PB = [("Pasillo de entrada\n(murete a media altura)", "circ", R(7.55, 0.55, 9.00, 7.87)), ("Entrada", "circ", R(7.25, 7.87, 9.00, 8.95)),
+           ("Escalera", "esc", R(7.25, 8.95, 9.00, 11.75)), ("Baño grande", "humedo", R(9.10, 8.85, 11.50, 11.25)),
+           ("Sala de estar\ny comedor", "sala", R(3.45, 7.87, 7.15, 11.75)), ("Cocina", "cocina", R(5.05, 11.85, 9.00, 15.75)),
+           ("Dormitorio\nprincipal", "priv", R(0.55, 11.85, 4.95, 15.75)), ("Vestidor", "priv", R(0.55, 9.55, 3.35, 11.75)),
+           ("Baño principal", "humedo", R(0.55, 7.87, 3.35, 9.45))]
+DOORS_PB = [FRONT, (3.70, 11.75, "H", 0.80, 0, 1), (1.60, 11.75, "H", 0.80, 0, -1), (1.60, 9.45, "H", 0.80, 0, -1),
+            (5.30, 11.75, "H", 1.80, 0, 0), (9.05, 9.20, "V", 0.80, 0, 1)]
+AB_PB = [(3.55, 7.87, 7.05, 7.87), (7.20, 7.97, 7.20, 8.90)]
+BASE_PA = [("Terraza sobre el salón", "terraza", SALON), ("Entrada", "circ", R(7.25, 7.87, 9.00, 8.95)), ("Escalera (hueco)", "esc", R(7.25, 8.95, 9.00, 11.75)),
+           ("Baño", "humedo", R(9.10, 8.85, 10.55, 11.25)), ("Sala familiar\ny terraza", "sala", R(3.45, 7.87, 7.15, 11.75)),
+           ("Dormitorio 1", "priv", R(0.55, 7.87, 3.35, 11.75)), ("Dormitorio 2", "priv", R(0.55, 11.85, 4.95, 15.75))]
+DOORS_PA = [(3.35, 9.50, "V", 0.90, 0, -1), (3.60, 11.75, "H", 0.80, 0, 1), (5.50, 11.75, "H", 0.80, 0, 1), (9.05, 9.20, "V", 0.80, 0, 1)]
 
 OPCIONES = {
- "A": dict(
-  titulo="Opción A — escalera y baño juntos al final del pasillo",
-  ideas=["Al fin del pasillo se llega a una entrada amplia: a la derecha la escalera y, pegado, el baño grande (puerta junto al pie de la escalera).",
-         "La sala de estar y comedor es el centro: cocina, oficina y dormitorio principal abren directamente a ella.",
-         "Arriba no hay pasillo: la escalera llega a una sala familiar y de ella salen los tres dormitorios."],
-  PB=[("Salón", "sala", SALON), ("Pasillo de entrada\n(murete a media altura)", "circ", R(7.55, 0.55, 9.00, 7.87)),
-      ("Entrada", "circ", R(7.25, 7.87, 9.00, 8.95)), ("Escalera", "esc", R(7.25, 8.95, 9.00, 11.75)),
-      ("Baño grande", "humedo", R(9.10, 8.85, 11.50, 11.25)), ("Sala de estar\ny comedor", "sala", R(3.45, 7.87, 7.15, 11.75)),
-      ("Cocina", "cocina", R(5.05, 11.85, 9.00, 15.75)), ("Oficina", "priv", R(3.15, 11.85, 4.95, 15.75)),
-      ("Dormitorio\nprincipal", "priv", R(0.55, 7.87, 3.35, 11.75)), ("Vestidor", "priv", R(0.55, 11.85, 3.05, 13.15)),
-      ("Baño principal", "humedo", R(0.55, 13.25, 3.05, 15.75))],
-  abPB=[(3.55, 7.87, 7.05, 7.87), (7.20, 7.97, 7.20, 8.90)], abPA=[(7.20, 7.97, 7.20, 8.90)],
-  doorsPB=COMMON_PB + [(5.30, 11.75, "H", 1.80, 0, 0), (9.05, 9.20, "V", 0.80, 0, 1)],
-  PA=[("Terraza sobre el salón", "terraza", SALON), ("Entrada", "circ", R(7.25, 7.87, 9.00, 8.95)), ("Escalera (hueco)", "esc", R(7.25, 8.95, 9.00, 11.75)),
-      ("Baño", "humedo", R(9.10, 8.85, 11.50, 11.25)), ("Sala familiar\ny terraza", "sala", R(3.45, 7.87, 7.15, 11.75)),
-      ("Dormitorio 1", "priv", R(0.55, 7.87, 3.35, 11.75)), ("Dormitorio 2", "priv", R(0.55, 11.85, 4.95, 15.75)),
-      ("Dormitorio 3", "priv", R(5.05, 11.85, 9.00, 15.75))],
-  doorsPA=[(3.35, 9.50, "V", 0.90, 0, -1), (3.60, 11.75, "H", 0.80, 0, 1), (5.50, 11.75, "H", 0.80, 0, 1), (9.05, 9.20, "V", 0.80, 0, 1)]),
- "B": dict(
-  titulo="Opción B — escalera en el saliente y baño en la entrada",
-  ideas=["La escalera pasa al saliente derecho (donde estaba el baño) y arranca justo al llegar desde el pasillo.",
-         "El baño queda pegado a la entrada, con puerta desde el mismo recibidor que la escalera.",
-         "Sala de estar y comedor más amplia (donde estaba la escalera); resto igual que A."],
-  PB=[("Salón", "sala", SALON), ("Pasillo de entrada\n(murete a media altura)", "circ", R(7.55, 0.55, 9.00, 7.87)),
-      ("Entrada", "circ", R(7.25, 7.87, 9.00, 9.60)), ("Baño", "humedo", R(7.25, 9.70, 9.00, 11.75)),
-      ("Escalera", "esc", R(9.10, 8.85, 11.50, 11.25)), ("Sala de estar\ny comedor", "sala", R(3.45, 7.87, 7.15, 11.75)),
-      ("Cocina", "cocina", R(5.05, 11.85, 9.00, 15.75)), ("Oficina", "priv", R(3.15, 11.85, 4.95, 15.75)),
-      ("Dormitorio\nprincipal", "priv", R(0.55, 7.87, 3.35, 11.75)), ("Vestidor", "priv", R(0.55, 11.85, 3.05, 13.15)),
-      ("Baño principal", "humedo", R(0.55, 13.25, 3.05, 15.75))],
-  abPB=[(3.55, 7.87, 7.05, 7.87), (7.20, 7.97, 7.20, 9.55), (9.05, 9.00, 9.05, 9.90)], abPA=[(7.20, 7.97, 7.20, 9.55), (9.05, 9.00, 9.05, 9.90)],
-  doorsPB=COMMON_PB + [(5.30, 11.75, "H", 1.80, 0, 0), (7.55, 9.60, "H", 0.80, 0, -1)],
-  PA=[("Terraza sobre el salón", "terraza", SALON), ("Entrada", "circ", R(7.25, 7.87, 9.00, 9.60)), ("Baño", "humedo", R(7.25, 9.70, 9.00, 11.75)),
-      ("Escalera (hueco)", "esc", R(9.10, 8.85, 11.50, 11.25)), ("Sala familiar\ny terraza", "sala", R(3.45, 7.87, 7.15, 11.75)),
-      ("Dormitorio 1", "priv", R(0.55, 7.87, 3.35, 11.75)), ("Dormitorio 2", "priv", R(0.55, 11.85, 4.95, 15.75)),
-      ("Dormitorio 3", "priv", R(5.05, 11.85, 9.00, 15.75))],
-  doorsPA=[(3.35, 9.50, "V", 0.90, 0, -1), (3.60, 11.75, "H", 0.80, 0, 1), (5.50, 11.75, "H", 0.80, 0, 1), (7.55, 9.60, "H", 0.80, 0, -1)]),
+ "1": dict(
+  titulo="Opción 1 — suite grande, oficina en la esquina del salón",
+  ideas=["Pasillo de entrada con murete a media altura; al final, una entrada amplia con la escalera a la derecha y el baño grande pegado a su pie.",
+         "Suite al oeste como tu referencia: dormitorio de 17 m², paso de vestidor con armarios a los lados y baño con bañera, doble lavabo y ducha.",
+         "Todo abre a la sala de estar (cocina, suite). Arriba sin pasillo: la escalera da a una sala familiar y de ella salen los tres dormitorios."],
+  PB=[("Salón", "sala", SALON_L), ("Oficina", "priv", R(3.68, 0.55, 6.00, 3.05))] + BASE_PB, doorsPB=DOORS_PB + [(4.30, 3.05, "H", 0.80, 0, -1)], abPB=AB_PB,
+  PA=BASE_PA + [("Dormitorio 3", "priv", R(5.05, 11.85, 9.00, 15.75))], doorsPA=DOORS_PA, abPA=[(7.20, 7.97, 7.20, 8.90)]),
+ "2": dict(
+  titulo="Opción 2 — salón completo, oficina arriba",
+  ideas=["Igual que la 1, pero el salón queda entero (unos 28 m²) y sin esquina de oficina.",
+         "La oficina pasa a la planta alta: el Dormitorio 3 (15 m²) puede ser despacho o dormitorio según lo necesites.",
+         "En planta baja queda un rincón de trabajo en la sala de estar si prefieres tenerlo a mano."],
+  PB=[("Salón", "sala", SALON)] + BASE_PB, doorsPB=DOORS_PB, abPB=AB_PB,
+  PA=BASE_PA + [("Dormitorio 3\n(o despacho)", "priv", R(5.05, 11.85, 9.00, 15.75))], doorsPA=DOORS_PA, abPA=[(7.20, 7.97, 7.20, 8.90)]),
 }
 
 
@@ -75,19 +68,39 @@ def door(ax, d):
     ax.plot([hg[0], hg[0] + pe[0] * w], [hg[1], hg[1] + pe[1] * w], color="#333", lw=1.2, zorder=8)
 
 
+def mueble_suite(ax):
+    z = 5
+    ax.add_patch(Rectangle((2.05, 13.75), 1.6, 2.0, fc="#f7b98a", ec="#333", lw=.9, zorder=z))               # cama (cabecero contra el muro del fondo)
+    for x in (1.55, 3.7): ax.add_patch(Rectangle((x, 15.25), .4, .45, fc="#fff", ec="#333", lw=.7, zorder=z))
+    for y0 in (9.55, 11.20): ax.add_patch(Rectangle((0.55, y0), 2.8, .55, fc="#e8d5c0", ec="#333", lw=.8, hatch="||", zorder=z))   # armarios a ambos lados del paso
+    ax.add_patch(Rectangle((0.65, 8.0), 1.75, 0.75, fc="#fff", ec="#333", lw=.9, zorder=z))                  # bañera
+    ax.add_patch(Rectangle((2.75, 8.0), 0.55, 1.15, fc="#fff", ec="#333", lw=.9, zorder=z))                  # doble lavabo
+    ax.add_patch(Rectangle((0.65, 8.85), 0.9, 0.5, fc="#eef", ec="#333", lw=.9, zorder=z))                   # ducha
+    ax.add_patch(Rectangle((1.75, 8.95), 0.45, 0.4, fc="#fff", ec="#333", lw=.9, zorder=z))                  # inodoro
+
+
+LABEL_POS = {"Dormitorio\nprincipal": (3.9, 12.75), "Vestidor": (1.95, 10.65), "Baño principal": (1.95, 9.15)}
+
+
 def dibujar(ax, rooms, doors, planta, abiertos=()):
-    ax.add_patch(MPoly(list(OUT.exterior.coords), closed=True, fc="#8d8d8d", ec="#222", lw=1.6, zorder=1))
-    ax.add_patch(MPoly(list(INN.exterior.coords), closed=True, fc="white", ec="none", zorder=2))
+    out, inn = (OUT, INN) if planta == "PB" else (OUT_PA, INN_PA)
+    ax.add_patch(MPoly(list(out.exterior.coords), closed=True, fc="#8d8d8d", ec="#222", lw=1.6, zorder=1))
+    ax.add_patch(MPoly(list(inn.exterior.coords), closed=True, fc="white", ec="none", zorder=2))
+    if planta == "PB":
+        ax.add_patch(Rectangle((10.85, 8.30), 1.20, 3.50, fc="none", ec="#a33", ls="--", lw=.9, zorder=4)); ax.text(11.45, 8.05, "vecino (1.ª planta)\nencima de esta mitad", ha="center", va="top", fontsize=5.8, color="#a33")
+    if planta == "PA":
+        ax.add_patch(Rectangle((10.85, 8.30), 1.20, 3.50, fc="#f0e0e0", ec="#a33", ls="--", lw=.9, zorder=1)); ax.text(11.45, 10.05, "casa vecina\n(1.ª planta)\nsobre el baño\nde abajo", ha="center", va="center", fontsize=6, color="#a33")
     circ = 0; total = 0
     for nombre, tipo, poly in rooms:
         a = area(poly)
         ax.add_patch(MPoly(poly, closed=True, fc=COL[tipo], ec="#222", lw=1.3 if tipo != "terraza" else .8, ls="-" if tipo != "terraza" else "--", zorder=3, hatch="//" if tipo == "esc" else None))
-        cx_, cy_ = Polygon(poly).centroid.coords[0]
+        cx_, cy_ = LABEL_POS.get(nombre, Polygon(poly).centroid.coords[0]) if planta == "PB" else Polygon(poly).centroid.coords[0]
         pequeno = Polygon(poly).bounds[2] - Polygon(poly).bounds[0] < 2.2
         ax.text(cx_, cy_, f"{nombre}\n{a:.1f} m²", ha="center", va="center", fontsize=6.6 if pequeno else 8, zorder=6, linespacing=1.15)
         if tipo == "circ": circ += a
         if tipo not in ("terraza", "esc"): total += a
     if planta == "PB":
+        mueble_suite(ax)
         ax.add_patch(Rectangle((7.45, 0.55), 0.10, 6.77, fc="#666", ec="#222", zorder=4)); ax.text(7.33, 3.6, "murete media altura", rotation=90, ha="right", va="center", fontsize=6.5)
         ax.text(3.6, 7.65, "abierto: salón y comedor", fontsize=6.5, style="italic", zorder=6)
     for (x0, y0, x1, y1) in abiertos: ax.plot([x0, x1], [y0, y1], color="white", lw=5, solid_capstyle="butt", zorder=7)
