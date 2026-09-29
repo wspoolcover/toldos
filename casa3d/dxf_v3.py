@@ -99,7 +99,7 @@ def planta_estructura(cx, nivel, titulo):
     z = 1.0
     base.pintar(cx, "muros_PB", h.muros_pb, "z", z)
     if nivel == "L1":
-        cats = ["viguetas_salon", "viguetas_casa", "vigas_forjado", "dintel"]; e = "IPE"
+        cats = ["viguetas_salon", "viguetas_casa", "vigas_forjado", "dinteles", "dintel"]; e = "IPE"
     else:
         cats = ["viguetas_cubierta", "vigas_cubierta"]; e = "IPE"
     for c in cats:
@@ -218,8 +218,10 @@ def lamina_estr(nombre):
              ("Viguetas terraza salón (E-O, luz 5,75)", E["salon_vigueta"]["perfil"], f"@{E['salon_vigueta']['sep']:.1f} m"),
              ("Viguetas forjado casa (E-O, luz 2,55)", E["casa_vigueta"]["perfil"], f"@{E['casa_vigueta']['sep']:.1f} m"),
              ("Viguetas cubierta (E-O, luz 2,55)", E["cubierta_vigueta"]["perfil"], f"@{E['cubierta_vigueta']['sep']:.1f} m"),
-             ("Vigas N-S forjado (3 líneas)", E["viga_ns"]["perfil"], "3 uds"), ("Vigas N-S cubierta (3 líneas)", E["viga_cub"]["perfil"], "3 uds"),
+             ("Vigas N-S forjado (continuas)", E["viga_ns"]["perfil"], "3 uds"), ("Vigas N-S cubierta (continuas)", E["viga_cub"]["perfil"], "3 uds"),
+             ("Viga de borde del saliente (2 niveles)", E["viga_saliente"]["perfil"], "2 uds"), ("Viga de fachada (2 niveles)", E["viga_fachada"]["perfil"], "2 lineas"),
              ("Pilares (ocultos en muros/tabiques)", E["pilar"]["perfil"], "6 uds"), ("Dintel de la cristalera", E["dintel"]["perfil"], "1 ud"),
+             ("Dinteles de puertas y ventanas", "IPE 100-120", "14 uds"),
              ("Zapatas aisladas bajo pilares", f"{E['zapata']['lado']:.1f}x{E['zapata']['lado']:.1f}x0,6", "6 uds")]
     fin = tabla(msp, 300, 282, "CUADRO DE PERFILES (acero S275JR)", filas, (88, 26, 26), 5.4)
     kg = ", ".join(f"{k}: {v:,.0f} kg".replace(",", ".") for k, v in sorted(h.KG.items()))

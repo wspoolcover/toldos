@@ -1,16 +1,16 @@
 {
  "salon_vigueta": {
-  "perfil": "IPE 240",
-  "sep": 1.2,
+  "perfil": "IPE 220",
+  "sep": 1.0,
   "luz": 5.75
  },
  "casa_vigueta": {
   "perfil": "IPE 120",
-  "sep": 1.2,
+  "sep": 1.0,
   "luz": 2.55
  },
  "viga_ns": {
-  "perfil": "HEB 140"
+  "perfil": "HEB 160"
  },
  "lineas_x": [
   3.1,
@@ -19,11 +19,11 @@
  ],
  "cubierta_vigueta": {
   "perfil": "IPE 120",
-  "sep": 1.2,
+  "sep": 1.0,
   "luz": 2.55
  },
  "viga_cub": {
-  "perfil": "HEB 140"
+  "perfil": "HEB 160"
  },
  "dintel": {
   "perfil": "HEB 160",
@@ -32,23 +32,13 @@
  "viga_fachada": {
   "perfil": "HEB 120"
  },
- "viga_saliente": {
-  "perfil": "HEB 160",
-  "luz": 3.7
- },
- "dinteles": {
-  "1.0": "IPE 100",
-  "1.2": "IPE 100",
-  "1.4": "IPE 120",
-  "1.6": "IPE 120"
- },
  "pilar": {
   "perfil": "HEB 120",
-  "N_central": 239.68109387409277,
-  "N_sur": 97.37202554163711
+  "N_central": 202.59065509200005,
+  "N_sur": 102.54498420600002
  },
  "zapata": {
-  "lado": 1.4,
+  "lado": 1.3,
   "canto": 0.6,
   "sigma": 150.0
  },

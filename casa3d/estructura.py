@@ -35,6 +35,20 @@ def check_viga(name, L, trib, G, Q, extra_line_G=0.0, extra_line_Q=0.0, lim_tot=
                 d_tot_mm=d_tot * 1e3, d_q_mm=d_q * 1e3, lim_tot_mm=L / lim_tot * 1e3, lim_q_mm=L / lim_q * 1e3,
                 ok=(M <= Mrd and V <= Vrd and d_tot <= L / lim_tot and d_q <= L / lim_q), kg=kg, R=qd * L / 2)
 
+def check_cont(name, L1, L2, trib, G, Q, extra_G=0.0, lim_tot=300, lim_q=400):
+    """Viga continua de dos vanos (L1 >= L2) con carga uniforme: momento en el apoyo central (teorema de los tres momentos)."""
+    h, b, tw, tf, A, I, Wpl, kg, iz = SECC[name]
+    g = G * trib + w(name) + extra_G; q = Q * trib
+    qd = GG * g + GQ * q
+    MB = qd * (L1**3 + L2**3) / (8 * (L1 + L2))
+    VB = qd * L1 / 2 + MB / L1
+    RB = qd * (L1 + L2) / 2 + MB * (1 / L1 + 1 / L2)
+    Mrd = Wpl * 1e-6 * FY / GM0 * 1e3; Vrd = (h * tw * 1e-6) * FY / (math.sqrt(3) * GM0) * 1e3
+    EI = E * 1e3 * I * 1e-8
+    d_tot = 0.0054 * (g + q) * L1**4 / EI; d_q = 0.0054 * q * L1**4 / EI      # flecha máxima de dos vanos iguales (aprox.)
+    return dict(name=name, M=MB, Mrd=Mrd, rM=MB / Mrd, rV=VB / Vrd, RB=RB, d_tot_mm=d_tot * 1e3, lim_tot_mm=L1 / lim_tot * 1e3,
+                ok=(MB <= Mrd and VB <= Vrd and d_tot <= L1 / lim_tot and d_q <= L1 / lim_q), kg=kg)
+
 def elegir(L, G, Q, tabla, spacings, trib_fn=lambda s: s, **kw):
     """Elige la sección más ligera por m² entre separaciones candidatas (prefiere secciones pequeñas)."""
     mejores = []
@@ -71,40 +85,34 @@ P(f"| Terraza transitable sobre el salón | {G_TERRAZA:.1f} | {Q_TERRAZA:.1f} |"
 P(f"| Cubierta plana no transitable (piedra + paneles solares) | {G_CUB:.1f} | {Q_CUB:.1f} (mantenimiento; nieve 0,5 supuesta) |\n")
 
 # 1) viguetas terraza sobre el salón
-sal = elegir(L_SAL, G_TERRAZA, Q_TERRAZA, IPE, [0.9, 1.0])
+sal = elegir(L_SAL, G_TERRAZA, Q_TERRAZA, IPE, [1.0, 1.2])
 P("## Terraza sobre el salón: viguetas E-O (luz 5,75 m)\n| Sección | Separación (m) | kg/m² | M/Mrd | Flecha total / límite (mm) |\n|---|---|---|---|---|")
 for kgm2, s, r in sal[:4]: P(f"| {r['name']} | {s:.1f} | {kgm2:.1f} | {r['rM']:.2f} | {r['d_tot_mm']:.1f} / {r['lim_tot_mm']:.1f} |")
 R["salon_vigueta"] = dict(perfil=sal[0][2]["name"], sep=sal[0][1], luz=L_SAL)
 
 # 2) viguetas casa (luz máxima de bahía = 3,0)
-casa = elegir(max(BAYS), G_HOUSE, Q_HOUSE, IPE, [0.9, 1.0])
+casa = elegir(max(BAYS), G_HOUSE, Q_HOUSE, IPE, [1.0, 1.2])
 P("\n## Planta alta de la casa: viguetas E-O (luz máx. 2,55 m)\n| Sección | Separación (m) | kg/m² | M/Mrd | Flecha total / límite (mm) |\n|---|---|---|---|---|")
 for kgm2, s, r in casa[:4]: P(f"| {r['name']} | {s:.1f} | {kgm2:.1f} | {r['rM']:.2f} | {r['d_tot_mm']:.1f} / {r['lim_tot_mm']:.1f} |")
 R["casa_vigueta"] = dict(perfil=casa[0][2]["name"], sep=casa[0][1], luz=max(BAYS))
 
-# 3) vigas N-S nivel 1 (dos vanos, se comprueba el mayor como biapoyado)
-vig = None
-for n in HEB:
-    rs = [check_viga(n, L, t, G_HOUSE, Q_HOUSE) for L, t in [(SPAN_NS[0], max(TRIB))]]
-    if all(r["ok"] for r in rs): vig = rs[0]; break
-P(f"\n## Vigas N-S del forjado (líneas x = 3,10; 5,30 y 7,20; vano {SPAN_NS[0]:.2f} m, ancho tributario {max(TRIB):.2f} m)\n")
-P(f"Sección: **{vig['name']}**. M/Mrd = {vig['rM']:.2f}; V/Vrd = {vig['rV']:.2f}; flecha {vig['d_tot_mm']:.1f} mm (límite {vig['lim_tot_mm']:.1f}). Reacción máx. por apoyo ≈ {vig['R']:.0f} kN.")
+# 3) vigas N-S nivel 1: una sola pieza continua sobre el pilar central (dos vanos)
+vig = next(r for r in (check_cont(n, SPAN_NS[0], SPAN_NS[1], max(TRIB), G_HOUSE, Q_HOUSE) for n in HEB) if r["ok"])
+P(f"\n## Vigas N-S del forjado (líneas x = 3,10; 5,30 y 7,20; una pieza continua de dos vanos {SPAN_NS[0]:.2f} + {SPAN_NS[1]:.2f} m; ancho tributario {max(TRIB):.2f} m)\n")
+P(f"Sección: **{vig['name']}**. M/Mrd = {vig['rM']:.2f} en el apoyo central; V/Vrd = {vig['rV']:.2f}; flecha {vig['d_tot_mm']:.1f} mm (límite {vig['lim_tot_mm']:.1f}). Reacción en el pilar central ≈ {vig['RB']:.0f} kN. Al ser continua trabaja mejor que dos vigas sueltas y admite un perfil menor.")
 R["viga_ns"] = dict(perfil=vig["name"])
 R["lineas_x"] = LINES_X
-Rn1 = vig["R"] + check_viga(vig["name"], SPAN_NS[1], max(TRIB), G_HOUSE, Q_HOUSE)["R"]   # reacción en pilar central (suma de ambos vanos)
+Rn1 = vig["RB"]
 
 # 4) cubierta plana no transitable (piedra + paneles solares): misma rejilla que el forjado
-cub = elegir(max(BAYS), G_CUB, Q_CUB, IPE, [0.9, 1.0])
+cub = elegir(max(BAYS), G_CUB, Q_CUB, IPE, [1.0, 1.2])
 P("\n## Cubierta plana (piedra y paneles solares): viguetas E-O (luz 2,55 m)\n| Sección | Separación (m) | kg/m² | M/Mrd | Flecha total / límite (mm) |\n|---|---|---|---|---|")
 for kgm2, s_, r in cub[:4]: P(f"| {r['name']} | {s_:.1f} | {kgm2:.1f} | {r['rM']:.2f} | {r['d_tot_mm']:.1f} / {r['lim_tot_mm']:.1f} |")
 R["cubierta_vigueta"] = dict(perfil=cub[0][2]["name"], sep=cub[0][1], luz=max(BAYS))
-vr = None
-for n in HEB:
-    r = check_viga(n, SPAN_NS[0], max(TRIB), G_CUB, Q_CUB)
-    if r["ok"]: vr = r; break
-P(f"\nVigas N-S de cubierta: **{vr['name']}** (M/Mrd {vr['rM']:.2f}, flecha {vr['d_tot_mm']:.1f}/{vr['lim_tot_mm']:.1f} mm).")
+vr = next(r for r in (check_cont(n, SPAN_NS[0], SPAN_NS[1], max(TRIB), G_CUB, Q_CUB) for n in HEB) if r["ok"])
+P(f"\nVigas N-S de cubierta (continuas): **{vr['name']}** (M/Mrd {vr['rM']:.2f}, flecha {vr['d_tot_mm']:.1f}/{vr['lim_tot_mm']:.1f} mm).")
 R["viga_cub"] = dict(perfil=vr["name"])
-Rc = vr["R"] * (SPAN_NS[0] + SPAN_NS[1]) / SPAN_NS[0]
+Rc = vr["RB"]
 
 # 5) dintel de la cristalera (luz libre 3,60 + 2 x 0,20 de apoyo)
 Ld = 4.1
@@ -127,9 +135,27 @@ P(f"\n## Viga de fachada (sustituye al muro entre salón y casa, en cada planta;
 P(f"Sección: **{vf['name']}** (M/Mrd {vf['rM']:.2f}, flecha {vf['d_tot_mm']:.1f}/{vf['lim_tot_mm']:.1f} mm). Cada planta lleva su viga; los pilares HEB 120 en x = 3,10; 5,30 y 7,20 quedan vistos en el borde del salón.")
 R["viga_fachada"] = dict(perfil=vf["name"])
 
+# 5c) viga de borde del saliente del baño (x = 9,15; sustituye al muro de 0,55 entre casa y saliente; luz 3,70 m entre apoyos en muro)
+trib_s = BAYS[3] / 2 + 2.775 / 2
+sal_f = next(r for r in (check_viga(n, 3.70, trib_s, G_HOUSE, Q_HOUSE) for n in list(HEB)[1:]) if r["ok"])
+sal_c = next(r for r in (check_viga(n, 3.70, trib_s, G_CUB, Q_CUB) for n in list(HEB)[1:]) if r["ok"])
+sal_p = max([sal_f["name"], sal_c["name"]], key=lambda n: SECC[n][7])
+P(f"\n## Viga de borde del saliente del baño (a x = 9,15, en forjado y en cubierta; luz {3.70:.2f} m entre muros)\n")
+P(f"Falta ese muro entre la casa y el saliente, así que una viga recoge el borde de la casa y las viguetas del saliente. Sección: **{sal_p}** (forjado M/Mrd {sal_f['rM']:.2f}, cubierta {sal_c['rM']:.2f}).")
+R["viga_saliente"] = dict(perfil=sal_p, luz=3.70)
+
+# 5d) dinteles de huecos en muros de 0,55 m (hoja simple; muro 1 m sobre el hueco + reacción de viguetas)
+din = {}
+P("\n## Dinteles de puertas y ventanas en muros de mampostería\n| Hueco (m) | Luz de cálculo | Perfil | M/Mrd |\n|---|---|---|---|")
+for wv in (1.0, 1.2, 1.4, 1.6):
+    L = wv + 0.40
+    r = next(r for r in (check_viga(n, L, 0.0, 0.0, 0.0, extra_line_G=0.55 * 1.0 * GAMMA_MURO + 4.8 * 1.3, extra_line_Q=2.0 * 1.3) for n in IPE) if r["ok"])
+    din[str(wv)] = r["name"]; P(f"| ≤ {wv:.1f} | {L:.1f} | {r['name']} | {r['rM']:.2f} |")
+R["dinteles"] = din
+
 # 6) pilares
-N_c2 = 1.05 * (Rn1 + Rc) + 1.35 * 33.7 * 9.81 / 1000 * 5.6          # pilar central (mayor carga) + peso propio
-N_c1 = 1.05 * (Rn1 / 2 + Rc / 2) + 1.35 * 33.7 * 9.81 / 1000 * 5.6
+N_c2 = (Rn1 + Rc) + 1.35 * 33.7 * 9.81 / 1000 * 5.6          # pilar central (mayor carga: reacción de vigas continuas) + peso propio
+N_c1 = 0.4 * (Rn1 + Rc) + 1.35 * 33.7 * 9.81 / 1000 * 5.6
 pil = None
 for n in list(HEB)[1:]:                                              # mínimo constructivo HEB 120
     r = pandeo_pilar(n, N_c2, 3.3)
@@ -148,7 +174,7 @@ peso_muro = 0.55 * 5.6 * GAMMA_MURO * GG
 sigma = (qw_house + peso_muro) / 0.55 / 1000
 P(f"\n## Apoyo en los muros de mampostería (50-60 cm)\n")
 P(f"Carga lineal en cabeza de muro de la casa ≈ {qw_house:.0f} kN/m + peso propio ≈ {peso_muro:.0f} kN/m → tensión en base ≈ {sigma:.2f} MPa (referencia orientativa 0,3-0,5 MPa: **hay que ensayar la mampostería**).")
-P("Las viguetas apoyan en placas de reparto sobre un zuncho perimetral (perfil UPN 160 o zuncho de hormigón) que ata los muros y hace de diafragma.")
+P("Las viguetas apoyan en placas de reparto sobre un zuncho perimetral que ata los muros y hace de diafragma. Recomendación para abaratar: zuncho de hormigón armado (hecho a la vez que el forjado) en lugar de perfil UPN de acero.")
 R["muro"] = dict(sigma_MPa=sigma)
 P("\n## Pendiente de confirmar por un técnico\n- Sismo (NCSE-02, zona sísmica de Almería) y arriostramiento de los muros de mampostería.\n- Estudio geotécnico y zapatas definitivas; estado real de los muros (grietas, humedad, calidad de la piedra).\n- Uniones, anclajes, protección contra fuego (R60 en vivienda de 2 plantas según CTE DB-SI) y comprobación de pandeo lateral.\n- Cálculo de la chapa colaborante, del anclaje de los paneles solares al viento y de la impermeabilización con los fabricantes.\n- Este documento no sustituye al proyecto de estructura visado.")
 open("memoria_estructura.md", "w").write("\n".join(out)); json.dump(R, open("estructura.json", "w"), indent=1)

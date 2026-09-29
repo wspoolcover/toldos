@@ -4,7 +4,8 @@ import json, math
 import cadquery as cq
 from perfiles import SECC
 
-E = json.load(open("estructura.json"))
+import os
+E = json.load(open(os.environ.get("ESTR", "estructura.json")))
 XE, Y_TOP, W_FRONT, W_SUR = 9.55, 16.30, 6.40, 6.68
 Y_JUNC, Y_E1, Y_E2, SAL, SAL_PA = Y_TOP - 8.98, 8.30, 11.80, 2.50, 1.30    # saliente este: 2,50 abajo; en planta alta solo la mitad (1,30)
 PTS = [(XE - W_FRONT, 0), (XE, 0), (XE, Y_E1), (XE + SAL, Y_E1), (XE + SAL, Y_E2), (XE, Y_E2), (XE, Y_TOP), (0, Y_TOP), (0, Y_JUNC), (XE - W_SUR, Y_JUNC)]
@@ -125,7 +126,7 @@ def viga_y(sec, y0, y1, x, ztop):
     return _perfil(sec, y1 - y0).rotate((0, 0, 0), (0, 1, 0), 90).rotate((0, 0, 0), (0, 0, 1), 90).translate((x, y0, ztop - SECC[sec][0] / 2000))
 def pilar(sec, x, y, z0, z1): return _perfil(sec, z1 - z0).translate((x, y, z0))
 
-STEEL = {k: [] for k in ("viguetas_salon", "viguetas_casa", "viguetas_cubierta", "vigas_forjado", "vigas_cubierta", "pilares", "dintel")}
+STEEL = {k: [] for k in ("viguetas_salon", "viguetas_casa", "viguetas_cubierta", "vigas_forjado", "vigas_cubierta", "pilares", "dintel", "dinteles")}
 sols = {k: [] for k in STEEL}; KG = {}
 def add(cat, sec, L, solid, geom):
     sols[cat].append(solid); STEEL[cat].append(geom); KG[sec] = KG.get(sec, 0) + SECC[sec][7] * L
@@ -144,9 +145,11 @@ def viguetas(cat, spec, ztop):
         if y > YI1 - 0.2: continue
         for a, b in zip(BAY_X, BAY_X[1:]):
             if VOID[1] - 0.05 <= y <= VOID[3] + 0.05 and a >= LINES_X[2] - 1e-6: continue          # hueco de escalera
+            if a >= LINES_X[2] - 1e-6 and Y_E1 - 0.10 <= y <= Y_E2 + 0.10: b = 9.15                 # en el saliente no hay muro: apoyan en su viga de borde
             add(cat, spec["perfil"], b - a, viga_x(spec["perfil"], a, b, y, ztop), (a, y, b, y, spec["perfil"]))
-    for y in (9.35, 10.35):                                                                           # saliente del baño (piso bajo)
-        if cat == "viguetas_casa": add(cat, "IPE 100", 2.775, viga_x("IPE 100", XE - T / 2, XE + SAL - T / 2, y, ztop), (XE - T / 2, y, XE + SAL - T / 2, y, "IPE 100"))
+    for y in (9.35, 10.35):                                                                           # viguetas del saliente del baño
+        x1 = XE + SAL - T / 2 if cat == "viguetas_casa" else XE + SAL_PA - T_BUMP / 2
+        add(cat, spec["perfil"], x1 - 9.15, viga_x(spec["perfil"], 9.15, x1, y, ztop), (9.15, y, x1, y, spec["perfil"]))
 viguetas("viguetas_casa", sc, zt1); viguetas("viguetas_cubierta", sq, zt2)
 for lx in LINES_X:
     add("vigas_forjado", E["viga_ns"]["perfil"], Y_END - COL_Y[0], viga_y(E["viga_ns"]["perfil"], COL_Y[0], Y_END, lx, zt1), (lx, COL_Y[0], lx, Y_END, E["viga_ns"]["perfil"]))
@@ -157,6 +160,15 @@ for lx in LINES_X:
 vfp = E["viga_fachada"]["perfil"]; nodos = [XE - W_SUR - 0.27, *LINES_X, XI1 + T / 2]
 for cat, zt in (("vigas_forjado", zt1), ("vigas_cubierta", zt2)):
     for a, b in zip(nodos, nodos[1:]): add(cat, vfp, b - a, viga_x(vfp, a, b, 7.60, zt), (a, 7.60, b, 7.60, vfp))
+vs = E["viga_saliente"]["perfil"]
+for cat, zt in (("vigas_forjado", zt1), ("vigas_cubierta", zt2)):
+    add(cat, vs, Y_E2 - Y_E1 + 0.40, viga_y(vs, Y_E1 - 0.20, Y_E2 + 0.20, 9.15, zt), (9.15, Y_E1 - 0.20, 9.15, Y_E2 + 0.20, vs))
+for pl, ori, pos, t, ini, w_, tipo, sw, tag, sill, hh in OPEN:                                        # dinteles de huecos en muros de 0,55 m
+    if t != T or tipo == "L" or tag == "CR": continue
+    k = "1.2" if w_ <= 1.2 else ("1.4" if w_ <= 1.4 else "1.6"); sec = E["dinteles"][k]
+    z = (0 if pl == "PB" else Z_PA) + sill + hh + SECC[sec][0] / 1000
+    if ori == "H": add("dinteles", sec, w_ + 0.4, viga_x(sec, ini - 0.2, ini + w_ + 0.2, pos + T / 2, z), (ini - 0.2, pos + T / 2, ini + w_ + 0.2, pos + T / 2, sec))
+    else: add("dinteles", sec, w_ + 0.4, viga_y(sec, ini - 0.2, ini + w_ + 0.2, pos + T / 2, z), (pos + T / 2, ini - 0.2, pos + T / 2, ini + w_ + 0.2, sec))
 d = E["dintel"]["perfil"]
 add("dintel", d, 4.05, viga_x(d, 3.50, 7.55, T / 2, 2.55 + SECC[d][0] / 1000), (3.50, T / 2, 7.55, T / 2, d))
 
@@ -184,7 +196,9 @@ partes = [("cimentacion", cimentacion, (.55, .55, .55)), ("muros_PB", muros_pb, 
 partes += [("acero_" + k, v, (.20, .32, .55)) for k, v in acero.items()]
 KGTOT = sum(KG.values())
 
-if __name__ == "__main__":
+if __name__ == "__main__" and os.environ.get("ESTR"):
+    print("KG", round(KGTOT), {k: round(v) for k, v in KG.items()})
+elif __name__ == "__main__":
     asm = cq.Assembly(name="vivienda_v3")
     for nn, s, col in partes: asm.add(s, name=nn, color=cq.Color(*col, 0.45 if nn.startswith("cristal") else 1))
     asm.export("casa_v3.step"); asm.export("casa_v3.glb")
