@@ -74,10 +74,13 @@ def muebles_pb(ax):
     r(ax, 4.55, 5.25, 1.00, 2.05, "#e8d5c0")
     for y in (5.4, 6.1, 6.8): r(ax, 4.27, y, .22, .4); r(ax, 5.61, y, .22, .4)
     ax.plot([3.55, 5.45], [4.9, 4.9], color="#a58", lw=.8, ls=":", zorder=6); ax.text(3.6, 5.0, "comedor", fontsize=6.3, color="#a58", va="bottom", zorder=8)
-    # suite: cama contra el muro oeste, armarios en el vestidor, baño
-    r(ax, 0.55, 13.15, 2.00, 1.60, "#f7b98a"); r(ax, 0.60, 12.60, .45, .45); r(ax, 0.60, 14.85, .45, .45)
-    r(ax, 0.55, 9.55, 0.60, 2.05, "#e8d5c0", "||"); r(ax, 1.15, 11.20, 2.15, 0.50, "#e8d5c0", "||")
-    r(ax, 0.65, 7.97, 1.75, 0.70); r(ax, 2.55, 7.97, 0.75, 0.45); r(ax, 2.45, 8.55, 0.45, 0.40)
+    # suite como la referencia: cama con cabecero al fondo entre mesitas, banco a los pies, escritorio junto a la ventana, vestidor con armarios en L y baño con ducha, inodoro y lavabo doble
+    r(ax, 2.55, 13.75, 1.60, 2.00, "#f7b98a"); r(ax, 2.05, 15.25, .42, .42); r(ax, 4.27, 15.25, .42, .42); r(ax, 2.70, 13.25, 1.30, .38, "#e9dcc8")
+    r(ax, 0.60, 14.35, 0.65, 1.30, "#e8d5c0"); r(ax, 1.30, 14.75, .42, .42)                                       # escritorio y silla, junto a la ventana
+    r(ax, 0.60, 12.15, 0.55, 1.90, "#e8d5c0", "||")                                                              # armario auxiliar del dormitorio
+    r(ax, 0.55, 9.55, 0.60, 2.05, "#e8d5c0", "||"); r(ax, 1.15, 11.20, 2.15, 0.50, "#e8d5c0", "||")              # vestidor: armarios en L
+    r(ax, 0.60, 9.75, 1.05, 0.30, "#f6f1e8")                                                                     # alfombra / banco
+    r(ax, 0.65, 8.65, 0.95, 0.65, "#eef"); r(ax, 1.85, 8.85, 0.45, 0.40); r(ax, 2.35, 7.95, 0.95, 0.55); r(ax, 2.35, 8.55, 0.95, 0.55)   # ducha, inodoro, doble lavabo
     # cocina: isla y fregadero junto a la fachada del fondo
     r(ax, 6.0, 13.2, 2.2, 0.8, "#eadcc4"); r(ax, 5.15, 15.2, 3.7, 0.5, "#eadcc4")
 
@@ -114,7 +117,7 @@ def dibujar(ax, rooms, doors, planta, abiertos=()):
     return circ, total
 
 
-IDEAS = ["Suite: se entra desde la sala directamente al vestidor; a la izquierda el baño y a la derecha el dormitorio, arriba, con tres ventanas al fondo.",
+IDEAS = ["Suite como la referencia: se entra desde la sala al vestidor con armarios en L; a la izquierda el baño (ducha, inodoro y lavabo doble) y a la derecha el dormitorio, con escritorio junto a la ventana.",
          "Cocina de 15 m² con puerta y ventana al fondo y ventana al este. Salón con comedor, sofá en U, pantalla grande y chimenea en el rincón.",
          "Sin oficina abajo: el Dormitorio 3 de arriba (15 m²) puede ser despacho. Arriba sin pasillo: la escalera da a una sala familiar."]
 
@@ -126,3 +129,25 @@ if __name__ == "__main__":
     fig.text(0.98, 0.012, f"Circulación: {c1 + c2:.1f} m² · Norte abajo (calle) · sur arriba (fondo) · Medidas orientativas", fontsize=8, va="bottom", ha="right", color="#555")
     fig.savefig("distribucion.png", dpi=110)
     print(f"circulación {c1 + c2:.1f} m²; útil PB {t1:.1f}, PA {t2:.1f}")
+
+
+def suite_png():
+    fig, ax = plt.subplots(figsize=(6.2, 10.4))
+    dibujar(ax, PB, PB_DOORS, "PB", PB_OPEN)
+    ax.set_aspect("equal", adjustable="box"); ax.set_xlim(0.0, 5.7); ax.set_ylim(7.3, 16.5)
+    for txt, xy in (("Escritorio", (0.95, 14.0)), ("Cama 1,60 × 2,00", (3.35, 12.95)), ("Armarios en L", (1.85, 11.95)), ("Ducha", (1.0, 8.2))):
+        ax.text(*xy, txt, fontsize=8, color="#7a3", ha="center", weight="bold", zorder=12)
+    x0,x1=ax.get_xlim(); y0,y1=ax.get_ylim()
+    for t in list(ax.texts)+list(ax.patches)+list(ax.lines):
+        try:
+            if hasattr(t,"get_position"):
+                px,py=t.get_position()
+                if not(x0<=px<=x1 and y0<=py<=y1): t.set_visible(False)
+            t.set_clip_on(True)
+        except Exception: pass
+    for t in ax.texts:
+        if t.get_text() in ("Escritorio","Ducha","Armarios en L"): t.set_visible(False)
+    ax.set_title("Suite principal (detalle): dormitorio 17 m², vestidor 6,4 m², baño 4,1 m²", fontsize=11, weight="bold")
+    fig.savefig("suite.png", dpi=120, bbox_inches="tight"); plt.close(fig)
+
+if __name__ == "__main__": suite_png()
