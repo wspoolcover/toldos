@@ -37,9 +37,16 @@ Albox tiene inviernos fríos de interior y veranos muy calurosos; la casa tendr�
 | **B. Splits inverter (aire acondicionado por bomba de calor) en cada estancia + chimenea** | 4.000–7.000 € | Barata, rápida; las tomas de A/A ya están en PL-10 | Menos confort, unidades visibles, ruido |
 | **C. Aerotermia + splits solo en los dormitorios de la planta alta** | 10.000–14.000 € | Equilibrio coste/confort | — |
 
-**Decisión (v7)**: aerotermia de 8 kW con suelo radiante en **toda** la planta baja (dormitorios incluidos) y multisplit de 4 unidades en la planta alta; la chimenea queda como apoyo y ambiente. La unidad exterior y el acumulador de ACS van en el patio este, junto al saliente del baño, y el colector del suelo radiante en la pared de la entrada. Por qué no suelo radiante arriba: ver `08_presupuesto_y_ahorro.md`, apartado 4. Esquemas en `instalaciones.png` y `cubierta_solar.png`.
+**Decisión (v7)**: aerotermia de 8 kW con suelo radiante en **toda** la planta baja (dormitorios incluidos) y multisplit de 4 unidades en la planta alta; la chimenea queda como apoyo y ambiente. La **unidad exterior va en el patio sur** (terreno propio; el este y el oeste son medianeras) y el **módulo hidráulico, el acumulador de ACS y el colector del suelo radiante en un armario bajo el segundo tramo de la escalera**, con puerta desde la entrada. Por qué no suelo radiante arriba: ver `08_presupuesto_y_ahorro.md`, apartado 4. Esquemas en `instalaciones.png` y `cubierta_solar.png`.
 
 ## 6. Fontanería y saneamiento (PL-08, PL-09)
 - Agua fría y caliente en PPR con aislamiento; termo de 100 L con intercambiador solar. Con aerotermia se sustituye por acumulador de 200–300 L.
 - Desagües a **fosa séptica**: confirmar capacidad, estado y distancia a la casa y si hace falta ampliarla.
 - Bajantes y registros en el hueco de la escalera y cerca de los baños, que están agrupados.
+
+
+## Acometidas y fosa (según PL-08, PL-09, PL-10)
+- **Agua**: arqueta y contador en el sur, junto a la cocina.
+- **Electricidad**: CGP y contador en un nicho de la fachada sur entre las ventanas del dormitorio 2 y la cocina; la derivación individual sube dentro del tabique entre ambos hasta el cuadro, en la sala de estar. Confirmar la ubicación con la compañía.
+- **Saneamiento**: colector Ø150 enterrado bajo la solera por el eje del salón hasta la **fosa séptica del norte**.
+- **Medianeras**: ninguna instalación puede apoyarse ni perforar los muros de las casas vecinas.

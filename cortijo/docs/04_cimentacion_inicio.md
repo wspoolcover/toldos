@@ -5,7 +5,7 @@ Qué sabemos, qué comprobar antes de abrir zanjas y en qué orden trabajar. Est
 ## Qué sabemos
 - **Salón (muros nuevos de ladrillo de 25 cm)**: cimentación ya hecha, 0,60 m (se asume de **ancho**). Carga de servicio ≈ 40 kN/m → presión ≈ 67 kPa. Cumple con margen si el terreno es normal.
 - **Casa existente (muros de 55 cm)**: cimentación desconocida; hay que descubrirla.
-- **Pilares nuevos (6 × HEB 120)**: carga central ≈ 221 kN. Con zapata de 1,3 × 1,3 × 0,6 m la presión sobre el terreno es ≈ 146 kPa incluyendo el peso propio; está **al límite** de los 150 kPa supuestos. Si el estudio da menos, sube a 1,4–1,5 m.
+- **Pilares nuevos (6 × HEB 120)**: carga central ≈ 245 kN. Con la tensión admisible de **130 kPa del proyecto original (PL-11)** salen zapatas de **1,5 × 1,5 × 0,6 m**. Si el estudio geotécnico da menos, habrá que ensancharlas o unirlas con una losa.
 - **Riostras** de 0,40 × 0,40 m entre zapatas y zuncho inferior de atado.
 
 ## Pasos

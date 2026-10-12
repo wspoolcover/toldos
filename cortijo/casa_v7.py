@@ -26,20 +26,18 @@ LINES_X, COL_Y = E["lineas_x"], [7.60, 11.80]
 # ---- huecos: (planta, ori, pos, t, ini, w, tipo, sw, etiqueta, antepecho, alto) ----
 OPEN = [
  ("PB", "H", 0.0, T_S, 3.55, 4.00, "V", 0, "CR", 0.0, 2.55), ("PB", "H", 0.0, T_S, 7.85, 1.40, "P2", 1, "P0", 0, 2.20),
- ("PB", "H", Y_FAC0, T, 1.20, 1.20, "V", 0, "V", 1.50, 0.60), ("PA", "H", Y_FAC0, T, 1.20, 1.40, "V", 0, "V", 0.90, 1.30),
  ("PB", "H", YI1, T, 0.75, 1.10, "V", 0, "V", 0.90, 1.30), ("PB", "H", YI1, T, 2.35, 1.10, "V", 0, "V", 0.90, 1.30),
  ("PB", "H", YI1, T, 4.60, 1.20, "V", 0, "V", 0.90, 1.30), ("PB", "H", YI1, T, 7.50, 1.00, "P", -1, "P0", 0, 2.10),
  ("PA", "H", YI1, T, 1.00, 1.20, "V", 0, "V", 0.90, 1.30), ("PA", "H", YI1, T, 3.00, 1.20, "V", 0, "V", 0.90, 1.30),
  ("PA", "H", YI1, T, 5.55, 1.20, "V", 0, "V", 0.90, 1.30), ("PA", "H", YI1, T, 7.50, 1.00, "V", 0, "V", 0.90, 1.30),
- ("PB", "V", XI1, T, 13.00, 1.60, "V", 0, "V", 0.90, 1.30), ("PA", "V", XI1, T, 13.60, 1.20, "V", 0, "V", 0.90, 1.30),
- ("PB", "V", XE + SAL - T, T, 9.60, 0.90, "V", 0, "V", 1.50, 0.60),
+ ("PB", "H", YI1, T, 6.45, 0.90, "V", 0, "V", 1.10, 1.10),        # ventana de la cocina sobre la encimera (la pared este es medianera)
  # puertas y pasos en tabiques
  ("PB", "V", 3.05, TP, 10.20, 0.90, "P", -1, "P2", 0, 2.05), ("PB", "H", 9.35, TP, 1.60, 0.80, "P", 0, "P3", 0, 2.05),
  ("PB", "H", 11.75, TP, 1.40, 0.80, "P", 1, "P3", 0, 2.05), ("PB", "H", 11.75, TP, 7.40, 1.50, "L", 0, "", 0, 2.40),
  ("PB", "H", 11.75, TP, 4.40, 0.80, "P", 1, "P3", 0, 2.05), ("PB", "H", 9.55, TP, 4.35, 0.85, "P", 1, "P3", 0, 2.05),
  ("PB", "H", 7.87, TP, 3.45, 2.00, "V", 0, "V", 0.00, 2.05),
  ("PB", "V", 9.00, TP, 9.20, 0.80, "P", 1, "P3", 0, 2.05),
- ("PA", "H", Y_FAC0 + 0.25, 0.04, 5.00, 1.60, "P2", -1, "PT", 0, 2.20),   # corredera de la sala familiar a la terraza
+ ("PA", "H", Y_FAC0 + 0.25, 0.04, 5.68, 1.42, "P2", -1, "PT", 0, 2.20),   # corredera de la sala familiar a la terraza, entre los pilares x = 5,55 y 7,20
  ("PA", "V", 3.95, TP, 9.50, 0.90, "P", -1, "P2", 0, 2.05), ("PA", "H", 11.75, TP, 4.20, 0.80, "P", -1, "P2", 0, 2.05),
  ("PA", "H", 11.75, TP, 5.00, 0.80, "P", 1, "P2", 0, 2.05), ("PA", "V", 9.00, TP, 9.20, 0.80, "P", 1, "P3", 0, 2.05)]
 TAB = [("PB", 3.05, 7.87, TP, 3.88), ("PB", 0.55, 9.35, 2.50, TP), ("PB", 0.55, 11.75, 8.45, TP), ("PB", 3.65, 11.85, TP, 3.90), ("PB", 6.30, 11.85, TP, 3.90), ("PB", 3.15, 7.87, 2.40, TP), ("PB", 5.55, 7.87, TP, 1.70),
@@ -87,12 +85,12 @@ _casa = anillo(NB_FULL, 0, Z_PA, T).cut(box(3.45, Y_FAC0 - .01, -.01, XI1 - 3.45
 _salon = anillo(SB, 0, Z_PA, T_S).cut(box(XE - W_SUR - 1, Y_JUNC - T_S - .01, -.01, W_SUR + 2, T_S + .02, Z_PA + .02))
 muros_pb = cortar(_casa, "PB", 0); muros_salon = cortar(_salon, "PB", 0)
 # planta alta: casa sin muro de fachada (cierre acristalado), saliente de baño con muros ligeros y solo la mitad de fondo
-pa = anillo(NB_MAIN, Z_PA, H_PA, T).cut(box(3.45, Y_FAC0 - .01, Z_PA - .01, XI1 - 3.45, T + .02, H_PA + .02))
+pa = anillo(NB_MAIN, Z_PA, H_PA, T).cut(box(2.95, Y_FAC0 - .01, Z_PA - .01, XI1 - 2.95, T + .02, H_PA + .02))
 pa = pa.cut(box(XI1 - .01, Y_E1, Z_PA - .01, T + .02, Y_E2 - Y_E1, H_PA + .02))
 for (x, y, dx, dy) in [(XI1, Y_E1, XE + SAL_PA - XI1, T_BUMP), (XI1, Y_E2 - T_BUMP, XE + SAL_PA - XI1, T_BUMP), (XE + SAL_PA - T_BUMP, Y_E1, T_BUMP, Y_E2 - Y_E1)]:
     pa = pa.union(box(x, y, Z_PA, dx, dy, H_PA))
 muros_pa = cortar(pa, "PA", Z_PA)
-parapeto_terraza = anillo(SB, Z_PA, 1.00, T_S).cut(box(XE - W_SUR - 1, Y_JUNC - .2, Z_PA - .1, W_SUR + 2, .5, 2))
+parapeto_terraza = anillo(SB, Z_PA, 1.00, T_S).cut(box(XE - W_SUR - 1, Y_JUNC - .5, Z_PA - .1, W_SUR + 2, 1.0, 2))   # abierto todo el frente: antes quedaba una tira de 5 cm de parapeto que cerraba el paso a la terraza
 parapeto_cubierta = anillo(NB_PA, Z_TOP, 0.50, 0.30)
 
 def losa(pts, z_top, hueco):
@@ -102,9 +100,9 @@ forjado = losa(PTS, Z_PA, VOID)
 losa_cubierta = losa(NB_PA, Z_TOP, VOID)
 lucernario = box(VOID[0] - .05, VOID[1] - .05, Z_TOP, VOID[2] - VOID[0] + .10, VOID[3] - VOID[1] + .10, .05)
 cristal_pb = box(3.55, 0.10, 0.0, 4.00, 0.04, 2.55)
-cristal_pa = box(3.45, Y_FAC0 + 0.25, Z_PA, XI1 - 3.45, 0.04, H_PA - T_LOSA).cut(box(5.00, Y_FAC0, Z_PA - .01, 1.60, 1, 2.21))   # cierre acristalado de la casa hacia la terraza, con hueco de 1,60 para la corredera
-puerta_terraza = box(3.40, Y_FAC0 + 0.19, Z_PA, 1.60, 0.03, 2.20).union(box(6.60, Y_FAC0 + 0.19, Z_PA, 1.60, 0.03, 2.20))   # dos hojas correderas abiertas, delante del fijo
-marco_terraza = box(4.95, Y_FAC0 + 0.17, Z_PA, 1.70, 0.08, 2.25).cut(box(5.00, Y_FAC0, Z_PA - .01, 1.60, 1, 2.20))
+cristal_pa = box(2.95, Y_FAC0 + 0.25, Z_PA, XI1 - 2.95, 0.04, H_PA - T_LOSA).cut(box(5.68, Y_FAC0, Z_PA - .01, 1.42, 1, 2.21))   # cierre acristalado de la casa hacia la terraza, con hueco de 1,60 para la corredera
+puerta_terraza = box(4.97, Y_FAC0 + 0.19, Z_PA, 0.71, 0.03, 2.20).union(box(4.26, Y_FAC0 + 0.15, Z_PA, 0.71, 0.03, 2.20))   # dos hojas correderas abiertas, apiladas a la izquierda delante del fijo
+marco_terraza = box(5.63, Y_FAC0 + 0.17, Z_PA, 1.52, 0.08, 2.25).cut(box(5.68, Y_FAC0, Z_PA - .01, 1.42, 1, 2.20))
 # carpintería de estilo cortijo: marcos y contraventanas de madera, vidrio en cada ventana, puertas de madera; solado de barro en la terraza
 _vid, _mad, _pue = {"PB": [], "PA": []}, {"PB": [], "PA": []}, {"PB": [], "PA": []}
 for pl, ori, pos, t, ini, w_, tipo, sw, tag, sill, hh in OPEN:
@@ -230,7 +228,7 @@ MOB = [box(6.45, 1.05, 0, .75, 3.30, .85), box(5.05, 3.65, 0, 1.40, .70, .45), b
 mobiliario = comp(MOB)
 PANELES = [box(1.0 + c * 1.15, 8.6 + f * 2.1, Z_TOP + 0.35, 1.05, 1.75, 0.04) for f in range(3) for c in range(6) if not (c >= 5 and f == 0)]
 paneles_solares = comp(PANELES)
-aerotermia = comp([box(9.65, 8.5, 0.0, 0.40, 1.00, 1.30), box(9.65, 9.6, 0.0, 0.40, 0.60, 1.60)])   # unidad exterior y acumulador junto al saliente del baño (patio este)
+aerotermia = comp([box(4.80, 16.45, 0.0, 1.00, 0.45, 0.95)])   # unidad exterior en el patio sur (terreno propio), junto a la pared de la cocina; el módulo hidráulico y el acumulador van en el armario bajo la escalera
 chimenea = comp([box(3.30, 6.20, 0, .85, 1.30, 1.25), box(3.40, 6.55, 1.25, .50, .50, Z_TOP + 1.0 - 1.25)])   # hogar y humero, sube por la esquina hasta pasar la cubierta
 
 partes = [("cimentacion", cimentacion, (.55, .55, .55)), ("muros_PB", muros_pb, (.85, .80, .70)), ("muros_salon", muros_salon, (.72, .45, .35)), ("muros_PA", muros_pa, (.85, .80, .70)),

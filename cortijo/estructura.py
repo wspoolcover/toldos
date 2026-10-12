@@ -195,18 +195,18 @@ for n in list(HEB)[1:]:                                              # mínimo c
 P(f"\n## Pilares HEB (6 uds., x = 3,10; 5,55 y 7,20; y = 7,60 y 11,80; ocultos en muros y tabiques; altura ≈ 5,6 m)\n")
 P(f"Carga axial de cálculo máx. ≈ {N_c2:.0f} kN (pilar central) y ≈ {N_c1:.0f} kN (pilar sur). Sección: **{pil['name']}**, N/Nb,Rd = {pil['ratio']:.2f} (pandeo eje débil, Lcr = 3,3 m).")
 R["pilar"] = dict(perfil=pil["name"], N_central=N_c2, N_sur=N_c1)
-SIG = 150.0                                                          # kPa admisible supuesta (falta estudio geotécnico)
+SIG = 130.0                                                          # kPa: tensión admisible que usa el proyecto del arquitecto (PL-11, 0,13 MPa); sigue pendiente de estudio geotécnico
 zap = math.ceil(math.sqrt(N_c2 / 1.35 * 1.05 / SIG) * 10) / 10 + 0.2
-P(f"\nZapatas aisladas bajo pilares (σ adm. supuesta 150 kPa, **pendiente de estudio geotécnico**): ≈ {zap:.1f} × {zap:.1f} m, canto 0,60 m.")
+P(f"\nZapatas aisladas bajo pilares (σ adm. = 130 kPa, el valor que figura en el plano PL-11 del arquitecto; **pendiente de estudio geotécnico**): ≈ {zap:.1f} × {zap:.1f} m, canto 0,60 m.")
 R["zapata"] = dict(lado=zap, canto=0.60, sigma=SIG)
 
-# 6b) cimentación existente bajo los muros de ladrillo del salón (zapata corrida de 60 cm de ancho, terreno supuesto de 150 kPa)
+# 6b) cimentación existente bajo los muros de ladrillo del salón (zapata corrida de 60 cm de ancho, terreno de 130 kPa (valor del proyecto original))
 R_s = R["salon_sistema"]["reaccion_kN_m"]; R_serv = (R["salon_sistema"]["peso"] + G_TERR + Q_TERRAZA) * L_SAL / 2
 carga_muro = 0.25 * 4.26 * 18.0                          # muro de 25 cm hasta el antepecho (3,26 + 1,00 m)
 q_serv = R_serv + carga_muro + 0.25 * 0.25 * 25
 sigma_c = q_serv / 0.60
 P("\n## Cimentación existente de los muros del salón (ladrillo de 25 cm, zapata de 60 cm)\n")
-P(f"Carga de servicio por metro de muro ≈ {q_serv:.0f} kN/m (forjado {R_serv:.0f} + muro y antepecho {carga_muro:.0f} + zuncho) → presión sobre el terreno ≈ **{sigma_c:.0f} kPa** con 0,60 m de ancho, frente a 150 kPa supuestos: **cumple** con margen si el terreno es normal (falta el estudio geotécnico). Si los 60 cm fueran de profundidad y no de ancho, habría que medir el ancho.")
+P(f"Carga de servicio por metro de muro ≈ {q_serv:.0f} kN/m (forjado {R_serv:.0f} + muro y antepecho {carga_muro:.0f} + zuncho) → presión sobre el terreno ≈ **{sigma_c:.0f} kPa** con 0,60 m de ancho, frente a 130 kPa del proyecto original: **cumple** con margen si el terreno es normal (falta el estudio geotécnico). Si los 60 cm fueran de profundidad y no de ancho, habría que medir el ancho.")
 P("Muro de ladrillo de 25 cm y 3,3 m de altura entre cimentación y forjado: esbeltez 13, admisible con zuncho arriba. Pilares de atado de hormigón (unos 25×25 cm) en las esquinas y cada 3,5-4 m (≈ 3 por muro lateral) para el sismo.")
 R["cimentacion_salon"] = dict(ancho=0.60, q_serv=q_serv, sigma=sigma_c)
 

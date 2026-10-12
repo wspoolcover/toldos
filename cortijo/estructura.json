@@ -57,9 +57,9 @@
   "N_sur": 99.32488090632404
  },
  "zapata": {
-  "lado": 1.4,
+  "lado": 1.5,
   "canto": 0.6,
-  "sigma": 150.0
+  "sigma": 130.0
  },
  "cimentacion_salon": {
   "ancho": 0.6,

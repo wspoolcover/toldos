@@ -25,27 +25,30 @@ AZ, RO, MA, VE, NA, GR = "#1f6fb5", "#c0392b", "#7d3c98", "#1e8449", "#d35400", 
 def fontaneria(ax, planta):
     base(ax, planta)
     if planta == "PB":
-        linea(ax, [(12.3, 3.0), (10.9, 3.0), (10.9, 9.0), (9.65, 9.0)], AZ, 2.2); caja(ax, 11.0, 2.6, 1.2, .5, AZ, "contador"); ax.text(12.35, 3.15, "acometida\n(calle)", fontsize=5.5, color=AZ, va="bottom")
-        caja(ax, 9.65, 8.5, .75, 1.7, GR, "aero-\ntermia\n+ ACS", fs=5)
-        # agua fría (azul) y caliente (rojo) por falso techo hasta los húmedos
-        for col, d in ((AZ, 0), (RO, .12)):
-            linea(ax, [(9.65, 9.3 + d), (9.3, 9.3 + d), (9.3, 11.0 + d)], col)                                    # baño grande
-            linea(ax, [(9.3, 9.3 + d), (8.9, 9.3 + d), (8.9, 12.0 + d), (8.7, 12.0 + d), (8.7, 14.5 + d)], col)   # cocina (este)
-            linea(ax, [(8.9, 12.0 + d), (3.0, 12.0 + d), (3.0, 9.4 + d), (1.6, 9.4 + d), (1.6, 8.3 + d)], col)      # baño de la suite por el falso techo del vestidor
-        for x, y, t in ((9.3, 11.0, "B"), (8.7, 14.5, "C"), (1.6, 8.3, "B")): punto(ax, x, y, AZ, t)
-        # saneamiento (verde): bajantes y colector a la fosa
-        for x, y in ((9.3, 10.4), (8.7, 15.4), (1.9, 8.1)): punto(ax, x, y, VE, "Ø110", r=.2, fs=4.5)
-        linea(ax, [(1.9, 8.1), (1.9, 7.6), (2.8, 7.6)], VE, 2, "--"); linea(ax, [(2.8, 7.6), (2.8, 16.9), (9.3, 16.9), (9.3, 10.4)], VE, 2, "--")
-        linea(ax, [(8.7, 15.4), (8.7, 16.9)], VE, 2, "--"); linea(ax, [(9.3, 16.9), (11.0, 16.9), (11.0, 13.0), (12.6, 13.0)], VE, 2.4, "--")
-        caja(ax, 10.3, 16.6, 1.4, .55, VE, "arqueta", fs=5); ax.text(12.65, 13.0, "a fosa séptica\n(existente, revisar)", fontsize=5.5, color=VE, va="center")
-        ax.text(5.5, 17.0, "tuberías PPR por el falso techo del pasillo y la sala; bajantes PVC en los 3 húmedos", fontsize=5.6, color=GR, ha="center")
+        ax.set_ylim(-4.6, 19.0)
+        # acometida de agua por el sur (como en el proyecto original, PL-08): arqueta y contador en el patio, junto a la cocina
+        caja(ax, 6.55, 16.85, 0.8, 0.4, AZ, "contador", fs=5); linea(ax, [(6.95, 18.6), (6.95, 17.25)], AZ, 2.4); ax.text(7.15, 18.4, "acometida de agua\n(sur, terreno propio)", fontsize=5.5, color=AZ, va="top")
+        caja(ax, 7.30, 9.15, 0.85, 1.0, GR, "módulo\nhidr. +\nACS 200 L", fs=4.6)
+        linea(ax, [(6.95, 16.85), (6.95, 12.2)], AZ, 1.6); linea(ax, [(6.95, 15.95), (7.7, 15.95), (7.7, 15.45)], AZ)
+        linea(ax, [(6.95, 12.2), (3.0, 12.2), (3.0, 9.4), (1.6, 9.4), (1.6, 8.3)], AZ); linea(ax, [(6.95, 12.2), (8.9, 12.2), (8.9, 11.0), (9.3, 11.0)], AZ)
+        linea(ax, [(7.25, 9.8), (7.0, 9.8), (7.0, 12.35)], RO, 1.6)                                                      # agua caliente: sale del módulo y se reparte por el falso techo de la sala
+        linea(ax, [(7.02, 12.35), (3.12, 12.35), (3.12, 9.52), (1.72, 9.52), (1.72, 8.42)], RO); linea(ax, [(7.02, 12.35), (9.02, 12.35), (9.02, 11.12), (9.3, 11.12)], RO); linea(ax, [(7.02, 12.35), (7.02, 16.05), (7.82, 16.05), (7.82, 15.55)], RO)
+        for x, y, t in ((9.3, 11.05, "B"), (7.7, 15.45, "C"), (1.6, 8.3, "B")): punto(ax, x, y, AZ, t)
+        # aerotermia: unidad exterior en el patio sur; tubos aislados ida/retorno por el exterior hasta la puerta de la cocina
+        caja(ax, 4.8, 16.45, 1.0, 0.5, GR, "unidad ext.\naerotermia", fs=4.6); linea(ax, [(5.8, 16.7), (8.9, 16.7), (8.9, 16.2), (8.9, 12.45), (7.05, 12.45), (7.05, 10.0), (7.25, 10.0)], GR, 1.6, "--")
+        # saneamiento (verde): bajantes de los tres húmedos y colector enterrado bajo la solera hasta la fosa séptica del norte (PL-09)
+        for x, y in ((1.9, 8.1), (9.3, 10.4), (6.6, 15.5)): punto(ax, x, y, VE, "Ø110", r=.22, fs=4.3)
+        linea(ax, [(1.9, 8.1), (1.9, 8.0), (5.9, 8.0)], VE, 2, "--"); linea(ax, [(9.3, 10.4), (9.3, 12.1), (5.9, 12.1), (5.9, 8.0)], VE, 2, "--"); linea(ax, [(6.6, 15.5), (6.6, 12.1)], VE, 2, "--")
+        linea(ax, [(5.9, 8.0), (5.9, -2.6)], VE, 2.6, "--"); caja(ax, 4.9, -4.0, 2.0, 1.3, VE, "fosa séptica\n(norte, terreno propio:\nrevisar capacidad)", fs=5)
+        caja(ax, 5.55, 7.3, 0.7, 0.4, VE, "arqueta", fs=4.8)
+        ax.text(0.2, 17.3, "tuberías PPR por el falso techo; el colector Ø150 va enterrado bajo la solera por el eje del salón (como en el proyecto original)", fontsize=5.6, color=GR)
         ax.text(1.0, 5.8, "drenaje perimetral\n+ geotextil", fontsize=5.5, color=VE, rotation=90, va="center")
-        for pts in ([(-0.2, -0.2), (-0.2, 16.5), (9.75, 16.5), (9.75, 12.0), (12.25, 12.0), (12.25, 8.1), (9.75, 8.1), (9.75, -0.2), (-0.2, -0.2)],): linea(ax, pts, VE, 1.0, ":")
+        linea(ax, [(-0.2, 7.2), (-0.2, 16.5), (9.75, 16.5), (9.75, 12.0)], VE, 1.0, ":")
         ax.set_title("FONTANERÍA Y SANEAMIENTO · planta baja", fontsize=10, weight="bold")
     else:
-        for col, d in ((AZ, 0), (RO, .12)): linea(ax, [(9.3, 8.6 + d), (9.3, 11.0 + d)], col); linea(ax, [(9.3, 8.6 + d), (9.65, 8.6 + d)], col)
+        for col, d in ((AZ, 0), (RO, .12)): linea(ax, [(9.3, 8.6 + d), (9.3, 11.0 + d)], col)
         punto(ax, 9.3, 11.0, AZ, "B"); punto(ax, 9.3, 10.4, VE, "Ø110", r=.2, fs=4.5)
-        ax.text(9.5, 7.6, "montantes por el\nsaliente del baño\n(sobre el baño de abajo)", fontsize=5.5, color=GR)
+        ax.text(7.3, 7.6, "montantes desde la planta baja\npor el saliente del baño\n(sobre el baño de abajo)", fontsize=5.5, color=GR)
         for x, y in ((4.0, 12.6), (6.5, 12.6), (2.0, 10.6), (2.0, 14.6)): ax.add_patch(Circle((x, y), .12, fc=AZ, ec="none", zorder=22))
         ax.text(4.0, 12.3, "sumideros de pluviales (bajantes PVC Ø90, 4 uds.)", fontsize=5.5, color=AZ, ha="left", va="top")
         ax.set_title("FONTANERÍA · planta alta (baño sobre baño: una sola columna)", fontsize=10, weight="bold")
@@ -53,32 +56,33 @@ def fontaneria(ax, planta):
 def electricidad(ax, planta):
     base(ax, planta)
     if planta == "PB":
-        caja(ax, 8.1, 8.0, .8, .45, NA, "CGP+\ncontador", fs=4.5); caja(ax, 8.1, 8.55, .8, .35, NA, "cuadro", fs=5)
-        linea(ax, [(12.3, 8.2), (9.3, 8.2), (8.9, 8.2)], NA, 2.2); ax.text(12.35, 8.35, "acometida\n9,2 kW mono\n(o 3F si coche)", fontsize=5.3, color=NA, va="bottom")
-        tramos = [[(8.5, 8.9), (8.5, 11.9), (6.0, 11.9), (6.0, 13.5)], [(8.5, 11.9), (8.5, 14.5)], [(6.0, 11.9), (2.0, 11.9), (2.0, 13.8)], [(2.0, 11.9), (2.0, 9.0)],
-                  [(8.1, 8.2), (7.5, 8.2), (7.5, 1.5)], [(7.5, 4.5), (4.5, 4.5)], [(4.4, 8.8), (4.4, 10.6)], [(7.5, 8.2), (6.3, 8.2), (6.3, 10.0)]]
+        ax.set_ylim(-0.9, 19.0)
+        caja(ax, 5.85, 16.25, 0.7, 0.35, NA, "CGP+cont.", fs=4.2); linea(ax, [(6.2, 18.6), (6.2, 16.6)], NA, 2.4); ax.text(6.45, 18.4, "acometida eléctrica (sur,\nsegún proyecto original)\n9,2 kW monofásica", fontsize=5.3, color=NA, va="top")
+        linea(ax, [(6.35, 16.25), (6.35, 11.6)], NA, 2.0); caja(ax, 5.95, 10.95, 0.8, 0.45, NA, "cuadro", fs=5)                  # derivación individual dentro del tabique dormitorio 2 / cocina
+        tramos = [[(6.35, 11.2), (8.3, 11.2), (8.3, 12.4), (8.5, 14.5)], [(8.3, 12.4), (7.4, 15.0)], [(6.35, 11.2), (5.0, 11.2), (5.0, 12.4), (5.2, 13.3)], [(6.35, 11.2), (3.15, 11.2), (3.15, 10.6), (2.0, 10.6), (2.0, 11.9), (2.0, 13.8)],
+                  [(2.0, 10.6), (2.0, 9.0)], [(6.35, 10.2), (4.4, 10.2), (4.4, 9.55), (4.4, 8.8)], [(6.35, 9.8), (5.9, 9.8), (5.9, 7.5), (7.5, 7.5), (7.5, 1.5)], [(7.5, 4.5), (4.5, 4.5)], [(6.35, 10.8), (6.3, 10.0)]]
         for t in tramos: linea(ax, t, NA, 1.2)
-        for x, y, t in ((6.0, 13.5, "D2"), (8.5, 14.5, "C"), (2.0, 13.8, "D1"), (2.0, 9.0, "V"), (7.5, 1.5, "S"), (4.5, 4.5, "TV"), (4.4, 8.8, "O"), (6.3, 10.0, "E"), (4.5, 1.2, "⌂")): punto(ax, x, y, NA, t, r=.19, fs=4.8)
+        for x, y, t in ((5.2, 13.3, "D2"), (8.5, 14.5, "C"), (7.4, 15.0, "C"), (2.0, 13.8, "D1"), (2.0, 9.0, "V"), (7.5, 1.5, "S"), (4.5, 4.5, "TV"), (4.4, 8.8, "O"), (6.3, 10.0, "E"), (4.5, 1.2, "⌂")): punto(ax, x, y, NA, t, r=.19, fs=4.8)
         caja(ax, 3.55, 1.6, .25, 1.9, MA, "", fs=5); ax.text(3.95, 2.3, "TV 75\"\n2×RJ45\n4 tomas\ntubo Ø40", fontsize=5, color=MA)
-        caja(ax, 8.1, 9.0, .8, .35, MA, "rack red", fs=5)
-        ax.text(5.6, 7.3, "canalizaciones por falso techo y tabiques; registros en cada estancia", fontsize=5.6, color=GR, ha="center")
-        ax.text(0.0, 16.8, "Leyenda: C cocina (6 mm² + 4 mm²) · S salón/comedor · TV multimedia · D dormitorios · V vestidor/baño · O despacho · E escalera y sala · ⌂ entrada/timbre", fontsize=5.5, color=NA)
+        caja(ax, 7.3, 8.0, .8, .35, MA, "rack red", fs=5)
+        ax.text(5.6, 17.3, "canalizaciones por falso techo y tabiques; registros en cada estancia", fontsize=5.6, color=GR, ha="center")
+        ax.text(0.0, 18.6, "Leyenda: C cocina (6 mm² + 4 mm²) · S salón/comedor · TV multimedia · D dormitorios · V vestidor/baño · O despacho · E escalera y sala · ⌂ entrada/timbre", fontsize=5.0, color=NA)
         ax.set_title("ELECTRICIDAD Y RED · planta baja", fontsize=10, weight="bold")
     else:
         linea(ax, [(8.5, 8.9), (8.5, 11.9), (2.0, 11.9), (2.0, 13.8)], NA, 1.2); linea(ax, [(2.0, 11.9), (2.0, 9.5)], NA, 1.2); linea(ax, [(6.7, 11.9), (6.7, 13.8)], NA, 1.2); linea(ax, [(8.5, 11.9), (8.5, 15.8), (6.0, 15.8)], NA, 1.2)
         for x, y, t in ((2.0, 13.8, "D2"), (2.0, 9.5, "D1"), (6.7, 13.8, "D3"), (5.5, 9.5, "F"), (9.8, 10.0, "B")): punto(ax, x, y, NA, t, r=.19, fs=4.8)
-        linea(ax, [(8.5, 8.9), (8.5, 7.5)], NA, 1.2); ax.text(8.6, 7.0, "subida al cuadro\n(hueco de escalera)", fontsize=5.3, color=NA)
+        linea(ax, [(6.35, 11.6), (6.35, 12.4)], NA, 1.2); ax.text(6.45, 12.2, "subida desde el cuadro\n(planta baja)", fontsize=5.3, color=NA)
         caja(ax, 5.5, 15.9, 1.0, .45, NA, "inversor\nsolar", fs=4.8); ax.text(6.6, 16.1, "cables de los paneles bajan por el\nmuro este hasta el cuadro", fontsize=5.3, color=NA, va="center")
         ax.set_title("ELECTRICIDAD · planta alta", fontsize=10, weight="bold")
 
 def clima(ax, planta):
     base(ax, planta)
     if planta == "PB":
-        caja(ax, 9.65, 8.5, .75, 1.7, GR, "aero-\ntermia\n8 kW", fs=5)
         for (x0, y0, x1, y1), t in (((3.4, 0.4, 7.7, 7.7), "SR salón 33 m²"), ((3.3, 9.7, 7.1, 11.7), "SR sala 11 m²"), ((0.6, 11.9, 3.6, 15.7), "SR dorm. ppal."), ((3.8, 11.9, 6.3, 15.7), "SR dorm. 2"), ((6.5, 11.9, 8.9, 15.7), "SR cocina"), ((3.2, 8.0, 5.5, 9.5), "SR desp."), ((0.6, 9.5, 3.0, 11.7), "SR vest."), ((0.6, 7.95, 3.0, 9.3), "SR baño")):
             for k in range(int((y1 - y0) / .3)): linea(ax, [(x0 + .1, y0 + .15 + k * .3), (x1 - .1, y0 + .15 + k * .3)], RO, .7, z=18)
             ax.text((x0 + x1) / 2, (y0 + y1) / 2, t, fontsize=5.5, color=RO, ha="center", va="center", zorder=25, bbox=dict(fc="white", ec="none", alpha=.8, pad=1))
-        caja(ax, 7.3, 8.0, .7, .8, RO, "colector\nSR", fs=4.8); linea(ax, [(9.65, 9.2), (8.0, 9.2), (8.0, 8.8)], RO, 2)
+        caja(ax, 7.3, 9.15, .85, 1.0, RO, "módulo +\ncolector SR\n(armario bajo\nla escalera)", fs=4.2); linea(ax, [(7.25, 9.7), (6.6, 9.7)], RO, 2)
+        caja(ax, 4.8, 16.45, 1.0, .5, GR, "aerotermia\n8 kW (patio sur)", fs=4.4); ax.set_ylim(-0.9, 18.0)
         ax.text(2.0, 5.5, "suelo radiante (SR) en toda la planta baja: 109 m², tubo PE-X paso 15 cm, mortero 5 cm\n+ 3 cm de aislamiento bajo el tubo. Calefacción en invierno y refrescamiento suave en verano.", fontsize=5.6, color=RO, ha="center")
         ax.text(3.75, 6.2, "chimenea\ninsert 7 kW", fontsize=5.3, color="#a33", ha="center")
         ax.set_title("CLIMATIZACIÓN · planta baja (aerotermia + suelo radiante)", fontsize=10, weight="bold")

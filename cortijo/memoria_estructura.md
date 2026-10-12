@@ -66,11 +66,11 @@ Falta ese muro entre la casa y el saliente, así que una viga recoge el borde de
 
 Carga axial de cálculo máx. ≈ 245 kN (pilar central) y ≈ 99 kN (pilar sur). Sección: **HEB 120**, N/Nb,Rd = 0.66 (pandeo eje débil, Lcr = 3,3 m).
 
-Zapatas aisladas bajo pilares (σ adm. supuesta 150 kPa, **pendiente de estudio geotécnico**): ≈ 1.4 × 1.4 m, canto 0,60 m.
+Zapatas aisladas bajo pilares (σ adm. = 130 kPa, el valor que figura en el plano PL-11 del arquitecto; **pendiente de estudio geotécnico**): ≈ 1.5 × 1.5 m, canto 0,60 m.
 
 ## Cimentación existente de los muros del salón (ladrillo de 25 cm, zapata de 60 cm)
 
-Carga de servicio por metro de muro ≈ 40 kN/m (forjado 19 + muro y antepecho 19 + zuncho) → presión sobre el terreno ≈ **67 kPa** con 0,60 m de ancho, frente a 150 kPa supuestos: **cumple** con margen si el terreno es normal (falta el estudio geotécnico). Si los 60 cm fueran de profundidad y no de ancho, habría que medir el ancho.
+Carga de servicio por metro de muro ≈ 40 kN/m (forjado 19 + muro y antepecho 19 + zuncho) → presión sobre el terreno ≈ **67 kPa** con 0,60 m de ancho, frente a 130 kPa del proyecto original: **cumple** con margen si el terreno es normal (falta el estudio geotécnico). Si los 60 cm fueran de profundidad y no de ancho, habría que medir el ancho.
 Muro de ladrillo de 25 cm y 3,3 m de altura entre cimentación y forjado: esbeltez 13, admisible con zuncho arriba. Pilares de atado de hormigón (unos 25×25 cm) en las esquinas y cada 3,5-4 m (≈ 3 por muro lateral) para el sismo.
 
 ## Apoyo en los muros de mampostería (50-60 cm)

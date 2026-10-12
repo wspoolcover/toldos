@@ -7,7 +7,7 @@ Rangos de referencia en España 2026 para unos 172 m² construidos (109 m² úti
 | Partida | Opción elegida | Rango (€) | Alternativa cara descartada |
 |---|---|---|---|
 | Demolición cubierta, forjado y escalera (PL-05) | Elemento a elemento con apeos; acopio de vigas de madera para reutilizar | 6.000–10.000 | — |
-| Cimentación: 6 zapatas 1,4 m, riostras, zuncho inferior, drenaje + geotextil | HA-25, B500S | 7.000–11.000 | — |
+| Cimentación: 6 zapatas 1,5 m, riostras, zuncho inferior, drenaje + geotextil | HA-25, B500S | 7.000–11.000 | — |
 | Estructura metálica (3,7 t HEB/IPE + placas y anclajes) | Perfiles de serie, uniones atornilladas en obra | 11.000–20.000 | Primer diseño: 6,7 t |
 | Forjados vigueta + bovedilla EPS (≈ 190 m²) y zunchos | (17+5) casa y cubierta, (25+5) salón | 11.000–17.000 | Chapa colaborante |
 | Muros nuevos del salón (ladrillo 25 cm) + pilares de atado | Lo haces tú | 3.000–5.000 (material) | — |
