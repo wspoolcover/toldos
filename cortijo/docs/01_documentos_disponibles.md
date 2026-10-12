@@ -2,6 +2,8 @@
 
 Revisado en tu Drive el 12-10-2026. Carpeta **CORTIJO PISICA**: solo contiene los 10 planos del proyecto del arquitecto (Andrés Oller Rodríguez, expediente 25-029, julio 2025). No he abierto ni usado el contrato de arras ni ningún documento de la empresa.
 
+> Las superficies de PL-04 y PL-06 son las del proyecto original. La casa **se ha agrandado**: las medidas válidas son las del croquis a mano del propietario, que son las que usa el modelo.
+
 ## Lo que hay (PL-01 a PL-10)
 | Plano | Contenido | Para qué lo usamos |
 |---|---|---|

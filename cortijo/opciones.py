@@ -18,27 +18,29 @@ COL = {"sala": "#fff3c4", "priv": "#d6e6f5", "humedo": "#cfe8d5", "cocina": "#f9
 def R(x0, y0, x1, y1): return [(x0, y0), (x1, y0), (x1, y1), (x0, y1)]
 
 # salón: se adelanta un poco hacia la sala de estar (rincón de la chimenea)
-SALON_PB = [(3.40, 0.25), (7.75, 0.25), (7.75, 7.87), (5.55, 7.87), (5.55, 9.55), (3.45, 9.55), (3.45, 7.87), (3.12, 7.87)]
+SALON_PB = [(3.40, 0.25), (7.75, 0.25), (7.75, 7.87), (5.55, 7.87), (5.55, 9.55), (3.15, 9.55), (3.15, 7.87), (3.12, 7.87)]
+SALON_PB = list(Polygon(SALON_PB).difference(sbox(3.0, 4.85, 5.25, 7.05)).exterior.coords)[:-1]   # muesca del despacho (esquina oeste del salón)
 SALON_PA = [(3.40, 0.25), (9.30, 0.25), (9.30, 7.32), (3.12, 7.32)]
 HUB = [(3.15, 9.65), (5.65, 9.65), (5.65, 7.87), (7.15, 7.87), (7.15, 11.75), (3.15, 11.75)]
 
-PB = [("Salón con comedor", "sala", SALON_PB, (5.45, 4.6)), ("Pasillo de entrada\n(murete a media altura)", "circ", [(7.85, 0.25), (9.30, 0.25), (9.30, 7.32), (9.00, 7.32), (9.00, 7.87), (7.85, 7.87)]),
+PB = [("Salón con comedor", "sala", SALON_PB, (4.55, 4.15)), ("Pasillo de entrada\n(murete a media altura)", "circ", [(7.85, 0.25), (9.30, 0.25), (9.30, 7.32), (9.00, 7.32), (9.00, 7.87), (7.85, 7.87)]),
       ("Entrada", "circ", R(7.25, 7.87, 9.00, 8.95)), ("Escalera", "esc", R(7.25, 8.95, 9.00, 11.75)), ("Baño grande", "humedo", R(9.10, 8.85, 11.50, 11.25)),
-      ("Sala de estar\ny paso", "sala", HUB, (5.15, 10.7)), ("Cocina", "cocina", R(5.65, 11.85, 9.00, 15.75)), ("Despacho", "priv", R(3.75, 13.55, 5.55, 15.75), (4.65, 14.05)), ("Paso y\narmarios", "circ", R(3.75, 11.85, 5.55, 13.45), (4.65, 13.05)),
+      ("Sala de estar\ny paso", "sala", HUB, (5.15, 10.7)), ("Cocina", "cocina", R(6.40, 11.85, 9.00, 15.75)), ("Dormitorio 2", "priv", R(3.75, 11.85, 6.30, 15.75), (5.05, 12.85)), ("Despacho", "priv", R(3.20, 4.85, 5.25, 7.05), (4.25, 5.55)),
       ("Dormitorio principal", "priv", R(0.55, 11.85, 3.65, 15.75), (2.25, 12.55)), ("Vestidor", "priv", R(0.55, 9.45, 3.05, 11.75), (2.0, 10.6)),
       ("Baño", "humedo", R(0.55, 7.87, 3.05, 9.35), (1.85, 9.05))]
 PB_DOORS = [(7.85, 0.25, "H", 1.40, 1, 1),            # puerta de entrada de 1,40, pegada al muro este, abre hacia dentro
-            (9.05, 9.20, "V", 0.80, 0, 1), (5.75, 11.75, "H", 1.60, 0, 0),
-            (4.35, 11.75, "H", 0.80, 0, 1),            # sala -> despacho
+            (9.05, 9.20, "V", 0.80, 0, 1), (6.50, 11.75, "H", 1.50, 0, 0),
+            (4.40, 11.75, "H", 0.80, 0, 1),            # sala -> dormitorio 2
 
             (3.05, 10.20, "V", 0.90, 0, -1),           # de la sala directamente al vestidor
             (1.60, 9.35, "H", 0.80, 0, 0),            # vestidor -> baño (corredera)
             (1.40, 11.75, "H", 0.80, 0, 1),
-            (4.30, 13.45, "H", 0.80, 0, 1),            # vestidor -> dormitorio (a la derecha)
+            (5.25, 6.15, "V", 0.80, 0, 1),             # salón -> despacho
             (7.50, 15.75, "H", 1.00, 0, -1)]           # cocina -> patio del fondo
 PB_OPEN = [(5.60, 7.95, 5.60, 9.50), (5.70, 7.87, 7.05, 7.87), (7.20, 7.97, 7.20, 8.90)]
-VENTANAS = [(0.75, 15.75, 1.10), (2.35, 15.75, 1.10), (4.05, 15.75, 1.20), (6.05, 15.75, 1.20), (1.20, 7.32, 1.20)]      # (x, y de la cara interior del muro, ancho)
-VENTANAS_E = [(9.00, 13.00, 1.60)]                                                                      # ventana de cocina al este
+VENTANAS = [(0.75, 15.75, 1.10), (2.35, 15.75, 1.10), (4.60, 15.75, 1.20), (1.20, 7.32, 1.20)]      # (x, y de la cara interior del muro, ancho)
+VENTANAS_E = [(9.00, 13.00, 1.60)]
+VENTANAS_W = [(2.90, 5.90, 1.00)]                                                                       # ventana del despacho (muro oeste del salón)                                                                      # ventana de cocina al este
 
 PA = [("Terraza sobre el salón", "terraza", SALON_PA), ("Entrada", "circ", R(7.25, 7.87, 9.00, 8.95)), ("Escalera (hueco)", "esc", R(7.25, 8.95, 9.00, 11.75)),
       ("Baño", "humedo", R(9.10, 8.85, 10.55, 11.25)), ("Sala familiar\ny terraza", "sala", R(3.45, 7.87, 7.15, 11.75)),
@@ -74,21 +76,22 @@ def muebles_pb(ax):
     r(ax, 5.65, 2.05, 0.80, 1.35, "#efe6d6")                                                                                              # mesa baja
     r(ax, 3.60, 1.60, 0.16, 1.90, "#222"); ax.text(3.98, 3.60, "pantalla", fontsize=6.3, color="#333", va="bottom", zorder=8)              # televisión
     r(ax, 3.50, 8.75, 1.15, 0.80, "#d8d0c8"); r(ax, 3.65, 8.98, 0.85, 0.35, "#f4a742"); ax.text(4.05, 8.62, "chimenea", fontsize=6.3, color="#a33", ha="center", va="top", zorder=8)
-    r(ax, 4.55, 5.25, 1.00, 2.05, "#e8d5c0")
-    for y in (5.4, 6.1, 6.8): r(ax, 4.27, y, .22, .4); r(ax, 5.61, y, .22, .4)
-    ax.plot([3.55, 5.45], [4.9, 4.9], color="#a58", lw=.8, ls=":", zorder=6); ax.text(3.6, 5.0, "comedor", fontsize=6.3, color="#a58", va="bottom", zorder=8)
+    r(ax, 5.95, 5.25, 1.00, 2.05, "#e8d5c0")
+    for y in (5.4, 6.1, 6.8): r(ax, 5.67, y, .22, .4); r(ax, 7.01, y, .22, .4)
+    ax.plot([5.45, 7.45], [4.9, 4.9], color="#a58", lw=.8, ls=":", zorder=6); ax.text(5.5, 5.0, "comedor", fontsize=6.3, color="#a58", va="bottom", zorder=8)
     # suite como la referencia: cama con cabecero al fondo entre mesitas, banco a los pies, escritorio junto a la ventana, vestidor con armarios en L y baño con ducha, inodoro y lavabo doble
     r(ax, 1.65, 13.25, 2.00, 1.60, "#f7b98a"); r(ax, 3.20, 12.78, .42, .42); r(ax, 3.20, 14.90, .42, .42); r(ax, 1.20, 13.55, .38, 1.10, "#e9dcc8")   # cama (cabecero al este), mesitas, banco
     r(ax, 0.60, 13.10, 0.30, 1.30, "#e8d5c0", "||")                                                              # estantería del rincón de lectura
     r(ax, 0.70, 14.55, 0.75, 0.75, "#c7a7d9"); r(ax, 1.05, 15.25, 0.40, 0.40, "#e8d5c0"); ax.text(0.95, 14.40, "rincón de\nlectura", fontsize=5.6, color="#7a3", ha="left", va="top", zorder=12)   # sillón y mesita junto a la ventana
-    # despacho pequeño: mesa bajo la ventana, silla y estantes en la pared
-    r(ax, 4.15, 15.15, 1.30, 0.55, "#e8d5c0"); r(ax, 4.50, 14.55, 0.45, 0.45, "#c7a7d9"); r(ax, 3.80, 13.75, 0.28, 1.30, "#e8d5c0", "||")
-    r(ax, 5.22, 11.95, 0.28, 1.30, "#e8d5c0", "||")   # armario del paso
+    # despacho íntimo en la esquina oeste del salón: mesa bajo la ventana, silla y estantería al norte
+    r(ax, 3.25, 5.75, 0.60, 1.20, "#e8d5c0"); r(ax, 3.95, 6.05, 0.45, 0.45, "#c7a7d9"); r(ax, 3.35, 4.90, 1.75, 0.28, "#e8d5c0", "||")
+    # dormitorio 2: cama de 1,50 con cabecero al oeste, mesitas y armario
+    r(ax, 3.80, 13.55, 1.90, 1.50, "#f7b98a"); r(ax, 3.80, 13.07, .40, .40); r(ax, 3.80, 15.12, .40, .40); r(ax, 3.80, 11.95, .50, 1.00, "#e8d5c0", "||")
     r(ax, 0.55, 9.55, 0.55, 2.05, "#e8d5c0", "||"); r(ax, 1.10, 11.20, 1.90, 0.50, "#e8d5c0", "||")              # vestidor: armarios en L
     r(ax, 1.20, 9.55, 0.85, 0.30, "#f6f1e8")                                                                     # alfombra / banco
     r(ax, 0.60, 8.42, 0.90, 0.90, "#eef"); r(ax, 1.75, 8.85, 0.40, 0.40); r(ax, 2.20, 7.92, 0.80, 0.50); r(ax, 2.20, 8.47, 0.80, 0.50)   # ducha, inodoro, doble lavabo
     # cocina: isla y fregadero junto a la fachada del fondo
-    r(ax, 6.0, 13.2, 2.2, 0.8, "#eadcc4"); r(ax, 5.15, 15.2, 3.7, 0.5, "#eadcc4")
+    r(ax, 6.85, 13.0, 1.8, 0.8, "#eadcc4"); r(ax, 6.50, 15.2, 2.4, 0.5, "#eadcc4"); r(ax, 8.50, 11.95, 0.45, 1.2, "#eadcc4")
 
 
 def dibujar(ax, rooms, doors, planta, abiertos=()):
@@ -113,6 +116,7 @@ def dibujar(ax, rooms, doors, planta, abiertos=()):
         ax.add_patch(Rectangle((3.55, 0.0), 4.00, 0.25, fc="#bfe3f8", ec="#2f8fd0", lw=1.4, zorder=6))
         ax.text(5.5, -0.15, "cristalera de suelo a techo (4,00 m) junto a la puerta", ha="center", va="top", fontsize=6.6, color="#1f6fa8", zorder=8)
         for (x, y, w) in VENTANAS: ax.add_patch(Rectangle((x, y), w, 0.55 if y > 10 else -0.55, fc="#bfe3f8", ec="#2f8fd0", lw=1.0, zorder=6))
+        for (x, y, w) in VENTANAS_W: ax.add_patch(Rectangle((x, y), 0.28, w, fc="#bfe3f8", ec="#2f8fd0", lw=1.0, zorder=6))
         for (x, y, w) in VENTANAS_E: ax.add_patch(Rectangle((x, y), 0.55, w, fc="#bfe3f8", ec="#2f8fd0", lw=1.0, zorder=6))
     for (x0, y0, x1, y1) in abiertos: ax.plot([x0, x1], [y0, y1], color="white", lw=5, solid_capstyle="butt", zorder=7)
     for d in doors: door(ax, d)
@@ -124,14 +128,15 @@ def dibujar(ax, rooms, doors, planta, abiertos=()):
 
 
 IDEAS = ["Suite como la referencia: vestidor con armarios en L (por eso el dormitorio no lleva armario), baño con ducha, inodoro y lavabo doble, y en el dormitorio un rincón de lectura junto a la ventana (sillón, mesita y estantería).",
-         "Cocina de 15 m² con puerta y ventana al fondo y ventana al este. Salón con comedor, sofá en U, pantalla grande y chimenea en el rincón.",
-         "Despacho íntimo (4 m²) con ventana, al fondo de un pasillito de armarios que sale de la sala de estar; el Dormitorio 3 de arriba sigue libre. Arriba sin pasillo: la escalera da a una sala familiar."]
+         "Cocina de 10 m² con puerta al patio del fondo y ventana al este. Salón con comedor, sofá en U, pantalla grande y chimenea en el rincón.",
+         "Abajo dos dormitorios: la suite y el Dormitorio 2 (10 m², con ventana al fondo). Despacho íntimo de 4,5 m² en la esquina oeste del salón, con ventana propia. Arriba sin pasillo: la escalera da a una sala familiar y 3 dormitorios."]
 
 if __name__ == "__main__":
     fig = plt.figure(figsize=(13, 9.5)); fig.suptitle("Distribución propuesta", fontsize=14, weight="bold", x=0.02, ha="left")
     ax1 = fig.add_axes([0.02, 0.10, 0.46, 0.80]); ax2 = fig.add_axes([0.51, 0.10, 0.46, 0.80])
     c1, t1 = dibujar(ax1, PB, PB_DOORS, "PB", PB_OPEN); c2, t2 = dibujar(ax2, PA, PA_DOORS, "PA", PA_OPEN)
-    fig.text(0.02, 0.06, "\n".join("• " + t for t in IDEAS), fontsize=8.6, va="top")
+    import textwrap
+    fig.text(0.02, 0.07, "\n".join(textwrap.fill("• " + t, 150, subsequent_indent="  ") for t in IDEAS), fontsize=8.2, va="top")
     fig.text(0.98, 0.012, f"Circulación: {c1 + c2:.1f} m² · Norte abajo (calle) · sur arriba (fondo) · Medidas orientativas", fontsize=8, va="bottom", ha="right", color="#555")
     fig.savefig("distribucion.png", dpi=110)
     for room in PB:
@@ -155,7 +160,7 @@ def suite_png():
         except Exception: pass
     for t in ax.texts:
         if t.get_text() in ("Escritorio","Ducha","Armarios en L","Cama 1,60 × 2,00"): t.set_visible(False)
-    ax.set_title("Suite principal (detalle): dormitorio 12 m², vestidor 5,8 m², baño 3,7 m², despacho 4 m²", fontsize=11, weight="bold")
+    ax.set_title("Suite principal (detalle): dormitorio 12 m², vestidor 5,8 m², baño 3,7 m²", fontsize=11, weight="bold")
     fig.savefig("suite.png", dpi=120, bbox_inches="tight"); plt.close(fig)
 
 if __name__ == "__main__": suite_png()

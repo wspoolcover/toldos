@@ -2,7 +2,7 @@
 import sys, numpy as np, trimesh, matplotlib; matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d.art3d import Poly3DCollection
-sc = trimesh.load("casa_v4.glb")
+sc = trimesh.load("casa_v5.glb")
 def render(skip, out, elev=38, azim=-62, title=""):
     fig = plt.figure(figsize=(11, 8)); ax = fig.add_subplot(111, projection="3d"); allv = []
     for name, g in sc.geometry.items():
@@ -16,5 +16,5 @@ def render(skip, out, elev=38, azim=-62, title=""):
     a = np.vstack(allv); mn, mx = a.min(0), a.max(0); c = (mn + mx) / 2; r = (mx - mn).max() / 2
     ax.set_xlim(c[0] - r, c[0] + r); ax.set_ylim(c[1] - r, c[1] + r); ax.set_zlim(0, 2 * r); ax.set_box_aspect((1, 1, 1))
     ax.view_init(elev, azim); ax.axis("off"); ax.set_title(title); fig.savefig(out, dpi=110, bbox_inches="tight"); plt.close(fig)
-render([], "cortijo_3d.png", title="Cortijo — vista exterior (v4)")
-render(["muros_PA", "forjado_PB_PA", "forjado_salon", "parapeto_terraza", "forjado_cubierta", "parapeto", "lucernario", "tabiques_PA", "cristal_PA", "acero_vigas_cubierta"], "cortijo_3d_PB.png", elev=62, azim=-70, title="Planta baja sin planta alta (v4)")
+render([], "cortijo_3d.png", title="Cortijo — vista exterior (v5)")
+render(["muros_PA", "forjado_PB_PA", "forjado_salon", "parapeto_terraza", "forjado_cubierta", "parapeto", "lucernario", "tabiques_PA", "cristal_PA", "acero_vigas_cubierta"], "cortijo_3d_PB.png", elev=62, azim=-70, title="Planta baja sin planta alta (v5)")
