@@ -106,7 +106,7 @@ cristal_pa = box(3.45, Y_FAC0 + 0.25, Z_PA, XI1 - 3.45, 0.04, H_PA - T_LOSA).cut
 puerta_terraza = box(3.40, Y_FAC0 + 0.19, Z_PA, 1.60, 0.03, 2.20).union(box(6.60, Y_FAC0 + 0.19, Z_PA, 1.60, 0.03, 2.20))   # dos hojas correderas abiertas, delante del fijo
 marco_terraza = box(4.95, Y_FAC0 + 0.17, Z_PA, 1.70, 0.08, 2.25).cut(box(5.00, Y_FAC0, Z_PA - .01, 1.60, 1, 2.20))
 # carpintería de estilo cortijo: marcos y contraventanas de madera, vidrio en cada ventana, puertas de madera; solado de barro en la terraza
-_vid, _mad, _pue = [], [], []
+_vid, _mad, _pue = {"PB": [], "PA": []}, {"PB": [], "PA": []}, {"PB": [], "PA": []}
 for pl, ori, pos, t, ini, w_, tipo, sw, tag, sill, hh in OPEN:
     if t < 0.2 or tag == "CR": continue
     z0 = (0 if pl == "PB" else Z_PA) + sill; f = 0.07
@@ -118,8 +118,8 @@ for pl, ori, pos, t, ini, w_, tipo, sw, tag, sill, hh in OPEN:
         marco = box(pos + t / 2 - .03, ini, z0, .06, w_, hh).cut(box(pos, ini + f, z0 + f, t, w_ - 2 * f, hh - 2 * f))
         hoja = box(pos + t / 2 - .015, ini + f, z0 + f, .03, w_ - 2 * f, hh - 2 * f)
         cv = [box(pos + (t + .02 if pos > 9 else -.06), ini - w_ / 2 - .02, z0, .04, w_ / 2, hh), box(pos + (t + .02 if pos > 9 else -.06), ini + w_ + .02, z0, .04, w_ / 2, hh)]
-    if tipo == "V": _vid.append(hoja); _mad.append(marco); _mad += cv
-    else: _pue.append(hoja); _mad.append(marco)
+    if tipo == "V": _vid[pl].append(hoja); _mad[pl].append(marco); _mad[pl] += cv
+    else: _pue[pl].append(hoja); _mad[pl].append(marco)
 carpinteria_madera, vidrios, puertas_madera = comp(_mad) if False else None, None, None
 
 
@@ -201,7 +201,7 @@ d = E["dintel"]["perfil"]
 add("dintel", d, 4.40, viga_x(d, 3.35, 7.75, T_S / 2, 2.55 + SECC[d][0] / 1000), (3.35, T_S / 2, 7.75, T_S / 2, d))
 
 def comp(lst): return cq.Workplane("XY").newObject([cq.Compound.makeCompound([s.val() for s in lst])])
-carpinteria_madera, vidrios, puertas_madera = comp(_mad), comp(_vid), comp(_pue)
+carp = {pl: (comp(_mad[pl]), comp(_vid[pl]), comp(_pue[pl])) for pl in ("PB", "PA")}
 solado_terraza = prisma(SB, Z_PA, 0.02, -T_S)
 puerta_entrada = box(7.85, T_S / 2 - .025, 0, 1.40, .05, 2.20)
 acero = {k: comp(v) for k, v in sols.items() if v}
@@ -239,7 +239,7 @@ partes = [("cimentacion", cimentacion, (.55, .55, .55)), ("muros_PB", muros_pb, 
           ("tabiques_PB", tab_pb, (.95, .95, .92)), ("tabiques_PA", tab_pa, (.95, .95, .92)), ("murete_pasillo", murete, (.90, .88, .80)),
           ("escalera", escalera, (.60, .45, .30)), ("lucernario", lucernario, (.55, .75, .90)),
           ("cristal_PB", cristal_pb, (.55, .75, .90)), ("cristal_PA", cristal_pa, (.55, .75, .90)), ("vidrios_terraza", puerta_terraza, (.55, .75, .90)), ("carpinteria_terraza", marco_terraza, (.35, .22, .12)),
-          ("carpinteria_madera", carpinteria_madera, (.35, .22, .12)), ("vidrios", vidrios, (.55, .75, .90)), ("puertas_madera", puertas_madera, (.35, .22, .12)), ("puerta_entrada", puerta_entrada, (.35, .22, .12)), ("solado_terraza", solado_terraza, (.70, .40, .25)),
+          *[(f"carpinteria_{pl}", carp[pl][0], (.35, .22, .12)) for pl in carp], *[(f"vidrios_{pl}", carp[pl][1], (.55, .75, .90)) for pl in carp], *[(f"puertas_{pl}", carp[pl][2], (.35, .22, .12)) for pl in carp], ("puerta_entrada", puerta_entrada, (.35, .22, .12)), ("solado_terraza", solado_terraza, (.70, .40, .25)),
           ("mobiliario", mobiliario, (.78, .68, .55)), ("chimenea", chimenea, (.60, .30, .25)), ("paneles_solares", paneles_solares, (.10, .15, .35)), ("aerotermia", aerotermia, (.80, .80, .82))]
 partes += [("acero_" + k, v, (.20, .32, .55)) for k, v in acero.items()]
 KGTOT = sum(KG.values())

@@ -64,7 +64,8 @@ w.node_tree.links.new(sky.outputs[0], w.node_tree.nodes["Background"].inputs[0])
 bpy.ops.object.light_add(type="SUN", location=(0, 0, 20)); sun = bpy.context.object; sun.data.energy = 3.5; sun.rotation_euler = (math.radians(42), 0, math.radians(-25))
 cam = bpy.data.cameras.new("c"); co = bpy.data.objects.new("cam", cam); sc.collection.objects.link(co); sc.camera = co; cam.lens = 30
 
-def shoot(name, loc, target, hide=()):
+def shoot(name, loc, target, hide=(), exposure=-0.9, world=0.06):
+    sc.view_settings.exposure = exposure; w.node_tree.nodes["Background"].inputs[1].default_value = world
     for ob in bpy.data.objects:
         if ob.type == "MESH" and ob.name not in ("Plane",): ob.hide_render = any(ob.name.startswith(h) for h in hide) or ob.name.startswith(("cimentacion", "riostras"))
     co.location = loc; d = [t - l for t, l in zip(target, loc)]
@@ -72,7 +73,5 @@ def shoot(name, loc, target, hide=()):
     co.rotation_euler = Vector(d).to_track_quat("-Z", "Y").to_euler()
     sc.render.filepath = OUT + name + ".png"; bpy.ops.render.render(write_still=True); print("render", name)
 
-shoot("exterior_norte", (-6, -14, 7), (5, 7, 2.5))
-shoot("exterior_sur", (18, 24, 9), (5, 9, 2.5))
-shoot("planta_baja_abierta", (-2, -4, 16), (5, 8.5, 0.5), hide=("muros_PA", "forjado_PB_PA", "forjado_salon", "forjado_cubierta", "parapeto", "lucernario", "tabiques_PA", "cristal_PA", "acero_vigas_cubierta", "zuncho_cubierta", "paneles", "acero_pilares"))
-shoot("salon_interior", (5.2, 1.2, 1.6), (4.2, 7.5, 1.3), hide=("muros_PA", "forjado_cubierta", "parapeto", "lucernario", "tabiques_PA", "cristal_PA", "acero_vigas_cubierta", "zuncho_cubierta", "paneles"))
+shoot("planta_baja_abierta", (-2, -4, 16), (5, 8.5, 0.5), hide=("muros_PA", "forjado_PB_PA", "forjado_salon", "forjado_cubierta", "parapeto", "lucernario", "tabiques_PA", "cristal_PA", "acero_vigas_cubierta", "zuncho_cubierta", "paneles", "acero_pilares", "carpinteria_PA", "vidrios_PA", "puertas_PA", "vidrios_terraza", "carpinteria_terraza", "cristal_PA"))
+shoot("salon_interior", (5.2, 1.2, 1.6), (4.2, 7.5, 1.3), hide=("muros_PA", "forjado_cubierta", "parapeto", "lucernario", "tabiques_PA", "cristal_PA", "acero_vigas_cubierta", "zuncho_cubierta", "paneles"), exposure=0.9, world=0.5)
