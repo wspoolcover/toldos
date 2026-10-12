@@ -7,6 +7,7 @@ Proyecto personal. Polígono 33, parcela 198, San Roque (Albox). Arquitecto de l
 - Modelo 3D **v7** (actual, con paneles solares y aerotermia): `casa_v7.step` (FreeCAD/CAD) y `casa_v7.glb` (Blender/visor). Se genera con `python casa_v7.py` (CadQuery). Los v6 y anteriores se conservan.
 - Planos DXF v5: plantas, secciones y dos láminas A1 (`*_v7.dxf`).
 - Vistas: `cortijo_3d.png`, `cortijo_3d_PB.png` (se generan con `vista3d.py`).
+- Render realista (Blender como módulo `bpy`, Cycles, materiales procedurales, estilo cortijo andaluz/mallorquín: encalado, piedra marés en el salón, madera oscura, barro cocido): `render_blender.py` → `render_*.png`. Se ejecuta con `python render_blender.py 48` (48 = muestras).
 - Estructura (líneas de vigas x = 3,10 / 5,55 / 7,20; acero ≈ 3,7 t): `estructura.py` → `memoria_estructura.md`; sismo en `sismo.py`; ahorro en `abaratar.md`; dossier para albañiles `dossier_obra.pdf` (distribución anterior).
 - Instalaciones: `instalaciones.py` → `instalaciones.png` (fontanería, electricidad, climatización por planta) y `cubierta_solar.png`.
 - Presupuesto y ahorro: `docs/08_presupuesto_y_ahorro.md`.

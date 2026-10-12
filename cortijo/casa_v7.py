@@ -102,6 +102,23 @@ losa_cubierta = losa(NB_PA, Z_TOP, VOID)
 lucernario = box(VOID[0] - .05, VOID[1] - .05, Z_TOP, VOID[2] - VOID[0] + .10, VOID[3] - VOID[1] + .10, .05)
 cristal_pb = box(3.55, 0.10, 0.0, 4.00, 0.04, 2.55)
 cristal_pa = box(3.45, Y_FAC0 + 0.25, Z_PA, XI1 - 3.45, 0.04, H_PA - T_LOSA)   # cierre acristalado de la casa hacia la terraza
+# carpintería de estilo cortijo: marcos y contraventanas de madera, vidrio en cada ventana, puertas de madera; solado de barro en la terraza
+_vid, _mad, _pue = [], [], []
+for pl, ori, pos, t, ini, w_, tipo, sw, tag, sill, hh in OPEN:
+    if t < 0.2 or tag == "CR": continue
+    z0 = (0 if pl == "PB" else Z_PA) + sill; f = 0.07
+    if ori == "H":
+        marco = box(ini, pos + t / 2 - .03, z0, w_, .06, hh).cut(box(ini + f, pos, z0 + f, w_ - 2 * f, t, hh - 2 * f))
+        hoja = box(ini + f, pos + t / 2 - .015, z0 + f, w_ - 2 * f, .03, hh - 2 * f)
+        cv = [box(ini - w_ / 2 - .02, pos + (t + .02 if pos < 8 else -.06), z0, w_ / 2, .04, hh), box(ini + w_ + .02, pos + (t + .02 if pos < 8 else -.06), z0, w_ / 2, .04, hh)]
+    else:
+        marco = box(pos + t / 2 - .03, ini, z0, .06, w_, hh).cut(box(pos, ini + f, z0 + f, t, w_ - 2 * f, hh - 2 * f))
+        hoja = box(pos + t / 2 - .015, ini + f, z0 + f, .03, w_ - 2 * f, hh - 2 * f)
+        cv = [box(pos + (t + .02 if pos > 9 else -.06), ini - w_ / 2 - .02, z0, .04, w_ / 2, hh), box(pos + (t + .02 if pos > 9 else -.06), ini + w_ + .02, z0, .04, w_ / 2, hh)]
+    if tipo == "V": _vid.append(hoja); _mad.append(marco); _mad += cv
+    else: _pue.append(hoja); _mad.append(marco)
+carpinteria_madera, vidrios, puertas_madera = comp(_mad) if False else None, None, None
+
 
 def tabiques(pl):
     z0, h = (0, Z_PA - T_LOSA) if pl == "PB" else (Z_PA, H_PA - T_LOSA)
@@ -181,6 +198,9 @@ d = E["dintel"]["perfil"]
 add("dintel", d, 4.40, viga_x(d, 3.35, 7.75, T_S / 2, 2.55 + SECC[d][0] / 1000), (3.35, T_S / 2, 7.75, T_S / 2, d))
 
 def comp(lst): return cq.Workplane("XY").newObject([cq.Compound.makeCompound([s.val() for s in lst])])
+carpinteria_madera, vidrios, puertas_madera = comp(_mad), comp(_vid), comp(_pue)
+solado_terraza = prisma(SB, Z_PA, 0.02, -T_S)
+puerta_entrada = box(7.85, T_S / 2 - .025, 0, 1.40, .05, 2.20)
 acero = {k: comp(v) for k, v in sols.items() if v}
 
 # ---------------- hormigón: forjado del salón (vigueta y bovedilla), zunchos perimetrales y riostras de cimentación ----------------
@@ -216,6 +236,7 @@ partes = [("cimentacion", cimentacion, (.55, .55, .55)), ("muros_PB", muros_pb, 
           ("tabiques_PB", tab_pb, (.95, .95, .92)), ("tabiques_PA", tab_pa, (.95, .95, .92)), ("murete_pasillo", murete, (.90, .88, .80)),
           ("escalera", escalera, (.60, .45, .30)), ("lucernario", lucernario, (.55, .75, .90)),
           ("cristal_PB", cristal_pb, (.55, .75, .90)), ("cristal_PA", cristal_pa, (.55, .75, .90)),
+          ("carpinteria_madera", carpinteria_madera, (.35, .22, .12)), ("vidrios", vidrios, (.55, .75, .90)), ("puertas_madera", puertas_madera, (.35, .22, .12)), ("puerta_entrada", puerta_entrada, (.35, .22, .12)), ("solado_terraza", solado_terraza, (.70, .40, .25)),
           ("mobiliario", mobiliario, (.78, .68, .55)), ("chimenea", chimenea, (.60, .30, .25)), ("paneles_solares", paneles_solares, (.10, .15, .35)), ("aerotermia", aerotermia, (.80, .80, .82))]
 partes += [("acero_" + k, v, (.20, .32, .55)) for k, v in acero.items()]
 KGTOT = sum(KG.values())
