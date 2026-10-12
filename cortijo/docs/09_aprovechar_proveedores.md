@@ -5,7 +5,7 @@ Tienes acceso a precio de coste en puertas, ventanas y hierro. No he abierto las
 ## Qué conviene comprar por tu canal (de mayor a menor ahorro posible)
 1. **Hierro (≈ 4,5 t con escalera, barandillas y soportes solares):** es la partida más pesada. Pide a tu proveedor los perfiles en bruto, ya cortados a la lista de la hoja «Hierro». Referencia de mercado: perfil en bruto ≈ 1,0–1,6 €/kg frente a 2,4–5,5 €/kg ya montado.
 2. **Ventanas y cristaleras de PVC (≈ 37 m²):** 8 ventanas, la cristalera del salón de 4,00 × 2,55 m, el cierre fijo de la planta alta y el fijo del despacho. Con contraventanas y mosquiteras.
-3. **Puertas (12):** entrada de 1,40 m, puerta de la cocina al patio, corredera a la terraza y 9 interiores. Si tu canal tiene puerta de hierro con vidrio para la entrada, encaja con el estilo cortijo.
+3. **Puertas (13):** entrada de 1,40 m, puerta de la cocina al patio, corredera a la terraza y 10 interiores. Si tu canal tiene puerta de hierro con vidrio para la entrada, encaja con el estilo cortijo.
 4. **Escalera de acero, barandillas y soportes de los paneles solares:** el taller puede fabricarlas y galvanizarlas junto con la estructura.
 5. **Opcionales de hierro:** pérgola de la terraza, rejas de las ventanas bajas del sur, cancela del patio.
 
