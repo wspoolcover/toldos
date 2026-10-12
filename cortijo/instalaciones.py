@@ -26,16 +26,16 @@ def fontaneria(ax, planta):
     base(ax, planta)
     if planta == "PB":
         ax.set_ylim(-4.6, 19.0)
-        # acometida de agua por el sur (como en el proyecto original, PL-08): arqueta y contador en el patio, junto a la cocina
-        caja(ax, 6.55, 16.85, 0.8, 0.4, AZ, "contador", fs=5); linea(ax, [(6.95, 18.6), (6.95, 17.25)], AZ, 2.4); ax.text(7.15, 18.4, "acometida de agua\n(sur, terreno propio)", fontsize=5.5, color=AZ, va="top")
+        # acometida de agua por el sur, que da a la calle (como en el proyecto original, PL-08): arqueta y contador en la acera, junto a la cocina
+        caja(ax, 6.55, 16.85, 0.8, 0.4, AZ, "contador", fs=5); linea(ax, [(6.95, 18.6), (6.95, 17.25)], AZ, 2.4); ax.text(7.15, 18.4, "acometida de agua\n(sur, desde la calle)", fontsize=5.5, color=AZ, va="top")
         caja(ax, 7.30, 9.15, 0.85, 1.0, GR, "módulo\nhidr. +\nACS 200 L", fs=4.6)
         linea(ax, [(6.95, 16.85), (6.95, 12.2)], AZ, 1.6); linea(ax, [(6.95, 15.95), (7.7, 15.95), (7.7, 15.45)], AZ)
         linea(ax, [(6.95, 12.2), (3.0, 12.2), (3.0, 9.4), (1.6, 9.4), (1.6, 8.3)], AZ); linea(ax, [(6.95, 12.2), (8.9, 12.2), (8.9, 11.0), (9.3, 11.0)], AZ)
         linea(ax, [(7.25, 9.8), (7.0, 9.8), (7.0, 12.35)], RO, 1.6)                                                      # agua caliente: sale del módulo y se reparte por el falso techo de la sala
         linea(ax, [(7.02, 12.35), (3.12, 12.35), (3.12, 9.52), (1.72, 9.52), (1.72, 8.42)], RO); linea(ax, [(7.02, 12.35), (9.02, 12.35), (9.02, 11.12), (9.3, 11.12)], RO); linea(ax, [(7.02, 12.35), (7.02, 16.05), (7.82, 16.05), (7.82, 15.55)], RO)
         for x, y, t in ((9.3, 11.05, "B"), (7.7, 15.45, "C"), (1.6, 8.3, "B")): punto(ax, x, y, AZ, t)
-        # aerotermia: unidad exterior en el patio sur; tubos aislados ida/retorno por el exterior hasta la puerta de la cocina
-        caja(ax, 4.8, 16.45, 1.0, 0.5, GR, "unidad ext.\naerotermia", fs=4.6); linea(ax, [(5.8, 16.7), (8.9, 16.7), (8.9, 16.2), (8.9, 12.45), (7.05, 12.45), (7.05, 10.0), (7.25, 10.0)], GR, 1.6, "--")
+        # aerotermia: la unidad exterior va sobre la cubierta (el sur da a la calle); los tubos bajan por el hueco de la escalera hasta el módulo
+        linea(ax, [(8.1, 10.0), (8.1, 9.6), (7.7, 9.6)], GR, 1.6, "--"); ax.text(8.25, 12.0, "tubos de aerotermia\nbajan por el hueco\nde la escalera", fontsize=4.8, color=GR)
         # saneamiento (verde): bajantes de los tres húmedos y colector enterrado bajo la solera hasta la fosa séptica del norte (PL-09)
         for x, y in ((1.9, 8.1), (9.3, 10.4), (6.6, 15.5)): punto(ax, x, y, VE, "Ø110", r=.22, fs=4.3)
         linea(ax, [(1.9, 8.1), (1.9, 8.0), (5.9, 8.0)], VE, 2, "--"); linea(ax, [(9.3, 10.4), (9.3, 12.1), (5.9, 12.1), (5.9, 8.0)], VE, 2, "--"); linea(ax, [(6.6, 15.5), (6.6, 12.1)], VE, 2, "--")
@@ -82,7 +82,7 @@ def clima(ax, planta):
             for k in range(int((y1 - y0) / .3)): linea(ax, [(x0 + .1, y0 + .15 + k * .3), (x1 - .1, y0 + .15 + k * .3)], RO, .7, z=18)
             ax.text((x0 + x1) / 2, (y0 + y1) / 2, t, fontsize=5.5, color=RO, ha="center", va="center", zorder=25, bbox=dict(fc="white", ec="none", alpha=.8, pad=1))
         caja(ax, 7.3, 9.15, .85, 1.0, RO, "módulo +\ncolector SR\n(armario bajo\nla escalera)", fs=4.2); linea(ax, [(7.25, 9.7), (6.6, 9.7)], RO, 2)
-        caja(ax, 4.8, 16.45, 1.0, .5, GR, "aerotermia\n8 kW (patio sur)", fs=4.4); ax.set_ylim(-0.9, 18.0)
+        ax.set_ylim(-0.9, 18.0); ax.text(8.0, 12.15, "unidad exterior 8 kW\nsobre la cubierta", fontsize=4.8, color=GR)
         ax.text(2.0, 5.5, "suelo radiante (SR) en toda la planta baja: 109 m², tubo PE-X paso 15 cm, mortero 5 cm\n+ 3 cm de aislamiento bajo el tubo. Calefacción en invierno y refrescamiento suave en verano.", fontsize=5.6, color=RO, ha="center")
         ax.text(3.75, 6.2, "chimenea\ninsert 7 kW", fontsize=5.3, color="#a33", ha="center")
         ax.set_title("CLIMATIZACIÓN · planta baja (aerotermia + suelo radiante)", fontsize=10, weight="bold")
@@ -103,10 +103,11 @@ def cubierta(ax):
             if c >= 5 and f == 0: continue
             ax.add_patch(Rectangle((1.0 + c * 1.15, 8.6 + f * 2.1), 1.05, 1.75, fc="#1c2a4a", ec="#9ab", lw=.6))
     ax.add_patch(Rectangle((7.25, 8.95), 1.75, 2.8, fc="#bfe3f8", ec="#2f8fd0", hatch="//")); ax.text(8.1, 10.35, "lucernario\nescalera", ha="center", va="center", fontsize=5.5)
+    ax.add_patch(Rectangle((8.25, 12.4), .95, .45, fc="#d0d0d4", ec="#555", lw=1)); ax.text(8.7, 13.0, "aerotermia\n8 kW", ha="center", fontsize=5.5, color="#333")
     ax.add_patch(Rectangle((3.40, 6.55), .5, .5, fc="#a33")); ax.text(3.65, 7.2, "humero", fontsize=5.5, ha="center", color="#a33")
     for x, y in ((4.0, 12.6), (6.5, 12.6), (2.0, 10.6), (2.0, 14.6)): ax.add_patch(Circle((x, y), .12, fc=AZ)); 
     ax.text(5.0, 15.9, "17 paneles de 450 W ≈ 7,6 kWp, orientados al SUR (inclinación 25-30°), sobre soportes lastrados\nsobre grava + sedum. Pendiente 1,5 % a 4 sumideros. Aislamiento XPS 10 cm invertido.", ha="center", fontsize=5.8)
-    ax.text(5.0, 17.0, "fondo · SUR", ha="center", fontsize=7, color="#555"); ax.text(5.0, -0.5, "calle · NORTE", ha="center", fontsize=7, color="#555")
+    ax.text(5.0, 17.0, "sur · calle", ha="center", fontsize=7, color="#555"); ax.text(5.0, -0.5, "norte · terreno propio", ha="center", fontsize=7, color="#555")
     ax.set_xlim(-0.6, 12.6); ax.set_ylim(-0.9, 17.5); ax.set_aspect("equal"); ax.axis("off"); ax.set_title("CUBIERTA: fotovoltaica, sedum y pluviales", fontsize=10, weight="bold")
 
 if __name__ == "__main__":

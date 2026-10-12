@@ -29,7 +29,7 @@ def paint(ax, poly, **kw):
 def ejes(ax, title):
     ax.set_xlim(-1.0, 13.2); ax.set_ylim(-1.6, 17.6); ax.set_aspect("equal"); ax.axis("off"); ax.set_title(title, fontsize=11, weight="bold", loc="left")
     ax.annotate("", xy=(-0.4, -0.9), xytext=(-0.4, 1.2), arrowprops=dict(arrowstyle="-|>", lw=1.4), annotation_clip=False); ax.text(-0.4, 1.4, "N", ha="center", fontsize=10, weight="bold")
-    ax.text(6.0, 17.2, "fondo · SUR (patio propio)", ha="center", fontsize=7, color=GR); ax.text(6.0, -1.3, "calle · NORTE", ha="center", fontsize=7, color=GR)
+    ax.text(6.0, 17.2, "sur · CALLE (fachada con CGP y rejas)", ha="center", fontsize=7, color=GR); ax.text(6.0, -1.3, "norte · terreno propio (entrada)", ha="center", fontsize=7, color=GR)
     ax.text(-0.9, 12.0, "casa vecina (oeste)", rotation=90, fontsize=7, color=RO, va="center"); ax.text(12.9, 10.0, "casa vecina (este)", rotation=90, fontsize=7, color=RO, va="center")
 
 def cimentacion(ax):

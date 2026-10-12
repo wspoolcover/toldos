@@ -1,5 +1,5 @@
 """Distribución propuesta (esquema en planta). Coordenadas del croquis en metros; muros existentes de 0,55 m.
-Abajo del croquis = NORTE (calle, entrada y salón); arriba = SUR (fachada del fondo: cocina y dormitorio principal)."""
+Abajo del croquis = NORTE (terreno propio: entrada y salón); arriba = SUR (fachada ancha a la calle: cocina y dormitorio principal)."""
 import math
 import matplotlib; matplotlib.use("Agg")
 import matplotlib.pyplot as plt
@@ -35,7 +35,7 @@ PB_DOORS = [(7.85, 0.25, "H", 1.40, 1, 1),            # puerta de entrada de 1,4
             (1.60, 9.35, "H", 0.80, 0, 0),            # vestidor -> baño (corredera)
             (1.40, 11.75, "H", 0.80, 0, 1),
             (4.35, 9.55, "H", 0.85, 0, 1),             # sala de estar -> despacho
-            (7.50, 15.75, "H", 1.00, 0, -1)]           # cocina -> patio del fondo
+            (7.50, 15.75, "H", 1.00, 0, -1)]           # cocina -> calle (puerta de servicio)
 PB_OPEN = [(5.60, 7.95, 5.60, 9.50), (5.70, 7.87, 7.05, 7.87), (7.20, 7.97, 7.20, 8.90)]
 VENTANAS = [(0.75, 15.75, 1.10), (2.35, 15.75, 1.10), (4.60, 15.75, 1.20), (6.45, 15.75, 0.90)]      # (x, y de la cara interior del muro, ancho)
 VENTANAS_E = []                                                                                         # medianeras este y oeste: sin ventanas
@@ -127,14 +127,14 @@ def dibujar(ax, rooms, doors, planta, abiertos=()):
     for (x0, y0, x1, y1) in abiertos: ax.plot([x0, x1], [y0, y1], color="white", lw=5, solid_capstyle="butt", zorder=7)
     for d in doors: door(ax, d)
     ax.annotate("", xy=(-0.1, -0.6), xytext=(-0.1, 1.6), arrowprops=dict(arrowstyle="-|>", color="#222", lw=1.6), annotation_clip=False)
-    ax.text(-0.1, 1.85, "N", ha="center", fontsize=11, weight="bold"); ax.text(11.9, -0.4, "calle · NORTE", ha="right", fontsize=7, color="#555"); ax.text(11.9, 17.05, "fondo · SUR", ha="right", fontsize=7, color="#555")
+    ax.text(-0.1, 1.85, "N", ha="center", fontsize=11, weight="bold"); ax.text(11.9, -0.4, "norte · terreno propio (entrada)", ha="right", fontsize=7, color="#555"); ax.text(11.9, 17.05, "sur · calle (fachada con CGP)", ha="right", fontsize=7, color="#555")
     ax.set_xlim(-0.6, 12.6); ax.set_ylim(-0.9, 17.3); ax.set_aspect("equal"); ax.axis("off")
     ax.set_title("PLANTA BAJA" if planta == "PB" else "PLANTA ALTA", fontsize=10, weight="bold")
     return circ, total
 
 
 IDEAS = ["Suite como la referencia: vestidor con armarios en L (por eso el dormitorio no lleva armario), baño con ducha, inodoro y lavabo doble, y en el dormitorio un rincón de lectura junto a la ventana (sillón, mesita y estantería).",
-         "Cocina de 10 m² en U (sin isla), puerta al patio del fondo y ventana sobre la encimera. Las paredes este y oeste son medianeras (casas vecinas pegadas): sin ventanas; los baños se ventilan con extractor. Salón con comedor, sofá en U, pantalla grande y chimenea en la esquina oeste.",
+         "Cocina de 10 m² en U (sin isla), puerta de servicio a la calle y ventana sobre la encimera. Las paredes este y oeste son medianeras (casas vecinas pegadas): sin ventanas; los baños se ventilan con extractor. Salón con comedor, sofá en U, pantalla grande y chimenea en la esquina oeste.",
          "Abajo dos dormitorios: la suite y el Dormitorio 2 (10 m², con ventana al fondo). Despacho íntimo de 3,8 m² pegado al vestidor (junto a la sala de estar), con cristal hacia el salón. La chimenea queda dentro del salón. Arriba sin pasillo: la escalera da a una sala familiar acristalada hacia la terraza (corredera de 1,42) y 3 dormitorios parejos (13-17 m²) con armarios empotrados."]
 
 if __name__ == "__main__":
@@ -143,7 +143,7 @@ if __name__ == "__main__":
     c1, t1 = dibujar(ax1, PB, PB_DOORS, "PB", PB_OPEN); c2, t2 = dibujar(ax2, PA, PA_DOORS, "PA", PA_OPEN)
     import textwrap
     fig.text(0.02, 0.075, "\n".join(textwrap.fill("• " + t, 150, subsequent_indent="  ") for t in IDEAS), fontsize=8.2, va="top")
-    fig.text(0.98, 0.955, f"Circulación: {c1 + c2:.1f} m² · Norte abajo (calle) · sur arriba (fondo) · Medidas orientativas", fontsize=8, va="top", ha="right", color="#555")
+    fig.text(0.98, 0.955, f"Circulación: {c1 + c2:.1f} m² · Norte abajo (entrada, terreno propio) · sur arriba (calle) · Medidas orientativas", fontsize=8, va="top", ha="right", color="#555")
     fig.savefig("distribucion.png", dpi=110)
     for room in PB:
         b=Polygon(room[2]).bounds; print(f"{room[0].splitlines()[0]:22s} {b[2]-b[0]:.2f} x {b[3]-b[1]:.2f} = {area(room[2]):.1f} m²")
