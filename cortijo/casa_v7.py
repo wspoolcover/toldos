@@ -84,7 +84,7 @@ for lx in LINES_X:
 
 _casa = anillo(NB_FULL, 0, Z_PA, T).cut(box(3.45, Y_FAC0 - .01, -.01, XI1 - 3.45, T + .02, Z_PA + .02))     # el muro de fachada existente se sustituye por viga
 _salon = anillo(SB, 0, Z_PA, T_S).cut(box(XE - W_SUR - 1, Y_JUNC - T_S - .01, -.01, W_SUR + 2, T_S + .02, Z_PA + .02))
-muros_pb = cortar(_casa.union(_salon), "PB", 0)
+muros_pb = cortar(_casa, "PB", 0); muros_salon = cortar(_salon, "PB", 0)
 # planta alta: casa sin muro de fachada (cierre acristalado), saliente de baño con muros ligeros y solo la mitad de fondo
 pa = anillo(NB_MAIN, Z_PA, H_PA, T).cut(box(3.45, Y_FAC0 - .01, Z_PA - .01, XI1 - 3.45, T + .02, H_PA + .02))
 pa = pa.cut(box(XI1 - .01, Y_E1, Z_PA - .01, T + .02, Y_E2 - Y_E1, H_PA + .02))
@@ -210,7 +210,7 @@ paneles_solares = comp(PANELES)
 aerotermia = comp([box(9.65, 8.5, 0.0, 0.40, 1.00, 1.30), box(9.65, 9.6, 0.0, 0.40, 0.60, 1.60)])   # unidad exterior y acumulador junto al saliente del baño (patio este)
 chimenea = comp([box(3.30, 6.20, 0, .85, 1.30, 1.25), box(3.40, 6.55, 1.25, .50, .50, Z_TOP + 1.0 - 1.25)])   # hogar y humero, sube por la esquina hasta pasar la cubierta
 
-partes = [("cimentacion", cimentacion, (.55, .55, .55)), ("muros_PB", muros_pb, (.85, .80, .70)), ("muros_PA", muros_pa, (.85, .80, .70)),
+partes = [("cimentacion", cimentacion, (.55, .55, .55)), ("muros_PB", muros_pb, (.85, .80, .70)), ("muros_salon", muros_salon, (.72, .45, .35)), ("muros_PA", muros_pa, (.85, .80, .70)),
           ("parapeto_terraza", parapeto_terraza, (.85, .80, .70)), ("parapeto_cubierta", parapeto_cubierta, (.85, .80, .70)),
           ("forjado_PB_PA", forjado, (.70, .70, .72)), ("forjado_salon", forjado_salon, (.66, .66, .68)), ("zuncho_forjado", zuncho_forjado, (.45, .45, .48)), ("zuncho_cubierta", zuncho_cubierta, (.45, .45, .48)), ("riostras", riostras, (.5, .5, .5)), ("forjado_cubierta", losa_cubierta, (.70, .70, .72)),
           ("tabiques_PB", tab_pb, (.95, .95, .92)), ("tabiques_PA", tab_pa, (.95, .95, .92)), ("murete_pasillo", murete, (.90, .88, .80)),
