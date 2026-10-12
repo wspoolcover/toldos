@@ -2,11 +2,12 @@
 
 Valores aproximados: confirmar la zona climática y los límites de transmitancia del DB-HE vigente (Albox está en la zona B3 o C3 según la altitud; es el CTE el que manda). Por tratarse de una rehabilitación con cambio de cubierta y forjados, el técnico fijará qué elementos deben cumplir.
 
-## 1. Muros (0,55 m existentes; 0,25 m de ladrillo nuevo en el salón)
-- Un muro macizo de 55 cm tiene una U de unos 1,3–1,9 W/m²K sin aislar: **mucha inercia** pero pierde calor.
-- **Recomendación: aislamiento por el exterior (SATE)** con EPS grafito de 8 cm (o lana mineral si se quiere incombustibilidad) y mortero armado. Deja la inercia del muro dentro, quita puentes térmicos de zunchos y forjados y baja la U a ≈ 0,35–0,40. Coste 35–55 €/m²; unos 330 m² de fachada → 12.000–18.000 €.
-- **Muros de ladrillo de 25 cm del salón**: mejor con SATE de 10 cm. Si no, cámara con lana mineral por el interior.
-- **Ahorro**: en las fachadas laterales (medianera con el vecino) no hace falta SATE si hay edificio construido.
+## 1. Muros (tapial de 0,55 m existente; 0,25 m de ladrillo nuevo en el salón)
+- **Lo que se ve en las fotos del 12-10-2026**: los muros viejos son de **tapial** (tierra y cal con cantos rodados) con arranque de piedra, con grietas y **humedad y sales en la base** (manchas oscuras de moho en el pie del muro).
+- Un muro macizo de 55 cm tiene una U de unos 1,3–1,9 W/m²K sin aislar: mucha inercia, pero pierde calor.
+- **El tapial debe poder respirar.** No es buena idea un SATE de EPS pegado con mortero de cemento: atrapa la humedad y degrada el muro. Recomendación: **tratar primero la humedad** (drenaje exterior, corte o ventilación en la base), **revocar con mortero de cal**, y aislar con un material transpirable: **lana mineral o corcho** (SATE de 8 cm, unos 50–75 €/m²; 220 m² de fachada → 11.000–17.000 €). El EPS grafito que ya tienes comprado sirve para el suelo y la cubierta, no para fachada.
+- **Muros de ladrillo de 25 cm del salón**: SATE de 10 cm (EPS o lana mineral) o cámara con lana mineral por dentro.
+- **Ahorro**: en las paredes medianeras no hace falta aislar por fuera; por dentro conviene un trasdosado fino.
 
 ## 2. Membranas y humedades («membrana textil»)
 - **Geotextil** (150–200 g/m²): envuelve la grava del drenaje perimetral para que no se colmate. Barato, imprescindible.

@@ -22,7 +22,7 @@ Todo es orientativo y pensado para decidir. Los precios son rangos habituales en
 - **Punto de red** en cada habitación y en el despacho, con un armario de comunicaciones en el recibidor. Cable Cat 6 desde ese armario; wifi con puntos de acceso en las dos plantas.
 
 ## 4. Red eléctrica (base: PL-10)
-- **Potencia**: electrificación elevada (9,2 kW), monofásica. Si se instala aerotermia y cargador de coche, plantear 11–14 kW o trifásica.
+- **Potencia**: en las fotos del 12-10-2026 la **caja general de protección (CGP) ya está colocada en la fachada sur** (Cahors, tres bases de fusible y cuatro conductores: tres fases y neutro, etiqueta de 63 A) con el tubo rojo subiendo al tendido aéreo. Es una **acometida trifásica**: contrátala trifásica (la potencia la fija la compañía). Es lo adecuado para aerotermia, cocina de inducción y cargador de coche. Antes de contratar, que un instalador autorizado confirme la derivación individual y el contador.
 - **Circuitos mínimos** (ITC-BT-25): C1 iluminación, C2 tomas generales, C3 cocina/horno, C4 lavadora/lavavajillas/termo, C5 baños y cocina, C8 calefacción (hoy tomas), C9 aire acondicionado, C10 secadora, C13 recarga de vehículo.
 - **Diferenciales**: 30 mA por circuito o por grupos; protección contra sobretensiones (zona de tormentas) y toma de tierra con pica o anillo en la cimentación (se coloca ahora, durante la zapata).
 - **Fotovoltaica** en cubierta (prevista en PL-08 y PL-10): **17 paneles de 450 W ≈ 7,6 kWp** orientados al sur sobre soportes lastrados (sin perforar la impermeabilización), inversor de 6 kW en la planta alta junto al muro este; coste 7.000–10.000 € instalado. Con aerotermia cubre la mayor parte de la calefacción y del aire acondicionado; batería solo más adelante si compensa.

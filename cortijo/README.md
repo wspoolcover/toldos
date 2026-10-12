@@ -15,6 +15,8 @@ Proyecto personal. Polígono 33, parcela 198, San Roque (Albox). Arquitecto de l
 
 - Visor web interactivo (modelo 3D con capas, renders, plantas, instalaciones): `visor_v7.html` (publicado como artefacto «Cortijo Albox»).
 
+- Estado real (fotos del 12-10-2026): `docs/11_estado_real_fotos.md`.
+
 ## Pendiente
 - Actualizar visor, dossier PDF y DXF cuando se cierre la distribución.
 - Estudio geotécnico y catas de cimentación.

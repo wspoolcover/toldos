@@ -57,7 +57,7 @@ def electricidad(ax, planta):
     base(ax, planta)
     if planta == "PB":
         ax.set_ylim(-0.9, 19.0)
-        caja(ax, 5.85, 16.25, 0.7, 0.35, NA, "CGP+cont.", fs=4.2); linea(ax, [(6.2, 18.6), (6.2, 16.6)], NA, 2.4); ax.text(6.45, 18.4, "acometida eléctrica (sur,\nsegún proyecto original)\n9,2 kW monofásica", fontsize=5.3, color=NA, va="top")
+        caja(ax, 5.85, 16.25, 0.7, 0.35, NA, "CGP+cont.", fs=4.2); linea(ax, [(6.2, 18.6), (6.2, 16.6)], NA, 2.4); ax.text(6.45, 18.4, "acometida eléctrica TRIFÁSICA\n(CGP Cahors ya colocada en la\nfachada sur, 63 A; posición a confirmar)", fontsize=5.3, color=NA, va="top")
         linea(ax, [(6.35, 16.25), (6.35, 11.6)], NA, 2.0); caja(ax, 5.95, 10.95, 0.8, 0.45, NA, "cuadro", fs=5)                  # derivación individual dentro del tabique dormitorio 2 / cocina
         tramos = [[(6.35, 11.2), (8.3, 11.2), (8.3, 12.4), (8.5, 14.5)], [(8.3, 12.4), (7.4, 15.0)], [(6.35, 11.2), (5.0, 11.2), (5.0, 12.4), (5.2, 13.3)], [(6.35, 11.2), (3.15, 11.2), (3.15, 10.6), (2.0, 10.6), (2.0, 11.9), (2.0, 13.8)],
                   [(2.0, 10.6), (2.0, 9.0)], [(6.35, 10.2), (4.4, 10.2), (4.4, 9.55), (4.4, 8.8)], [(6.35, 9.8), (5.9, 9.8), (5.9, 7.5), (7.5, 7.5), (7.5, 1.5)], [(7.5, 4.5), (4.5, 4.5)], [(6.35, 10.8), (6.3, 10.0)]]

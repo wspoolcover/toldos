@@ -20,3 +20,10 @@ Qué sabemos, qué comprobar antes de abrir zanjas y en qué orden trabajar. Est
 - ¿Los 60 cm del salón son el ancho o la profundidad de la zapata? ¿Hay armado?
 - ¿Los muros de 55 cm son de mampostería o de ladrillo? ¿Hay humedades?
 - ¿Cuál es la distancia al vecino por el este y el oeste (necesitas permiso o apeo en medianera)?
+
+
+## Lo que se ve en las fotos del 12-10-2026
+- Los muros de 55 cm son de **tapial** con arranque de piedra. El tapial es frágil a tracción y a la humedad: los **zunchos** de hormigón arriba y el **recalce de la base** son clave.
+- **Ya hay zanjas abiertas** junto al pie de los muros, por dentro: es el principio del recalce. Hacerlo **por bataches alternos** (tramos cortos de 1–1,5 m, sin abrir dos contiguos a la vez) y con la cubierta y el forjado apeados.
+- Los **apeos metálicos** están puestos bajo el forjado y en el hueco del muro central. No retirarlos hasta que las vigas de acero estén colocadas y apoyadas en sus pilares.
+- Hay **humedad y sales en la base** de varios muros: antes de aislar, drenaje perimetral y corte de capilaridad.

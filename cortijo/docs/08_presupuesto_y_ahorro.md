@@ -12,7 +12,7 @@ Rangos de referencia en España 2026 para unos 172 m² construidos (109 m² úti
 | Forjados vigueta + bovedilla EPS (≈ 190 m²) y zunchos | (17+5) casa y cubierta, (25+5) salón | 11.000–17.000 | Chapa colaborante |
 | Muros nuevos del salón (ladrillo 25 cm) + pilares de atado | Lo haces tú | 3.000–5.000 (material) | — |
 | Cubierta plana: impermeabilización + XPS 10 cm + grava/sedum | Invertida, sedum solo en zonas libres | 9.000–14.000 | Césped natural (+5.000) |
-| SATE 8 cm fachadas norte, sur y este (≈ 220 m²) | EPS grafito | 9.000–13.000 | SATE en medianeras (+4.000) |
+| SATE transpirable 8 cm (lana mineral o corcho sobre mortero de cal), fachadas libres (≈ 220 m²) | Tapial: no usar EPS pegado | 11.000–17.000 | SATE en medianeras (+4.000) |
 | Ventanas y cristalera (**PVC** con lámina de madera, bajo emisivo, control solar en sur, contraventanas) | **A precio de coste por WS Ventanas** | 6.000–10.000 | PVP: 12.000–18.000 |
 | Tabiquería (ladrillo hueco doble o placa de yeso) | Placa de yeso con lana: más rápida y lleva las instalaciones | 5.000–8.000 | — |
 | Solera + suelo radiante PB (109 m²) + mortero | Tubo PE-X paso 15 cm, 3 cm aislante | 6.000–9.000 | — |
