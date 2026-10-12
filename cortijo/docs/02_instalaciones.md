@@ -25,7 +25,7 @@ Todo es orientativo y pensado para decidir. Los precios son rangos habituales en
 - **Potencia**: electrificación elevada (9,2 kW), monofásica. Si se instala aerotermia y cargador de coche, plantear 11–14 kW o trifásica.
 - **Circuitos mínimos** (ITC-BT-25): C1 iluminación, C2 tomas generales, C3 cocina/horno, C4 lavadora/lavavajillas/termo, C5 baños y cocina, C8 calefacción (hoy tomas), C9 aire acondicionado, C10 secadora, C13 recarga de vehículo.
 - **Diferenciales**: 30 mA por circuito o por grupos; protección contra sobretensiones (zona de tormentas) y toma de tierra con pica o anillo en la cimentación (se coloca ahora, durante la zapata).
-- **Placas solares** en cubierta (previstas en PL-08 y PL-10): 5–6 kWp ≈ 14–16 paneles ≈ 30 m²; coste 6.000–8.000 € instalado. Paga la calefacción y el aire acondicionado de gran parte del año.
+- **Fotovoltaica** en cubierta (prevista en PL-08 y PL-10): **17 paneles de 450 W ≈ 7,6 kWp** orientados al sur sobre soportes lastrados (sin perforar la impermeabilización), inversor de 6 kW en la planta alta junto al muro este; coste 7.000–10.000 € instalado. Con aerotermia cubre la mayor parte de la calefacción y del aire acondicionado; batería solo más adelante si compensa.
 - **Canalizaciones**: tubo corrugado empotrado en muros y tabiques; bajantes de cuadros por el hueco de la escalera.
 
 ## 5. Calefacción y refrigeración
@@ -37,7 +37,7 @@ Albox tiene inviernos fríos de interior y veranos muy calurosos; la casa tendr�
 | **B. Splits inverter (aire acondicionado por bomba de calor) en cada estancia + chimenea** | 4.000–7.000 € | Barata, rápida; las tomas de A/A ya están en PL-10 | Menos confort, unidades visibles, ruido |
 | **C. Aerotermia + splits solo en los dormitorios de la planta alta** | 10.000–14.000 € | Equilibrio coste/confort | — |
 
-**Recomendación**: A en planta baja (suelo radiante, donde está el salón de 37 m² y los muros de 55 cm) y splits en la planta alta; la chimenea queda como apoyo y ambiente. Se prevé desde ya la sala de máquinas (1 m² en la planta baja), el depósito de inercia y los pasos de tubería en los forjados.
+**Decisión (v7)**: aerotermia de 8 kW con suelo radiante en **toda** la planta baja (dormitorios incluidos) y multisplit de 4 unidades en la planta alta; la chimenea queda como apoyo y ambiente. La unidad exterior y el acumulador de ACS van en el patio este, junto al saliente del baño, y el colector del suelo radiante en la pared de la entrada. Por qué no suelo radiante arriba: ver `08_presupuesto_y_ahorro.md`, apartado 4. Esquemas en `instalaciones.png` y `cubierta_solar.png`.
 
 ## 6. Fontanería y saneamiento (PL-08, PL-09)
 - Agua fría y caliente en PPR con aislamiento; termo de 100 L con intercambiador solar. Con aerotermia se sustituye por acumulador de 200–300 L.
