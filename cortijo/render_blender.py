@@ -1,6 +1,6 @@
 """Render realista con Blender (módulo bpy, Cycles CPU): materiales procedurales (ladrillo, enfoscado, hormigón, vidrio, acero, madera) sobre casa_v7.glb."""
 import bpy, math, sys
-GLB, OUT = "casa_v7.glb", "render_"
+import os; D = os.path.dirname(os.path.abspath(__file__)); GLB, OUT = os.path.join(D, "casa_v7.glb"), os.path.join(D, "render_")
 bpy.ops.wm.read_factory_settings(use_empty=True)
 bpy.ops.import_scene.gltf(filepath=GLB)
 sc = bpy.context.scene; sc.render.engine = "CYCLES"; sc.cycles.samples = int(sys.argv[-1]) if sys.argv[-1].isdigit() else 48
