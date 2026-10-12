@@ -39,6 +39,7 @@ OPEN = [
  ("PB", "H", 11.75, TP, 4.40, 0.80, "P", 1, "P3", 0, 2.05), ("PB", "H", 9.55, TP, 4.35, 0.85, "P", 1, "P3", 0, 2.05),
  ("PB", "H", 7.87, TP, 3.45, 2.00, "V", 0, "V", 0.00, 2.05),
  ("PB", "V", 9.00, TP, 9.20, 0.80, "P", 1, "P3", 0, 2.05),
+ ("PA", "H", Y_FAC0 + 0.25, 0.04, 5.00, 1.60, "P2", -1, "PT", 0, 2.20),   # corredera de la sala familiar a la terraza
  ("PA", "V", 3.95, TP, 9.50, 0.90, "P", -1, "P2", 0, 2.05), ("PA", "H", 11.75, TP, 4.20, 0.80, "P", -1, "P2", 0, 2.05),
  ("PA", "H", 11.75, TP, 5.00, 0.80, "P", 1, "P2", 0, 2.05), ("PA", "V", 9.00, TP, 9.20, 0.80, "P", 1, "P3", 0, 2.05)]
 TAB = [("PB", 3.05, 7.87, TP, 3.88), ("PB", 0.55, 9.35, 2.50, TP), ("PB", 0.55, 11.75, 8.45, TP), ("PB", 3.65, 11.85, TP, 3.90), ("PB", 6.30, 11.85, TP, 3.90), ("PB", 3.15, 7.87, 2.40, TP), ("PB", 5.55, 7.87, TP, 1.70),
@@ -101,7 +102,9 @@ forjado = losa(PTS, Z_PA, VOID)
 losa_cubierta = losa(NB_PA, Z_TOP, VOID)
 lucernario = box(VOID[0] - .05, VOID[1] - .05, Z_TOP, VOID[2] - VOID[0] + .10, VOID[3] - VOID[1] + .10, .05)
 cristal_pb = box(3.55, 0.10, 0.0, 4.00, 0.04, 2.55)
-cristal_pa = box(3.45, Y_FAC0 + 0.25, Z_PA, XI1 - 3.45, 0.04, H_PA - T_LOSA)   # cierre acristalado de la casa hacia la terraza
+cristal_pa = box(3.45, Y_FAC0 + 0.25, Z_PA, XI1 - 3.45, 0.04, H_PA - T_LOSA).cut(box(5.00, Y_FAC0, Z_PA - .01, 1.60, 1, 2.21))   # cierre acristalado de la casa hacia la terraza, con hueco de 1,60 para la corredera
+puerta_terraza = box(3.40, Y_FAC0 + 0.19, Z_PA, 1.60, 0.03, 2.20).union(box(6.60, Y_FAC0 + 0.19, Z_PA, 1.60, 0.03, 2.20))   # dos hojas correderas abiertas, delante del fijo
+marco_terraza = box(4.95, Y_FAC0 + 0.17, Z_PA, 1.70, 0.08, 2.25).cut(box(5.00, Y_FAC0, Z_PA - .01, 1.60, 1, 2.20))
 # carpintería de estilo cortijo: marcos y contraventanas de madera, vidrio en cada ventana, puertas de madera; solado de barro en la terraza
 _vid, _mad, _pue = [], [], []
 for pl, ori, pos, t, ini, w_, tipo, sw, tag, sill, hh in OPEN:
@@ -223,7 +226,7 @@ MOB = [box(6.45, 1.05, 0, .75, 3.30, .85), box(5.05, 3.65, 0, 1.40, .70, .45), b
        box(6.45, 15.15, 0, 2.55, .60, .90), box(8.40, 12.60, 0, .60, 2.55, .90), box(6.45, 11.95, 0, .60, 1.60, .90),                                           # cocina
        box(1.3, 8.0, Z_PA, 1.5, 2.0, .50), box(1.6, 13.3, Z_PA, 1.6, 2.0, .50), box(6.6, 13.3, Z_PA, 1.6, 2.0, .50),                                    # camas de arriba
        box(0.60, 11.15, Z_PA, 2.60, .60, 2.20), box(0.60, 11.85, Z_PA, .60, 2.40, 2.20), box(4.85, 11.85, Z_PA, .60, 2.40, 2.20),                     # armarios empotrados
-       box(4.4, 8.3, Z_PA, 2.4, 0.9, .45)]                                                                                                              # sofá de la sala familiar
+       box(4.1, 10.6, Z_PA, 2.4, 0.9, .45)]                                                                                                              # sofá de la sala familiar
 mobiliario = comp(MOB)
 PANELES = [box(1.0 + c * 1.15, 8.6 + f * 2.1, Z_TOP + 0.35, 1.05, 1.75, 0.04) for f in range(3) for c in range(6) if not (c >= 5 and f == 0)]
 paneles_solares = comp(PANELES)
@@ -235,7 +238,7 @@ partes = [("cimentacion", cimentacion, (.55, .55, .55)), ("muros_PB", muros_pb, 
           ("forjado_PB_PA", forjado, (.70, .70, .72)), ("forjado_salon", forjado_salon, (.66, .66, .68)), ("zuncho_forjado", zuncho_forjado, (.45, .45, .48)), ("zuncho_cubierta", zuncho_cubierta, (.45, .45, .48)), ("riostras", riostras, (.5, .5, .5)), ("forjado_cubierta", losa_cubierta, (.70, .70, .72)),
           ("tabiques_PB", tab_pb, (.95, .95, .92)), ("tabiques_PA", tab_pa, (.95, .95, .92)), ("murete_pasillo", murete, (.90, .88, .80)),
           ("escalera", escalera, (.60, .45, .30)), ("lucernario", lucernario, (.55, .75, .90)),
-          ("cristal_PB", cristal_pb, (.55, .75, .90)), ("cristal_PA", cristal_pa, (.55, .75, .90)),
+          ("cristal_PB", cristal_pb, (.55, .75, .90)), ("cristal_PA", cristal_pa, (.55, .75, .90)), ("vidrios_terraza", puerta_terraza, (.55, .75, .90)), ("carpinteria_terraza", marco_terraza, (.35, .22, .12)),
           ("carpinteria_madera", carpinteria_madera, (.35, .22, .12)), ("vidrios", vidrios, (.55, .75, .90)), ("puertas_madera", puertas_madera, (.35, .22, .12)), ("puerta_entrada", puerta_entrada, (.35, .22, .12)), ("solado_terraza", solado_terraza, (.70, .40, .25)),
           ("mobiliario", mobiliario, (.78, .68, .55)), ("chimenea", chimenea, (.60, .30, .25)), ("paneles_solares", paneles_solares, (.10, .15, .35)), ("aerotermia", aerotermia, (.80, .80, .82))]
 partes += [("acero_" + k, v, (.20, .32, .55)) for k, v in acero.items()]

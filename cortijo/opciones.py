@@ -112,7 +112,9 @@ def dibujar(ax, rooms, doors, planta, abiertos=()):
         if tipo not in ("terraza", "esc"): total += a
     if planta == "PA":
         for (x, y, dx, dy) in ((0.60, 11.15, 2.60, 0.60), (0.60, 11.85, 0.60, 2.40), (4.75, 11.85, 0.60, 2.40)): r(ax, x, y, dx, dy, "#e8d5c0", "||")   # armarios empotrados
-        r(ax, 1.3, 8.0, 1.5, 2.0, "#f7b98a"); r(ax, 1.6, 13.3, 1.6, 2.0, "#f7b98a"); r(ax, 6.6, 13.3, 1.6, 2.0, "#f7b98a"); r(ax, 4.4, 8.3, 2.4, 0.9, "#c9b79c")
+        r(ax, 1.3, 8.0, 1.5, 2.0, "#f7b98a"); r(ax, 1.6, 13.3, 1.6, 2.0, "#f7b98a"); r(ax, 6.6, 13.3, 1.6, 2.0, "#f7b98a"); r(ax, 4.1, 10.6, 2.4, 0.9, "#c9b79c")
+        ax.add_patch(Rectangle((3.45, 7.32), 5.55, 0.55, fc="#bfe3f8", ec="#2f8fd0", lw=1.0, zorder=6)); ax.add_patch(Rectangle((5.0, 7.32), 1.6, 0.55, fc="white", ec="#2f8fd0", lw=1.0, zorder=7))
+        ax.plot([5.0, 5.0 + 0.8], [7.32, 7.32 - 0.5], color="#333", lw=1, zorder=8); ax.plot([6.6, 6.6 - 0.8], [7.32, 7.32 - 0.5], color="#333", lw=1, zorder=8); ax.text(5.8, 7.05, "corredera 1,60 a la terraza", fontsize=5.6, ha="center", va="top", color="#1f6fa8", zorder=9)
     if planta == "PB":
         r(ax, 3.80, 11.95, 0.50, 1.00, "#e8d5c0", "||")
         muebles_pb(ax)
@@ -133,7 +135,7 @@ def dibujar(ax, rooms, doors, planta, abiertos=()):
 
 IDEAS = ["Suite como la referencia: vestidor con armarios en L (por eso el dormitorio no lleva armario), baño con ducha, inodoro y lavabo doble, y en el dormitorio un rincón de lectura junto a la ventana (sillón, mesita y estantería).",
          "Cocina de 10 m² en U (sin isla: no cabe con pasillos de 90 cm), puerta al patio del fondo y ventana al este. Salón con comedor, sofá en U, pantalla grande y chimenea en la esquina oeste.",
-         "Abajo dos dormitorios: la suite y el Dormitorio 2 (10 m², con ventana al fondo). Despacho íntimo de 3,8 m² pegado al vestidor (junto a la sala de estar), con cristal hacia el salón. La chimenea queda dentro del salón. Arriba sin pasillo: la escalera da a una sala familiar y 3 dormitorios parejos (13-17 m²) con armarios empotrados."]
+         "Abajo dos dormitorios: la suite y el Dormitorio 2 (10 m², con ventana al fondo). Despacho íntimo de 3,8 m² pegado al vestidor (junto a la sala de estar), con cristal hacia el salón. La chimenea queda dentro del salón. Arriba sin pasillo: la escalera da a una sala familiar acristalada hacia la terraza (corredera de 1,60) y 3 dormitorios parejos (13-17 m²) con armarios empotrados."]
 
 if __name__ == "__main__":
     fig = plt.figure(figsize=(13, 9.5)); fig.suptitle("Distribución propuesta", fontsize=14, weight="bold", x=0.02, ha="left")
