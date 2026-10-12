@@ -28,7 +28,7 @@
  },
  "lineas_x": [
   3.1,
-  5.3,
+  5.55,
   7.2
  ],
  "viga_cub": {
@@ -42,7 +42,7 @@
   "perfil": "HEB 120"
  },
  "viga_saliente": {
-  "perfil": "HEB 140",
+  "perfil": "HEB 160",
   "luz": 3.7
  },
  "dinteles": {
@@ -53,11 +53,11 @@
  },
  "pilar": {
   "perfil": "HEB 120",
-  "N_central": 220.72188982727425,
-  "N_sur": 89.7883439229097
+  "N_central": 244.5632322858101,
+  "N_sur": 99.32488090632404
  },
  "zapata": {
-  "lado": 1.3,
+  "lado": 1.4,
   "canto": 0.6,
   "sigma": 150.0
  },
@@ -67,6 +67,6 @@
   "sigma": 66.70625
  },
  "muro": {
-  "sigma_MPa": 0.19211359090909094
+  "sigma_MPa": 0.19660606363636365
  }
 }

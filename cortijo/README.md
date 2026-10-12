@@ -7,8 +7,8 @@ Proyecto personal. Polígono 33, parcela 198, San Roque (Albox). Arquitecto de l
 - Modelo 3D **v6** (actual): `casa_v6.step` (FreeCAD/CAD) y `casa_v6.glb` (Blender/visor). Se genera con `python casa_v6.py` (CadQuery). Los v5 y anteriores se conservan.
 - Planos DXF v5: plantas, secciones y dos láminas A1 (`*_v6.dxf`).
 - Vistas: `cortijo_3d.png`, `cortijo_3d_PB.png` (se generan con `vista3d.py`).
-- Estructura: `estructura.py` → `memoria_estructura.md`; sismo en `sismo.py`; ahorro en `abaratar.md`; dossier para albañiles `dossier_obra.pdf` (distribución anterior).
-- Documentos: `docs/` (disponibles/faltan, instalaciones, envolvente, inicio de cimentación, ahorro).
+- Estructura (líneas de vigas x = 3,10 / 5,55 / 7,20; acero ≈ 3,7 t): `estructura.py` → `memoria_estructura.md`; sismo en `sismo.py`; ahorro en `abaratar.md`; dossier para albañiles `dossier_obra.pdf` (distribución anterior).
+- Documentos: `docs/` (disponibles/faltan, instalaciones, envolvente, inicio de cimentación, ahorro, escalera y revisión de optimización).
 
 ## Pendiente
 - Actualizar visor, dossier PDF y DXF cuando se cierre la distribución.

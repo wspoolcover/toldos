@@ -33,26 +33,26 @@ Forjado (17+5)×71 con bovedilla de poliestireno, 2,02 kN/m² ([ficha Prearcon T
 
 | Forjado | G total | M/Mu | V/Vu | Flecha con fluencia / límite (mm) |
 |---|---|---|---|---|
-| Casa (planta alta) | 4.22 | 0.40 | 0.51 | 1.3 / 8.5 |
-| Cubierta plana (piedra y paneles solares) | 5.52 | 0.42 | 0.53 | 1.6 / 8.5 |
+| Casa (planta alta) | 4.22 | 0.50 | 0.57 | 2.0 / 9.4 |
+| Cubierta plana (piedra y paneles solares) | 5.52 | 0.51 | 0.59 | 2.4 / 9.4 |
 
-## Vigas N-S del forjado (líneas x = 3,10; 5,30 y 7,20; una pieza continua de dos vanos 4.20 + 3.95 m; ancho tributario 2.38 m)
+## Vigas N-S del forjado (líneas x = 3,10; 5,55 y 7,20; una pieza continua de dos vanos 4.20 + 3.95 m; ancho tributario 2.64 m)
 
-Sección: **HEB 140**. M/Mrd = 0.68 en el apoyo central; V/Vrd = 0.37; flecha 8.0 mm (límite 14.0). Reacción en el pilar central ≈ 108 kN. Al ser continua trabaja mejor que dos vigas sueltas y admite un perfil menor.
+Sección: **HEB 140**. M/Mrd = 0.76 en el apoyo central; V/Vrd = 0.41; flecha 8.9 mm (límite 14.0). Reacción en el pilar central ≈ 119 kN. Al ser continua trabaja mejor que dos vigas sueltas y admite un perfil menor.
 
-Vigas N-S de cubierta (continuas): **HEB 140** (M/Mrd 0.70, flecha 8.4/14.0 mm).
+Vigas N-S de cubierta (continuas): **HEB 140** (M/Mrd 0.78, flecha 9.3/14.0 mm).
 
 ## Dintel sobre la cristalera (luz 4.40 m; muro de ladrillo de 25 cm y antepecho 7.7 kN/m)
 
 Sección: **HEB 160** (M/Mrd 0.40, flecha 10.4/14.7 mm). Se aloja en el espesor del muro con placas de apoyo de 0,20 m en cada extremo.
 
-## Viga de fachada (sustituye al muro entre salón y casa, en cada planta; luz 2.30 m entre pilares)
+## Viga de fachada (sustituye al muro entre salón y casa, en cada planta; luz 2.45 m entre pilares)
 
-Sección: **HEB 120** (M/Mrd 0.25, flecha 2.4/7.7 mm). Cada planta lleva su viga; los pilares HEB 120 en x = 3,10; 5,30 y 7,20 quedan vistos en el borde del salón.
+Sección: **HEB 120** (M/Mrd 0.28, flecha 3.1/8.2 mm). Cada planta lleva su viga; los pilares HEB 120 en x = 3,10; 5,55 y 7,20 quedan vistos en el borde del salón.
 
 ## Viga de borde del saliente del baño (a x = 9,15, en forjado y en cubierta; luz 3.70 m entre muros)
 
-Falta ese muro entre la casa y el saliente, así que una viga recoge el borde de la casa y las viguetas del saliente. Sección: **HEB 140** (forjado M/Mrd 0.54, cubierta 0.56).
+Falta ese muro entre la casa y el saliente, así que una viga recoge el borde de la casa y las viguetas del saliente. Sección: **HEB 160** (forjado M/Mrd 0.57, cubierta 0.41).
 
 ## Dinteles de puertas y ventanas en muros de mampostería
 | Hueco (m) | Luz de cálculo | Perfil | M/Mrd |
@@ -62,11 +62,11 @@ Falta ese muro entre la casa y el saliente, así que una viga recoge el borde de
 | ≤ 1.4 | 1.8 | IPE 120 | 0.70 |
 | ≤ 1.6 | 2.0 | IPE 120 | 0.86 |
 
-## Pilares HEB (6 uds., x = 3,10; 5,30 y 7,20; y = 7,60 y 11,80; ocultos en muros y tabiques; altura ≈ 5,6 m)
+## Pilares HEB (6 uds., x = 3,10; 5,55 y 7,20; y = 7,60 y 11,80; ocultos en muros y tabiques; altura ≈ 5,6 m)
 
-Carga axial de cálculo máx. ≈ 221 kN (pilar central) y ≈ 90 kN (pilar sur). Sección: **HEB 120**, N/Nb,Rd = 0.60 (pandeo eje débil, Lcr = 3,3 m).
+Carga axial de cálculo máx. ≈ 245 kN (pilar central) y ≈ 99 kN (pilar sur). Sección: **HEB 120**, N/Nb,Rd = 0.66 (pandeo eje débil, Lcr = 3,3 m).
 
-Zapatas aisladas bajo pilares (σ adm. supuesta 150 kPa, **pendiente de estudio geotécnico**): ≈ 1.3 × 1.3 m, canto 0,60 m.
+Zapatas aisladas bajo pilares (σ adm. supuesta 150 kPa, **pendiente de estudio geotécnico**): ≈ 1.4 × 1.4 m, canto 0,60 m.
 
 ## Cimentación existente de los muros del salón (ladrillo de 25 cm, zapata de 60 cm)
 
@@ -75,7 +75,7 @@ Muro de ladrillo de 25 cm y 3,3 m de altura entre cimentación y forjado: esbelt
 
 ## Apoyo en los muros de mampostería (50-60 cm)
 
-Carga lineal en cabeza de muro de la casa ≈ 23 kN/m + peso propio ≈ 83 kN/m → tensión en base ≈ 0.19 MPa (referencia orientativa 0,3-0,5 MPa: **hay que ensayar la mampostería**).
+Carga lineal en cabeza de muro de la casa ≈ 25 kN/m + peso propio ≈ 83 kN/m → tensión en base ≈ 0.20 MPa (referencia orientativa 0,3-0,5 MPa: **hay que ensayar la mampostería**).
 Las viguetas apoyan en placas de reparto sobre un zuncho perimetral que ata los muros y hace de diafragma. Recomendación para abaratar: zuncho de hormigón armado (hecho a la vez que el forjado) en lugar de perfil UPN de acero.
 
 ## Pendiente de confirmar por un técnico
@@ -86,7 +86,7 @@ Las viguetas apoyan en placas de reparto sobre un zuncho perimetral que ata los 
 - Este documento no sustituye al proyecto de estructura visado.
 
 ## Sismo: comprobación orientativa (Albox está en zona sísmica)
-Peso sísmico del edificio ≈ **3861 kN** (muros 2464, forjados 698, cubierta 551, sobrecarga casi permanente 113, acero 36).
+Peso sísmico del edificio ≈ **3862 kN** (muros 2464, forjados 698, cubierta 551, sobrecarga casi permanente 113, acero 36).
 Aceleración básica supuesta ab = 0.16 g (Almería capital: 0,14 g según la [tabla de municipios de NCSE-02](https://normatia.com/es/recursos/emplazamiento/zona-sismica/); Albox no aparece en esa tabla: hay que mirar el Anexo 1 de la norma).
 Con un coeficiente sísmico de 0.20-0.25 (suposición conservadora para mampostería) el cortante en la base sería ≈ **772-965 kN**.
 - **Dirección N-S:** muros de la casa (0,55 m) y de ladrillo del salón (0,25 m), 11.6 m² de sección → tensión tangencial ≈ 0.08 MPa.
@@ -96,4 +96,4 @@ Referencia de resistencia a cortante de mampostería antigua en buen estado: uno
 
 
 ## Acero del modelo 3D (sin uniones ni placas)
-Total ≈ 3630 kg (HEB 140: 1966 kg, HEB 120: 1281 kg, HEB 160: 187 kg, IPE 100: 137 kg, IPE 120: 58 kg). Ver `abaratar.md`.
+Total ≈ 3699 kg (HEB 140: 1704 kg, HEB 120: 1281 kg, HEB 160: 520 kg, IPE 100: 137 kg, IPE 120: 58 kg). Ver `abaratar.md`.

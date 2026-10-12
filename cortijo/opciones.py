@@ -28,7 +28,7 @@ PB = [("Salón con comedor", "sala", SALON_PB, (4.55, 4.15)), ("Pasillo de entra
       ("Dormitorio principal", "priv", R(0.55, 11.85, 3.65, 15.75), (2.25, 12.55)), ("Vestidor", "priv", R(0.55, 9.45, 3.05, 11.75), (2.0, 10.6)),
       ("Baño", "humedo", R(0.55, 7.87, 3.05, 9.35), (1.85, 9.05))]
 PB_DOORS = [(7.85, 0.25, "H", 1.40, 1, 1),            # puerta de entrada de 1,40, pegada al muro este, abre hacia dentro
-            (9.05, 9.20, "V", 0.80, 0, 1), (6.50, 11.75, "H", 1.50, 0, 0),
+            (9.05, 9.20, "V", 0.80, 0, 1), (7.40, 11.75, "H", 1.50, 0, 0),
             (4.40, 11.75, "H", 0.80, 0, 1),            # sala -> dormitorio 2
 
             (3.05, 10.20, "V", 0.90, 0, -1),           # de la sala directamente al vestidor
@@ -91,7 +91,7 @@ def muebles_pb(ax):
     r(ax, 1.20, 9.55, 0.85, 0.30, "#f6f1e8")                                                                     # alfombra / banco
     r(ax, 0.60, 8.42, 0.90, 0.90, "#eef"); r(ax, 1.75, 8.85, 0.40, 0.40); r(ax, 2.20, 7.92, 0.80, 0.50); r(ax, 2.20, 8.47, 0.80, 0.50)   # ducha, inodoro, doble lavabo
     # cocina: isla y fregadero junto a la fachada del fondo
-    r(ax, 6.85, 13.0, 1.8, 0.8, "#eadcc4"); r(ax, 6.50, 15.2, 2.4, 0.5, "#eadcc4"); r(ax, 8.50, 11.95, 0.45, 1.2, "#eadcc4")
+    r(ax, 6.45, 15.15, 2.55, 0.60, "#eadcc4"); r(ax, 8.40, 12.60, 0.60, 2.55, "#eadcc4"); r(ax, 6.45, 11.95, 0.60, 1.60, "#eadcc4")   # cocina en U: sur, este y un tramo al oeste; pasillo central de 1,35 m
 
 
 def dibujar(ax, rooms, doors, planta, abiertos=()):
@@ -128,7 +128,7 @@ def dibujar(ax, rooms, doors, planta, abiertos=()):
 
 
 IDEAS = ["Suite como la referencia: vestidor con armarios en L (por eso el dormitorio no lleva armario), baño con ducha, inodoro y lavabo doble, y en el dormitorio un rincón de lectura junto a la ventana (sillón, mesita y estantería).",
-         "Cocina de 10 m² con puerta al patio del fondo y ventana al este. Salón con comedor, sofá en U, pantalla grande y chimenea en la esquina oeste.",
+         "Cocina de 10 m² en U (sin isla: no cabe con pasillos de 90 cm), puerta al patio del fondo y ventana al este. Salón con comedor, sofá en U, pantalla grande y chimenea en la esquina oeste.",
          "Abajo dos dormitorios: la suite y el Dormitorio 2 (10 m², con ventana al fondo). Despacho íntimo de 3,8 m² pegado al vestidor (junto a la sala de estar), con cristal hacia el salón. La chimenea queda dentro del salón. Arriba sin pasillo: la escalera da a una sala familiar y 3 dormitorios."]
 
 if __name__ == "__main__":

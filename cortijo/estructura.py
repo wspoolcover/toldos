@@ -73,8 +73,8 @@ R = {}; out = []
 P = out.append
 # ---------- geometría base ----------
 L_SAL = 5.75                    # luz de viguetas del salón (E-O), entre ejes de apoyo en muros
-LINES_X = [3.10, 5.30, 7.20]    # líneas de vigas N-S (coinciden con tabiques y con el hueco de escalera)
-BAYS = [2.55, 2.20, 1.90, 1.80] # luces de viguetas E-O entre muros y líneas de vigas
+LINES_X = [3.10, 5.55, 7.20]    # líneas de vigas N-S: tabique de la suite, esquina del despacho / tabique dorm 2-cocina, hueco de escalera
+BAYS = [2.83, 2.45, 1.65, 2.08] # luces de viguetas E-O entre muros y líneas de vigas
 SPAN_NS = [4.20, 3.95]          # vanos de vigas N-S entre pilares/muro
 TRIB = [(BAYS[i] + BAYS[i + 1]) / 2 for i in range(3)]   # anchos tributarios de las tres líneas de vigas
 
@@ -134,7 +134,7 @@ R["casa_sistema"] = dict(tipo="vigueta", forjado="(17+5)x71", vigueta="T-1", bov
 
 # 3) vigas N-S nivel 1: una sola pieza continua sobre el pilar central (dos vanos)
 vig = next(r for r in (check_cont(n, SPAN_NS[0], SPAN_NS[1], max(TRIB), G_HOUSE, Q_HOUSE) for n in HEB) if r["ok"])
-P(f"\n## Vigas N-S del forjado (líneas x = 3,10; 5,30 y 7,20; una pieza continua de dos vanos {SPAN_NS[0]:.2f} + {SPAN_NS[1]:.2f} m; ancho tributario {max(TRIB):.2f} m)\n")
+P(f"\n## Vigas N-S del forjado (líneas x = 3,10; 5,55 y 7,20; una pieza continua de dos vanos {SPAN_NS[0]:.2f} + {SPAN_NS[1]:.2f} m; ancho tributario {max(TRIB):.2f} m)\n")
 P(f"Sección: **{vig['name']}**. M/Mrd = {vig['rM']:.2f} en el apoyo central; V/Vrd = {vig['rV']:.2f}; flecha {vig['d_tot_mm']:.1f} mm (límite {vig['lim_tot_mm']:.1f}). Reacción en el pilar central ≈ {vig['RB']:.0f} kN. Al ser continua trabaja mejor que dos vigas sueltas y admite un perfil menor.")
 R["viga_ns"] = dict(perfil=vig["name"])
 R["lineas_x"] = LINES_X
@@ -164,7 +164,7 @@ for n in list(HEB)[1:]:                                  # mínimo constructivo 
     r = check_viga(n, max(BAYS[1], 2.30), 0.9, G_HOUSE, Q_HOUSE, extra_line_G=0.30 * 1.0 * GAMMA_MURO)
     if r["ok"]: vf = r; break
 P(f"\n## Viga de fachada (sustituye al muro entre salón y casa, en cada planta; luz {max(BAYS[1], 2.30):.2f} m entre pilares)\n")
-P(f"Sección: **{vf['name']}** (M/Mrd {vf['rM']:.2f}, flecha {vf['d_tot_mm']:.1f}/{vf['lim_tot_mm']:.1f} mm). Cada planta lleva su viga; los pilares HEB 120 en x = 3,10; 5,30 y 7,20 quedan vistos en el borde del salón.")
+P(f"Sección: **{vf['name']}** (M/Mrd {vf['rM']:.2f}, flecha {vf['d_tot_mm']:.1f}/{vf['lim_tot_mm']:.1f} mm). Cada planta lleva su viga; los pilares HEB 120 en x = 3,10; 5,55 y 7,20 quedan vistos en el borde del salón.")
 R["viga_fachada"] = dict(perfil=vf["name"])
 
 # 5c) viga de borde del saliente del baño (x = 9,15; sustituye al muro de 0,55 entre casa y saliente; luz 3,70 m entre apoyos en muro)
@@ -192,7 +192,7 @@ pil = None
 for n in list(HEB)[1:]:                                              # mínimo constructivo HEB 120
     r = pandeo_pilar(n, N_c2, 3.3)
     if r["ratio"] <= 0.85: pil = r; break
-P(f"\n## Pilares HEB (6 uds., x = 3,10; 5,30 y 7,20; y = 7,60 y 11,80; ocultos en muros y tabiques; altura ≈ 5,6 m)\n")
+P(f"\n## Pilares HEB (6 uds., x = 3,10; 5,55 y 7,20; y = 7,60 y 11,80; ocultos en muros y tabiques; altura ≈ 5,6 m)\n")
 P(f"Carga axial de cálculo máx. ≈ {N_c2:.0f} kN (pilar central) y ≈ {N_c1:.0f} kN (pilar sur). Sección: **{pil['name']}**, N/Nb,Rd = {pil['ratio']:.2f} (pandeo eje débil, Lcr = 3,3 m).")
 R["pilar"] = dict(perfil=pil["name"], N_central=N_c2, N_sur=N_c1)
 SIG = 150.0                                                          # kPa admisible supuesta (falta estudio geotécnico)
