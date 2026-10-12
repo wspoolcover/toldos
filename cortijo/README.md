@@ -13,6 +13,8 @@ Proyecto personal. Polígono 33, parcela 198, San Roque (Albox). Arquitecto de l
 - Presupuesto y ahorro: `docs/08_presupuesto_y_ahorro.md`.
 - Documentos: `docs/` (disponibles/faltan, instalaciones, envolvente, inicio de cimentación, ahorro, escalera y revisión de optimización).
 
+- Visor web interactivo (modelo 3D con capas, renders, plantas, instalaciones): `visor_v7.html` (publicado como artefacto «Cortijo Albox»).
+
 ## Pendiente
 - Actualizar visor, dossier PDF y DXF cuando se cierre la distribución.
 - Estudio geotécnico y catas de cimentación.
