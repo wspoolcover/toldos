@@ -16,12 +16,14 @@ Valores aproximados: confirmar la zona climática y los límites de transmitanci
 - **Cubierta plana**: impermeabilización de lámina bituminosa o EPDM, aislamiento XPS de 10–12 cm **invertido** y protección de grava o piedra. Pendiente 1–2 % hacia los sumideros de PL-09. En una **barrera de vapor** no hace falta pensar en Almería.
 - **Barrera de aire / lámina transpirable**: no se necesita en muros macizos de fábrica.
 
-## 3. Ventanas
-- **Hoy** (PL-07): aluminio lacado blanco, vidrio doble 4/8/4 y persiana. Uw de unos 3 W/m²K: solo vale para el nivel mínimo y en verano deja pasar mucho sol.
-- **Recomendación**: **PVC multicámara** (la gama Deceuninck que ya manejas en WS Ventanas, Uf 1,2–1,4) con vidrio **4/16/4 bajo emisivo con argón (Ug ≈ 1,0)** y, en las fachadas sur y oeste, vidrio de control solar (g ≤ 0,40). Uw final ≈ 1,3–1,5.
-- **Cristalera del salón (4,00 × 2,55 m, norte)**: casi no recibe sol directo; 6/16/44.2 bajo emisivo, corredera elevable de PVC o aluminio con rotura de puente térmico.
-- **Persianas**: monoblock con cajón aislado o persiana exterior de lamas; protegen del sol en verano.
-- **Ahorro**: como tienes empresa de ventanas, **pedir precio de coste**: puede suponer más de la mitad del gasto de carpintería. Mosquiteras incluidas.
+## 3. Ventanas (decisión: PVC)
+- **Proyecto original (PL-07)**: aluminio lacado blanco, vidrio 4/8/4 y persiana (Uw ≈ 3 W/m²K). Se sustituye.
+- **Decisión del propietario: PVC multicámara** (la gama Deceuninck que ya manejas en WS Ventanas, Uf 1,2–1,4) con vidrio **4/16/4 bajo emisivo con argón (Ug ≈ 1,0)**; Uw final ≈ 1,3–1,5. Fachada sur: vidrio de control solar (g ≤ 0,40).
+- **Acabado cortijo**: lámina imitación madera (o blanco) en lugar de aluminio lacado. En el sol fuerte conviene un tono medio o lámina con pigmentos reflectantes: los PVC muy oscuros se dilatan más (preguntar al fabricante la gama «cool»). Contraventanas tipo mallorquín de lamas, de aluminio o de madera tratada, por fuera.
+- **Cristalera del salón (4,00 × 2,55 m, norte)**: en PVC se hace con dos hojas de 2,00 m y refuerzo de acero (corredera elevable) más un fijo si hace falta. **Comprobar con el fabricante** el peso del vidrio 6/16/44.2 y la flecha del perfil: para huecos de esta altura el aluminio con rotura de puente térmico rinde mejor, pero el PVC es válido si el fabricante lo garantiza.
+- **Corredera de la terraza (1,42 m)** y las puertas de la cocina y de la entrada: también en PVC.
+- **Persianas**: monoblock con cajón aislado en dormitorios; en la fachada sur, además, contraventanas.
+- **Ahorro**: pedirlas a **precio de coste** a tu propia empresa: puede suponer más de la mitad del gasto de carpintería. Mosquiteras incluidas.
 
 ## 4. Césped o cubierta ajardinada sobre la planta superior
 | | Sedum (extensiva) | Césped natural | Césped artificial |
