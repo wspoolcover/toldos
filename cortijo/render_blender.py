@@ -73,5 +73,7 @@ def shoot(name, loc, target, hide=(), exposure=-0.9, world=0.06):
     co.rotation_euler = Vector(d).to_track_quat("-Z", "Y").to_euler()
     sc.render.filepath = OUT + name + ".png"; bpy.ops.render.render(write_still=True); print("render", name)
 
-shoot("planta_baja_abierta", (-2, -4, 16), (5, 8.5, 0.5), hide=("muros_PA", "forjado_PB_PA", "forjado_salon", "forjado_cubierta", "parapeto", "lucernario", "tabiques_PA", "cristal_PA", "acero_vigas_cubierta", "zuncho_cubierta", "paneles", "acero_pilares", "carpinteria_PA", "vidrios_PA", "puertas_PA", "vidrios_terraza", "carpinteria_terraza", "cristal_PA"))
+shoot("exterior_norte", (-6, -14, 7), (5, 7, 2.5))
+shoot("exterior_sur", (18, 24, 9), (5, 9, 2.5))
+shoot("planta_baja_abierta", (-2, -4, 16), (5, 8.5, 0.5), hide=("muros_PA", "forjado_PB_PA", "forjado_salon", "forjado_cubierta", "parapeto", "lucernario", "tabiques_PA", "cristal_PA", "acero_vigas_cubierta", "zuncho_cubierta", "paneles", "acero_pilares", "carpinteria_PA", "vidrios_PA", "puertas_PA", "vidrios_terraza", "carpinteria_terraza", "cristal_PA", "acero_dinteles"))
 shoot("salon_interior", (5.2, 1.2, 1.6), (4.2, 7.5, 1.3), hide=("muros_PA", "forjado_cubierta", "parapeto", "lucernario", "tabiques_PA", "cristal_PA", "acero_vigas_cubierta", "zuncho_cubierta", "paneles"), exposure=0.9, world=0.5)
