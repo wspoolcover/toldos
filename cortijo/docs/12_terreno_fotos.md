@@ -36,3 +36,9 @@
 - **Cota de apoyo más profunda** (la capa que se mueve con el clima suele llegar a 1,0–1,5 m): no apoyar zapatas en la capa superficial.
 - **Evitar que el agua llegue al pie de los muros**: drenaje perimetral, acera de hormigón alrededor de la casa y no plantar árboles grandes a menos de 4–5 m.
 - **Las zapatas y riostras propuestas** (1,60 m, riostras de 40×50) siguen siendo razonables, pero la profundidad y el tipo (zapatas o losa) los decide el estudio.
+
+
+## Aclaraciones del propietario (13-10-2026)
+- **Acometida de agua**: en el norte, justo en el camino, junto a la entrada de **7 m con puerta corredera** (hay raíl de hormigón en el suelo).
+- **Acometida de luz**: en la fachada sur de la vivienda (la ancha), hacia la **rambla de Albox**.
+- Por tanto el agua llega por el norte y la luz por el sur. Esquema de instalaciones corregido en consecuencia.

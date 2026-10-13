@@ -1,5 +1,5 @@
 """Vivienda v7 (dormitorios de arriba parejos, armarios empotrados, paneles solares y aerotermia): envolvente sobre croquis (muros existentes 0,55 m), distribución propuesta y estructura de acero.
-Coordenadas del croquis en metros: abajo = NORTE (terreno propio: entrada y salón); arriba = SUR (fachada ancha con CGP, a la calle)."""
+Coordenadas del croquis en metros: abajo = NORTE (acceso por el camino con puerta corredera de 7 m, agua; entrada y salón); arriba = SUR (fachada ancha con la CGP, hacia la rambla de Albox)."""
 import json, math
 import cadquery as cq
 from perfiles import SECC
@@ -228,7 +228,7 @@ MOB = [box(6.45, 1.05, 0, .75, 3.30, .85), box(5.05, 3.65, 0, 1.40, .70, .45), b
 mobiliario = comp(MOB)
 PANELES = [box(1.0 + c * 1.15, 8.6 + f * 2.1, Z_TOP + 0.35, 1.05, 1.75, 0.04) for f in range(3) for c in range(6) if not (c >= 5 and f == 0)]
 paneles_solares = comp(PANELES)
-aerotermia = comp([box(8.25, 12.4, Z_TOP, 0.95, 0.45, 0.95)])   # unidad exterior sobre la cubierta, junto al lucernario de la escalera (el sur da a la calle); módulo hidráulico y acumulador en el armario bajo la escalera
+aerotermia = comp([box(8.25, 12.4, Z_TOP, 0.95, 0.45, 0.95)])   # unidad exterior sobre la cubierta, junto al lucernario de la escalera (más seguro, y lejos de la rambla); módulo hidráulico y acumulador en el armario bajo la escalera
 chimenea = comp([box(3.30, 6.20, 0, .85, 1.30, 1.25), box(3.40, 6.55, 1.25, .50, .50, Z_TOP + 1.0 - 1.25)])   # hogar y humero, sube por la esquina hasta pasar la cubierta
 
 partes = [("cimentacion", cimentacion, (.55, .55, .55)), ("muros_PB", muros_pb, (.85, .80, .70)), ("muros_salon", muros_salon, (.72, .45, .35)), ("muros_PA", muros_pa, (.85, .80, .70)),

@@ -204,7 +204,7 @@ def lamina_dist(nombre):
     fin = cuadro_salas(msp, 300, 282)
     notas(msp, 300, fin - 8, ["NOTAS: muros existentes de 0,55 m; medidas exteriores del croquis. Tabiques de 0,10 m.",
         "Falta confirmar a qué lado del croquis queda el este (otro terreno con la salida del sol).",
-        "Norte abajo (entrada y salón, terreno propio), sur arriba (calle). Escalera en U con hueco y lucernario en cubierta.",
+        "Norte abajo (acceso, entrada y salón), sur arriba (CGP, hacia la rambla). Escalera en U con hueco y lucernario en cubierta.",
         "Se demuele el muro de fachada entre salón y casa y la pared central: los sustituyen vigas de acero (línea gruesa)."])
     doc.saveas(nombre); print(nombre)
 

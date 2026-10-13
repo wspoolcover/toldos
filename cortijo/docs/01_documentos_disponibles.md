@@ -33,7 +33,7 @@ Observaciones sobre los planos que conviene aclarar con el arquitecto:
 - PL-07 deja ventanas con vidrio 4/8/4 y aluminio sin rotura de puente térmico (no lo indica): no cumple lo que hoy se pone en obra nueva en la zona.
 
 ## Vecinos y linderos (dato del propietario, 12-10-2026)
-- **Norte** (la parte estrecha del salón, hacia la calle) y **sur** (fondo): terreno propio.
+- **Norte** (la parte estrecha del salón): el **acceso por el camino**, con entrada de unos 7 m con puerta corredera (hay un raíl de hormigón) y la acometida de agua. **Sur** (fachada ancha con la CGP): terreno propio hacia la **rambla de Albox**.
 - **Este y oeste**: casas vecinas **pegadas** (medianeras), incluidos los muros laterales del salón. En PL-04 y PL-06 figuran como «VIVIENDA» y el saliente oeste como «encabalgamiento otra propiedad».
 - Consecuencias aplicadas: **sin ventanas en los muros este y oeste** (se quitó la ventana este de la cocina, la del baño grande, la del baño de la suite y la este del dormitorio 3); los baños se ventilan con extractor; la unidad exterior de la aerotermia va al patio sur; la acometida de agua y la eléctrica entran por el sur y la fosa séptica está al norte, como en PL-08, PL-09 y PL-10.
 - A comprobar: vistas sobre fincas vecinas a menos de 2 m (art. 582 del Código Civil), la altura de los parapetos de la terraza junto a las medianeras y quién construye cada medianera.

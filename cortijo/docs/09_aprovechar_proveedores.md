@@ -7,7 +7,7 @@ Tienes acceso a precio de coste en puertas, ventanas y hierro. No he abierto las
 2. **Ventanas y cristaleras de PVC (≈ 37 m²):** 8 ventanas, la cristalera del salón de 4,00 × 2,55 m, el cierre fijo de la planta alta y el fijo del despacho. Con contraventanas y mosquiteras.
 3. **Puertas (13):** entrada de 1,40 m, puerta de la cocina al patio, corredera a la terraza y 10 interiores. Si tu canal tiene puerta de hierro con vidrio para la entrada, encaja con el estilo cortijo.
 4. **Escalera de acero, barandillas y soportes de los paneles solares:** el taller puede fabricarlas y galvanizarlas junto con la estructura.
-5. **Opcionales de hierro:** pérgola de la terraza, rejas de las ventanas bajas del sur, cancela del patio.
+5. **Opcionales de hierro:** pérgola de la terraza, rejas de las ventanas bajas del sur, cancela del patio sur y raíl y hoja de la puerta corredera de 7 m del acceso.
 
 ## Cómo usar el Excel
 - **Ventanas / Puertas / Hierro:** rellena la columna amarilla con tu precio de coste (unidad o €/kg); los totales salen solos.

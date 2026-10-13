@@ -489,7 +489,7 @@ $SKPOLY
   9
 $TDCREATE
  40
-2461326.9275115742
+2461327.461099537
   9
 $TDUCREATE
  40
@@ -497,7 +497,7 @@ $TDUCREATE
   9
 $TDUPDATE
  40
-2461326.9275347223
+2461327.461122685
   9
 $TDUUPDATE
  40
@@ -929,11 +929,11 @@ $PSTYLEMODE
   9
 $FINGERPRINTGUID
   2
-{E1CC596F-AE18-4E22-9509-0533F62B5DC0}
+{6874ECF1-D477-41EA-A759-7297EC19B12E}
   9
 $VERSIONGUID
   2
-{F0AD5F71-E521-450F-9F25-CACEEF07C739}
+{47966578-0F07-4B9C-9F98-C98D4593E079}
   9
 $EXTNAMES
 290
@@ -1323,9 +1323,9 @@ ISM
   0
 CLASS
   1
-LAYOUT
+ACDBPLACEHOLDER
   2
-AcDbLayout
+AcDbPlaceHolder
   3
 ObjectDBX Classes
  90
@@ -1339,9 +1339,9 @@ ObjectDBX Classes
   0
 CLASS
   1
-ACDBPLACEHOLDER
+LAYOUT
   2
-AcDbPlaceHolder
+AcDbLayout
   3
 ObjectDBX Classes
  90
@@ -38355,7 +38355,7 @@ AcDbText
  40
 2.1
   1
-Norte abajo (entrada y salón, terreno propio), sur arriba (calle). Escalera en U con hueco y lucernario en cubierta.
+Norte abajo (acceso, entrada y salón), sur arriba (CGP, hacia la rambla). Escalera en U con hueco y lucernario en cubierta.
 100
 AcDbText
   0
@@ -39485,7 +39485,7 @@ DictionaryVariables
 280
 0
   1
-1.4.4 @ 2026-10-12T22:15:37.467023+00:00
+1.4.4 @ 2026-10-13T11:03:59.877206+00:00
   0
 VISUALSTYLE
   5
@@ -40197,7 +40197,7 @@ DictionaryVariables
 280
 0
   1
-1.4.4 @ 2026-10-12T22:15:39.269674+00:00
+1.4.4 @ 2026-10-13T11:04:01.776120+00:00
   0
 ENDSEC
   0

@@ -16,7 +16,7 @@ Rangos de referencia en España 2026 para unos 172 m² construidos (109 m² úti
 | Ventanas y cristalera (**PVC** con lámina de madera, bajo emisivo, control solar en sur, contraventanas) | **A precio de coste por WS Ventanas** | 6.000–10.000 | PVP: 12.000–18.000 |
 | Tabiquería (ladrillo hueco doble o placa de yeso) | Placa de yeso con lana: más rápida y lleva las instalaciones | 5.000–8.000 | — |
 | Solera + suelo radiante PB (109 m²) + mortero | Tubo PE-X paso 15 cm, 3 cm aislante | 6.000–9.000 | — |
-| Aerotermia 8 kW + acumulador ACS 200 L + colector | Monobloc en el patio este | 8.000–12.000 | Caldera de gasóleo + depósito |
+| Aerotermia 8 kW + acumulador ACS 200 L + colector | Unidad exterior en la cubierta | 8.000–12.000 | Caldera de gasóleo + depósito |
 | Multisplit planta alta (1 exterior + 4 interiores 2,5 kW) | Inverter A++ | 3.500–5.500 | Suelo radiante arriba (+6.000) |
 | Fotovoltaica 7,6 kWp (17 paneles) + inversor 6 kW + batería opcional | Sin batería al principio | 7.000–10.000 (batería +4.000–6.000) | — |
 | Electricidad completa (9,2 kW, 13 circuitos, red Cat 6, TV) | Mecanismos de gama media | 7.000–11.000 | Domótica (+3.000–8.000) |

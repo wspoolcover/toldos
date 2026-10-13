@@ -17,9 +17,13 @@ Resumen de lo que enseñan las 11 fotos y qué cambia en el diseño. Lo marcado 
 - **Recalce por bataches** y zunchos arriba (`docs/04_cimentacion_inicio.md`, plano de cimentación).
 - **Rejas de hierro** en las ventanas del sur: encajan con tu canal de hierro y con el estilo cortijo.
 
-## Orientación (resuelta: el arquitecto conoce el terreno)
-- **El sur (fachada ancha de 9,55 m, con la CGP, la puerta antigua y las rejas) da a la calle.** El **norte (salón, antes porche) es terreno propio**, donde está la entrada de la casa reformada y la fosa séptica. Es lo que dicen los planos PL-08, PL-09 y PL-10.
-- Consecuencias aplicadas: la unidad exterior de la aerotermia pasa a la **cubierta** (no puede ir en la acera); la puerta de la cocina al sur es ahora una puerta de servicio **a la calle**: ponle reja o cerradura de seguridad; se corrigen las etiquetas «calle» y «terreno propio» en todos los planos.
+## Orientación (confirmada por el propietario el 13-10-2026)
+- **Norte (extremo del salón)**: el **acceso por el camino**. Hay una entrada de unos **7 m** con raíl de hormigón para una **puerta corredera**, y ahí está la **acometida de agua**. La entrada de la casa y el aparcamiento son por este lado.
+- **Sur (fachada ancha de 9,55 m)**: tiene la **CGP trifásica**, la puerta antigua y las rejas. Es terreno propio y da hacia la **rambla de Albox**, no a una calle.
+- **Este y oeste**: casas vecinas pegadas.
+- **Corrección mía**: una versión anterior de los planos ponía «calle» en el sur por una foto de la fachada con acera. Ya está revertido: el sur es el patio propio hacia la rambla.
+- La unidad de aerotermia queda **en la cubierta**: más segura y fuera de la zona de la rambla, que puede llevar agua en las avenidas. La puerta de la cocina al sur es una salida al patio.
+- Comprobar con el arquitecto la **distancia a la rambla** (dominio público hidráulico) y si la zona es inundable; el proyecto legalizado ya debería contemplarlo.
 
 ## A confirmar
 - **Posición exacta de la CGP** en la fachada (en mi esquema está entre dos ventanas del dormitorio 2 y la cocina).
