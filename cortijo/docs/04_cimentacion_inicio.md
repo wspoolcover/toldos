@@ -27,3 +27,7 @@ Qué sabemos, qué comprobar antes de abrir zanjas y en qué orden trabajar. Est
 - **Ya hay zanjas abiertas** junto al pie de los muros, por dentro: es el principio del recalce. Hacerlo **por bataches alternos** (tramos cortos de 1–1,5 m, sin abrir dos contiguos a la vez) y con la cubierta y el forjado apeados.
 - Los **apeos metálicos** están puestos bajo el forjado y en el hueco del muro central. No retirarlos hasta que las vigas de acero estén colocadas y apoyadas en sus pilares.
 - Hay **humedad y sales en la base** de varios muros: antes de aislar, drenaje perimetral y corte de capilaridad.
+
+
+## Terreno según las fotos del 13-10-2026
+El suelo se ve agrietado por la sequía, típico de arcillas y limos expansivos. Hacer el estudio geotécnico antes de cerrar las zapatas, apoyar por debajo de la capa que se mueve con el clima y proteger el pie de los muros del agua (ver `12_terreno_fotos.md`).
