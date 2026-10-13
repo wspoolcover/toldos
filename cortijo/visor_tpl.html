@@ -1,0 +1,183 @@
+<title>Cortijo Albox</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@400;600&display=swap">
+<style>
+/* Layout: cajetín de plano arriba, pestañas de trabajo, visor 3D con panel de capas y vistas */
+:root{--bg:#f4f3ef;--panel:#fffefb;--fg:#201d19;--muted:#6a645b;--line:#d6d1c6;--accent:#8c4a2f;--accent-fg:#fffefb;--stage:#e8e4d9;--ok:#2d6a4f;
+--sans:"IBM Plex Sans Condensed","Arial Narrow",system-ui,sans-serif;--mono:"IBM Plex Mono",ui-monospace,Menlo,monospace}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#171512;--panel:#201d19;--fg:#ece7dd;--muted:#a39b8d;--line:#38332c;--accent:#e0a074;--accent-fg:#171512;--stage:#1d1b17;--ok:#7bc4a0;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#171512;--panel:#201d19;--fg:#ece7dd;--muted:#a39b8d;--line:#38332c;--accent:#e0a074;--accent-fg:#171512;--stage:#1d1b17;--ok:#7bc4a0;color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);padding-inline:16px;padding-block:16px}
+main{max-width:1240px;margin-inline:auto;display:flex;flex-direction:column;gap:16px}
+header{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:6px 24px;border-bottom:2px solid var(--fg);padding-bottom:10px}
+h1{margin:0;font-size:30px;font-weight:600;letter-spacing:.01em;text-wrap:balance}
+.meta{font-family:var(--mono);font-size:12px;color:var(--muted);text-align:right}
+nav{display:flex;gap:6px;flex-wrap:wrap}
+nav button{font:inherit;font-size:14px;padding:8px 16px;border:1px solid var(--line);background:var(--panel);color:var(--fg);cursor:pointer}
+nav button[aria-selected="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-fg)}
+nav button:focus-visible,.chips button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.view{display:grid;grid-template-columns:minmax(0,1fr) 270px;gap:14px}
+@media(max-width:800px){.view{grid-template-columns:minmax(0,1fr)}}
+#stage{position:relative;background:var(--stage);border:1px solid var(--line);aspect-ratio:4/3;min-height:340px;max-width:100%;touch-action:none}
+#stage canvas{display:block;width:100%;height:100%}
+#hint{position:absolute;left:10px;bottom:8px;font-family:var(--mono);font-size:11px;color:var(--muted)}
+aside{background:var(--panel);border:1px solid var(--line);padding:14px;display:flex;flex-direction:column;gap:11px;min-width:0}
+aside h2{margin:0;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips button{font:inherit;font-size:13px;padding:5px 10px;border:1px solid var(--line);background:var(--bg);color:var(--fg);cursor:pointer}
+.chips button:hover{border-color:var(--accent)}
+label{display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer}
+.dat{font-family:var(--mono);font-size:12px;line-height:1.7;color:var(--muted);margin:0}
+.dat b{color:var(--fg);font-weight:500}
+figure{margin:0;display:flex;flex-direction:column;gap:6px}
+figcaption{font-size:14px;color:var(--muted);max-width:75ch}
+figcaption b{color:var(--fg);font-weight:600}
+.gal{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,480px),1fr));gap:16px}
+.gal img,.one img{display:block;width:100%;height:auto;border:1px solid var(--line);background:#fff}
+.imgbox{overflow:auto;max-width:100%}
+.imgbox img{min-width:860px}
+h3{margin:18px 0 8px;font-size:17px}
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px}
+@media(max-width:800px){.two{grid-template-columns:minmax(0,1fr)}}
+table.t{border-collapse:collapse;width:100%;font-size:14px;background:var(--panel)}
+table.t th,table.t td{border:1px solid var(--line);padding:6px 10px;text-align:left}
+table.t th{font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+table.t td.n{font-family:var(--mono);text-align:right;font-variant-numeric:tabular-nums}
+.wrap{overflow-x:auto}
+ul.l{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:7px;font-size:15px;line-height:1.45;max-width:78ch}
+.note{font-size:13px;color:var(--muted);margin:0;max-width:75ch}
+.tag{font-family:var(--mono);font-size:11px;color:var(--ok);border:1px solid var(--ok);padding:1px 6px;margin-left:6px}
+</style>
+<main>
+<header><h1>Cortijo Albox</h1><span class="meta">Polígono 33, parcela 198 · San Roque, Albox (Almería)<br>Diseño v8 · borrador sin visado</span></header>
+<nav role="tablist"><button role="tab" id="t3d" aria-selected="true">Modelo 3D</button><button role="tab" id="trn" aria-selected="false">Renders</button><button role="tab" id="tpl" aria-selected="false">Plantas</button><button role="tab" id="tin" aria-selected="false">Instalaciones</button><button role="tab" id="tno" aria-selected="false">Decisiones</button></nav>
+
+<section id="v3d" class="view">
+ <div id="stage"><span id="hint">Arrastra para girar · rueda para acercar · dos dedos para mover</span></div>
+ <aside>
+  <h2>Vistas</h2>
+  <div class="chips"><button data-cam="norte">Norte (entrada)</button><button data-cam="sur">Sur (rambla)</button><button data-cam="terraza">Terraza</button><button data-cam="planta">Desde arriba</button></div>
+  <h2>Capas</h2>
+  <label><input type="checkbox" data-p="forjado_cubierta,parapeto_cubierta,lucernario" checked> Cubierta</label>
+  <label><input type="checkbox" data-p="paneles_solares" checked> Paneles solares</label>
+  <label><input type="checkbox" data-p="muros_PA,cristal_PA,tabiques_PA,carpinteria_PA,vidrios_PA,puertas_PA,vidrios_terraza,carpinteria_terraza" checked> Planta alta</label>
+  <label><input type="checkbox" data-p="forjado_PB_PA,solado_terraza,parapeto_terraza,forjado_salon" checked> Forjado y terraza</label>
+  <label><input type="checkbox" data-p="muros_PB,muros_salon,cristal_PB,tabiques_PB,murete_pasillo,carpinteria_PB,vidrios_PB,puertas_PB,puerta_entrada" checked> Planta baja</label>
+  <label><input type="checkbox" data-p="escalera,barandillas" checked> Escalera</label>
+  <label><input type="checkbox" data-p="mobiliario,chimenea" checked> Muebles y chimenea</label>
+  <label><input type="checkbox" data-p="aerotermia" checked> Aerotermia (cubierta)</label>
+  <label><input type="checkbox" data-p="acero_viguetas_salon,acero_viguetas_casa,acero_viguetas_cubierta,acero_vigas_forjado,acero_vigas_cubierta,acero_pilares,acero_dintel,acero_dinteles,zuncho_forjado,zuncho_cubierta"> Estructura (acero y zunchos)</label>
+  <label><input type="checkbox" data-p="cimentacion,riostras"> Cimentación</label>
+  <h2>Datos</h2>
+  <p class="dat">Planta baja <b>109 m²</b> útiles<br>Planta alta <b>63 m²</b> útiles<br>Terraza del salón <b>43 m²</b><br>Fachada ancha <b>9,55 m</b> · fondo <b>16,30 m</b><br>Norte: acceso (puerta corredera de 7 m) y agua<br>Sur: fachada con CGP, hacia la rambla<br>Este y oeste: casas vecinas</p>
+ </aside>
+</section>
+
+<section id="vrn" hidden>
+ <div class="gal">
+  <figure><img alt="Fachada norte: salón de piedra marés con cristalera, puerta de madera y terraza con corredera" src="data:image/jpeg;base64,{{R_NORTE}}"><figcaption><b>Fachada norte, el acceso desde el camino.</b> Salón de piedra marés con cristalera de 4 m y la puerta de entrada; encima, la terraza con la corredera de la sala familiar.</figcaption></figure>
+  <figure><img alt="Fachada sur: casa encalada con ventanas de madera y paneles solares" src="data:image/jpeg;base64,{{R_SUR}}"><figcaption><b>Fachada sur, hacia la rambla de Albox.</b> Casa encalada, marcos y contraventanas de madera, puerta de servicio de la cocina, 16 paneles solares y la unidad de aerotermia en la cubierta.</figcaption></figure>
+  <figure><img alt="Interior del salón con muro de piedra y chimenea" src="data:image/jpeg;base64,{{R_SALON}}"><figcaption><b>Salón.</b> Muro de piedra, chimenea en la esquina oeste, comedor y, al fondo, la sala de estar con el despacho.</figcaption></figure>
+  <figure><img alt="Planta baja vista desde arriba sin la planta alta" src="data:image/jpeg;base64,{{R_PB}}"><figcaption><b>Planta baja abierta.</b> Suite, cocina abierta a la sala de estar, dormitorio 2 al este y salón vistos desde arriba.</figcaption></figure>
+  <figure><img alt="Desde la sala de estar, paso libre de 1,60 m a la cocina" src="data:image/jpeg;base64,{{R_COCINA}}"><figcaption><b>De la sala de estar a la cocina.</b> Paso libre de 1,60 m entre los pilares (se puede cerrar con una corredera). La cocina da al patio sur.</figcaption></figure>
+  <figure><img alt="Entrada con el pie de la escalera, la puerta del baño grande y el paso bajo la escalera" src="data:image/jpeg;base64,{{R_ESC}}"><figcaption><b>Entrada y escalera.</b> El pie de la escalera queda al sur de la entrada; a la izquierda la puerta del baño grande y, bajo el tramo de vuelta, el paso al armario técnico.</figcaption></figure>
+ </div>
+ <p class="note">Imágenes generadas con Blender a partir del modelo. Muebles y materiales son representativos, no definitivos.</p>
+</section>
+
+<section id="vpl" hidden>
+ <h3>Distribución (norte abajo)</h3>
+ <div class="imgbox"><img alt="Plantas baja y alta con las estancias y sus superficies" src="data:image/jpeg;base64,{{PLANTAS}}"></div>
+ <div class="two">
+  <div><h3>Estancias</h3><div class="wrap"><table class="t"><thead><tr><th>Planta baja</th><th>m²</th></tr></thead><tbody>
+  <tr><td>Salón con comedor y chimenea</td><td class="n">34,2</td></tr><tr><td>Pasillo de entrada (murete bajo)</td><td class="n">10,9</td></tr><tr><td>Sala de estar y paso</td><td class="n">11,1</td></tr><tr><td>Cocina (abierta a la sala)</td><td class="n">9,4</td></tr><tr><td>Dormitorio principal</td><td class="n">12,1</td></tr><tr><td>Vestidor</td><td class="n">5,8</td></tr><tr><td>Baño de la suite</td><td class="n">3,7</td></tr><tr><td>Dormitorio 2</td><td class="n">9,7</td></tr><tr><td>Despacho</td><td class="n">3,8</td></tr><tr><td>Baño grande</td><td class="n">5,8</td></tr><tr><td>Entrada y escalera</td><td class="n">7,7</td></tr></tbody></table></div></div>
+  <div><h3>&nbsp;</h3><div class="wrap"><table class="t"><thead><tr><th>Planta alta</th><th>m²</th></tr></thead><tbody>
+  <tr><td>Dormitorio 1</td><td class="n">13,2</td></tr><tr><td>Dormitorio 2</td><td class="n">16,8</td></tr><tr><td>Dormitorio 3 (o despacho)</td><td class="n">14,8</td></tr><tr><td>Sala familiar con salida a la terraza</td><td class="n">12,0</td></tr><tr><td>Baño</td><td class="n">3,5</td></tr><tr><td>Terraza sobre el salón</td><td class="n">42,7</td></tr></tbody></table></div>
+  <h3>Suite principal</h3><div class="one"><img alt="Detalle de la suite: dormitorio, vestidor y baño" src="data:image/jpeg;base64,{{SUITE}}"></div></div>
+ </div>
+</section>
+
+<section id="vin" hidden>
+ <h3>Agua, luz, red y climatización por planta</h3>
+ <div class="imgbox"><img alt="Esquemas de fontanería, electricidad y climatización de las dos plantas" src="data:image/jpeg;base64,{{INST}}"></div>
+ <div class="two">
+  <div><h3>Cubierta</h3><div class="one"><img alt="Cubierta con 16 paneles solares y sumideros" src="data:image/jpeg;base64,{{CUB}}"></div></div>
+  <div><h3>Resumen</h3><ul class="l">
+   <li><b>El agua entra por el norte</b>, junto a la puerta corredera del camino; la <b>luz por el sur</b> (la CGP trifásica ya está colocada). La <b>fosa séptica</b> queda al norte, como en el proyecto original.</li>
+   <li><b>Aerotermia de 8 kW</b>: unidad exterior sobre la cubierta; módulo y acumulador en un armario técnico bajo la escalera.</li>
+   <li><b>Suelo radiante</b> en toda la planta baja, dormitorios incluidos. Arriba, aire acondicionado por splits.</li>
+   <li><b>16 paneles solares</b> (7,2 kWp) mirando al sur; sedum en las zonas libres de la cubierta.</li>
+   <li><b>Baños sobre baños</b> para llevar una sola columna de bajantes. Extractores en los baños, que no tienen ventana.</li>
+   <li><b>Chimenea</b> cerrada de leña en el salón, con toma de aire exterior.</li></ul></div>
+ </div>
+ <p class="note">Esquema de intenciones: no es un proyecto de ejecución.</p>
+</section>
+
+<section id="vno" hidden>
+ <h3>Cómo está pensada la casa</h3>
+ <ul class="l">
+  <li><b>Casas vecinas pegadas al este y al oeste</b>: esas paredes no llevan ventanas. La luz entra por el norte (cristalera del salón), por el sur (dormitorios y cocina, hacia la rambla) y por la terraza.</li>
+  <li><b>Salón de piedra marés</b> y casa encalada, con carpintería de PVC acabado madera y contraventanas de lamas: el aire de cortijo andaluz o mallorquín.</li>
+  <li><b>Planta baja</b>: suite como una habitación de hotel (vestidor en L, rincón de lectura, baño con ducha), segundo dormitorio, despacho pequeño y apartado, cocina abierta a la sala de estar (paso libre de 1,60 m), que reparte el paso.</li>
+  <li><b>Planta alta</b>: tres dormitorios con armarios empotrados y una sala familiar que se abre a la terraza con una corredera de 1,42 m.</li>
+  <li><b>Escalera en U</b> con el pie junto a la entrada: 17 peldaños de 19,2 cm, entre la entrada y la sala familiar. Ya no tapa la cocina ni el baño grande, y debajo del tramo de vuelta queda un paso libre y el armario técnico.</li>
+  <li><b>Terraza de 43 m²</b> sobre el salón, con acceso directo desde la sala familiar.</li>
+ </ul>
+ <h3>Novedades de la v8</h3>
+ <ul class="l">
+  <li><b>Escalera movida</b>: el pie queda junto a la entrada. En la versión anterior tapaba el acceso a la cocina y al baño grande; ahora no estorba.</li>
+  <li><b>Cocina abierta a la sala de estar</b> por un paso libre de 1,60 m (se puede cerrar con una corredera). El dormitorio 2 pasa al este.</li>
+  <li><b>Puertas libres</b>: se ha comprobado sobre el modelo que se puede ir de cada estancia a las demás (paso de 70 cm), y se han corregido inodoro, armarios y sofá que tapaban puertas.</li>
+  <li><b>16 paneles solares</b> (7,2 kWp): uno tapaba el lucernario de la escalera.</li>
+ </ul>
+ <h3>Para decidir</h3>
+ <ul class="l">
+  <li>Piedra marés en el salón o todo encalado.</li>
+  <li>Color de la carpintería: madera oscura, madera media o blanco.</li>
+  <li>Pérgola de aluminio sobre una parte de la terraza.</li>
+ </ul>
+ <p class="note">Modelo preliminar. La estructura, el terreno, los sismos y las distancias a los linderos los resuelve un técnico antes de construir.</p>
+</section>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script>
+const GLB="{{GLB}}";
+const $=s=>document.querySelector(s);
+const TABS={"3d":["v3d","t3d"],rn:["vrn","trn"],pl:["vpl","tpl"],in:["vin","tin"],no:["vno","tno"]};
+function tab(a){for(const k in TABS){$("#"+TABS[k][0]).hidden=k!==a;$("#"+TABS[k][1]).setAttribute("aria-selected",k===a)}if(a==="3d")resize()}
+for(const k in TABS)$("#"+TABS[k][1]).onclick=()=>tab(k);
+const stage=$("#stage");let renderer,scene,camera,controls,model,parts={},R=20;
+function resize(){if(!renderer)return;const w=stage.clientWidth,h=stage.clientHeight;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix()}
+const COL=[[/^muros_salon|^parapeto_terraza/,0xcdb184,.95],[/^muros_P|^parapeto_cubierta|^tabiques|^murete|^chimenea/,0xf2efe6,.95],[/^carpinteria|^puertas|^puerta_entrada/,0x4a2c17,.7],[/^vidrios|^cristal|^lucernario/,0xb4d9ee,.3,1],
+ [/^forjado|^zuncho/,0xc9c5bb,.95],[/^solado/,0x9a5a3c,.9],[/^escalera/,0x8d6b46,.8],[/^mobiliario/,0xa98a63,.8],[/^paneles/,0x16233f,.3],[/^aerotermia/,0xd6d6da,.5],[/^acero/,0x3a5a8c,.5],[/^cimentacion|^riostras/,0x8a857b,.95]];
+const NAMES=["muros_salon","parapeto_terraza","muros_PB","muros_PA","parapeto_cubierta","tabiques_PB","tabiques_PA","murete_pasillo","chimenea","carpinteria_PB","carpinteria_PA","carpinteria_terraza","puertas_PB","puertas_PA","puerta_entrada","vidrios_PB","vidrios_PA","vidrios_terraza","cristal_PB","cristal_PA","lucernario","forjado_PB_PA","forjado_salon","forjado_cubierta","zuncho_forjado","zuncho_cubierta","solado_terraza","escalera","mobiliario","paneles_solares","aerotermia","cimentacion","riostras"];
+function pname(o){for(let p=o;p;p=p.parent){if(p.name&&(NAMES.includes(p.name)||/^acero_/.test(p.name)))return p.name}return ""}
+function init(){
+ renderer=new THREE.WebGLRenderer({antialias:true,alpha:true});renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;stage.prepend(renderer.domElement);
+ scene=new THREE.Scene();camera=new THREE.PerspectiveCamera(36,4/3,.1,400);
+ scene.add(new THREE.HemisphereLight(0xfff6e8,0x8a8070,.55));
+ const d=new THREE.DirectionalLight(0xfff1dc,.7);d.position.set(-10,22,14);d.castShadow=true;d.shadow.mapSize.set(2048,2048);Object.assign(d.shadow.camera,{left:-18,right:18,top:18,bottom:-18,near:1,far:70});d.shadow.bias=-.0006;d.shadow.normalBias=.05;scene.add(d);
+ controls=new THREE.OrbitControls(camera,renderer.domElement);controls.enableDamping=true;controls.maxPolarAngle=Math.PI*.495;
+ const bin=Uint8Array.from(atob(GLB),c=>c.charCodeAt(0)).buffer;
+ new THREE.GLTFLoader().parse(bin,"",g=>{model=g.scene;
+  let box=new THREE.Box3().setFromObject(model),sz=box.getSize(new THREE.Vector3());
+  if(sz.z<sz.y){const pivot=new THREE.Group();pivot.rotation.x=-Math.PI/2;pivot.add(model);scene.add(pivot);model=pivot}else scene.add(model);
+  model.traverse(o=>{if(o.name)parts[o.name]=o;if(o.isMesh){const n=pname(o),c=COL.find(c=>c[0].test(n));
+    o.material=new THREE.MeshStandardMaterial({color:c?c[1]:0xcccccc,roughness:c?c[2]:.9,metalness:c&&c[1]===0x3a5a8c?.6:0,side:THREE.DoubleSide});
+    if(c&&c[3]){o.material.transparent=true;o.material.opacity=.3;o.material.depthWrite=false}else{o.castShadow=true;o.receiveShadow=true}}});
+  box=new THREE.Box3().setFromObject(model);const c=box.getCenter(new THREE.Vector3()),s=box.getSize(new THREE.Vector3());
+  model.position.sub(c);R=Math.max(s.x,s.z,s.y);
+  const ground=new THREE.Mesh(new THREE.CircleGeometry(R*1.6,64),new THREE.MeshStandardMaterial({color:0xa89a79,roughness:1}));ground.rotation.x=-Math.PI/2;ground.position.y=box.min.y-c.y+.6-.01;ground.receiveShadow=true;scene.add(ground);
+  cam("norte");resize();apply();
+ },e=>{$("#hint").textContent="No se pudo cargar el modelo"});
+ (function loop(){requestAnimationFrame(loop);controls.update();renderer.render(scene,camera)})();
+}
+const CAMS={norte:[.7,.62,1.35],sur:[.75,.62,-1.35],terraza:[.2,.38,.7],planta:[.02,1.75,.14]};
+function cam(k){const v=CAMS[k];camera.position.set(R*v[0],R*v[1],R*v[2]);controls.target.set(k==="terraza"?0:0,k==="terraza"?R*.05:0,k==="terraza"?R*.15:0);controls.update()}
+document.querySelectorAll("[data-cam]").forEach(b=>b.onclick=()=>cam(b.dataset.cam));
+function apply(){document.querySelectorAll("input[data-p]").forEach(i=>i.dataset.p.split(",").forEach(n=>{const o=parts[n];if(o)o.visible=i.checked}))}
+document.querySelectorAll("input[data-p]").forEach(i=>i.addEventListener("change",apply));
+addEventListener("resize",resize);
+init();setTimeout(apply,600);setTimeout(apply,1500);
+</script>

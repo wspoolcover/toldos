@@ -1,6 +1,6 @@
-"""Mediciones para pedir a proveedores (carpintería y hierro) a partir del modelo v7. Genera pedido_proveedores.xlsx con columnas de precio para rellenar."""
+"""Mediciones para pedir a proveedores (carpintería y hierro) a partir del modelo v8. Genera pedido_proveedores.xlsx con columnas de precio para rellenar."""
 import math, collections
-import casa_v7 as c
+import casa_v8 as c
 from perfiles import SECC
 from openpyxl import Workbook
 from openpyxl.styles import Font, PatternFill, Alignment
@@ -32,7 +32,7 @@ rows_h = []
 for (cat, sec, L), n in corte.items():
     kgm = SECC[sec][7]; rows_h.append((cat, sec, L, n, kgm, round(L * n * kgm, 1)))
 extras = [("Placas base y cabeza de pilares + anclajes (12 uds, estimado)", "", "", 12, "", 12 * 14.0), ("Escalera de acero: 2 zancas UPN + 17 peldaños + descansillo (estimado)", "", "", 1, "", 380.0),
-          ("Barandilla de escalera y del hueco superior (≈ 9 m, estimado)", "", "", 9, "", 9 * 14.0), ("Soportes de 17 paneles solares, acero galvanizado (≈ 5 kg/panel, estimado)", "", "", 17, "", 17 * 5.0),
+          ("Barandillas: lado abierto de la escalera, suelo junto al hueco y pasamanos (≈ 10 m, estimado)", "", "", 10, "", 10 * 14.0), (f"Soportes de {len(c.PANELES)} paneles solares, acero galvanizado (≈ 5 kg/panel, estimado)", "", "", len(c.PANELES), "", len(c.PANELES) * 5.0),
           ("Tornillería, cartelas y piezas de unión (≈ 3 %)", "", "", 1, "", round(0.03 * sum(r[5] for r in rows_h), 1))]
 kg_tot = sum(r[5] for r in rows_h) + sum(e[5] for e in extras)
 
@@ -41,7 +41,7 @@ def cab(ws, fila, textos):
     for i, t in enumerate(textos, 1):
         cl = ws.cell(row=fila, column=i, value=t); cl.font = neg; cl.fill = azul; cl.alignment = Alignment(wrap_text=True, vertical="center")
 ws = wb.active; ws.title = "Ventanas"
-ws["A1"] = "Ventanas, cristaleras y fijos (medidas del modelo v7, huecos de obra: ancho × alto en m)"; ws["A1"].font = Font(bold=True, size=12)
+ws["A1"] = "Ventanas, cristaleras y fijos (medidas del modelo v8, huecos de obra: ancho × alto en m)"; ws["A1"].font = Font(bold=True, size=12)
 cab(ws, 3, ["Elemento", "Planta", "Ancho (m)", "Alto (m)", "Antepecho (m)", "Uds", "Superficie total (m²)", "Descripción", "Precio unidad (€) – RELLENAR", "Total (€)"])
 for i, (n, p, w, h, s, u, d) in enumerate(ven, 4):
     ws.append([n, p, w, h, s, u, f"=C{i}*D{i}*F{i}", d, None, f"=I{i}*F{i}"]); ws.cell(row=i, column=9).fill = amar

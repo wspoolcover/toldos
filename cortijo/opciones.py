@@ -21,32 +21,42 @@ def R(x0, y0, x1, y1): return [(x0, y0), (x1, y0), (x1, y1), (x0, y1)]
 SALON_PB = [(3.40, 0.25), (7.75, 0.25), (7.75, 7.87), (3.12, 7.87)]
 SALON_PA = [(3.40, 0.25), (9.30, 0.25), (9.30, 7.32), (3.12, 7.32)]
 HUB = [(3.15, 9.65), (5.65, 9.65), (5.65, 7.87), (7.15, 7.87), (7.15, 11.75), (3.15, 11.75)]
+# v8: escalera en U de 17 contrahuellas (huella 22 cm), pie en y = 9,65 (el baño grande y la entrada quedan libres) y meseta al sur, que entra 51 cm en el dormitorio del este
+Y0_ESC, T_ESC, X_LANE = 9.65, 0.22, 8.125
+LAND = 0.88                                             # fondo de la meseta (>= ancho de cada tramo, 0,875)
+Y_FIN = Y0_ESC + 8 * T_ESC + LAND                       # 12,29: fin de la meseta
+ESC_PB = R(7.25, Y0_ESC, 9.00, Y_FIN)
+Y_HALL_PA = Y0_ESC + T_ESC                              # 9,87: el tramo de bajada tiene 7 huellas y la última contrahuella llega al propio suelo de la planta alta
+Y_PAD = Y0_ESC + 5 * T_ESC                              # hasta aquí el suelo de la planta alta cubre los 5 primeros escalones con altura libre de sobra
+HUECO_PA = [(7.25, Y_HALL_PA), (X_LANE, Y_HALL_PA), (X_LANE, Y_PAD), (9.00, Y_PAD), (9.00, Y_FIN), (7.25, Y_FIN)]
+DORM_E = [(6.25, 11.85), (7.15, 11.85), (7.15, Y_FIN + 0.10), (9.00, Y_FIN + 0.10), (9.00, 15.75), (6.25, 15.75)]
 
 PB = [("Salón con comedor", "sala", SALON_PB, (4.55, 4.15)), ("Pasillo de entrada\n(murete a media altura)", "circ", [(7.85, 0.25), (9.30, 0.25), (9.30, 7.32), (9.00, 7.32), (9.00, 7.87), (7.85, 7.87)]),
-      ("Entrada", "circ", R(7.25, 7.87, 9.00, 8.95)), ("Escalera", "esc", R(7.25, 8.95, 9.00, 11.75)), ("Baño grande", "humedo", R(9.10, 8.85, 11.50, 11.25)),
-      ("Sala de estar\ny paso", "sala", HUB, (5.15, 10.7)), ("Cocina", "cocina", R(6.40, 11.85, 9.00, 15.75)), ("Dormitorio 2", "priv", R(3.75, 11.85, 6.30, 15.75), (5.05, 12.85)), ("Despacho", "priv", R(3.15, 7.97, 5.55, 9.55), (4.6, 8.2)),
+      ("Entrada", "circ", R(7.25, 7.87, 9.00, Y0_ESC)), ("Escalera", "esc", ESC_PB, (8.56, 11.85)), ("Baño grande", "humedo", R(9.10, 8.85, 11.50, 11.25)),
+      ("Sala de estar\ny paso", "sala", HUB, (5.15, 10.7)), ("Cocina\n(abierta a la sala)", "cocina", R(3.75, 11.85, 6.15, 15.75), (4.95, 13.2)), ("Dormitorio 2", "priv", DORM_E, (7.9, 14.4)), ("Despacho", "priv", R(3.15, 7.97, 5.55, 9.55), (4.6, 8.2)),
       ("Dormitorio principal", "priv", R(0.55, 11.85, 3.65, 15.75), (2.25, 12.55)), ("Vestidor", "priv", R(0.55, 9.45, 3.05, 11.75), (2.0, 10.6)),
       ("Baño", "humedo", R(0.55, 7.87, 3.05, 9.35), (1.85, 9.05))]
 PB_DOORS = [(7.85, 0.25, "H", 1.40, 1, 1),            # puerta de entrada de 1,40, pegada al muro este, abre hacia dentro
-            (9.05, 9.20, "V", 0.80, 0, 1), (7.40, 11.75, "H", 1.50, 0, 0),
-            (4.40, 11.75, "H", 0.80, 0, 1),            # sala -> dormitorio 2
+            (9.05, 8.90, "V", 0.75, 0, 1),             # baño grande, desde la entrada (a la izquierda del pie de la escalera)
+            (6.35, 11.75, "H", 0.80, 0, 1),            # sala -> dormitorio 2
 
             (3.05, 10.20, "V", 0.90, 0, -1),           # de la sala directamente al vestidor
             (1.60, 9.35, "H", 0.80, 0, 0),            # vestidor -> baño (corredera)
             (1.40, 11.75, "H", 0.80, 0, 1),
             (4.35, 9.55, "H", 0.85, 0, 1),             # sala de estar -> despacho
-            (7.50, 15.75, "H", 1.00, 0, -1)]           # cocina -> patio sur (puerta de servicio, hacia la rambla)
-PB_OPEN = [(5.60, 7.95, 5.60, 9.50), (5.70, 7.87, 7.05, 7.87), (7.20, 7.97, 7.20, 8.90)]
-VENTANAS = [(0.75, 15.75, 1.10), (2.35, 15.75, 1.10), (4.60, 15.75, 1.20), (6.45, 15.75, 0.90)]      # (x, y de la cara interior del muro, ancho)
+            (3.85, 15.75, "H", 0.90, 0, -1)]           # cocina -> patio sur (puerta de servicio, hacia la rambla)
+PB_OPEN = [(5.60, 7.95, 5.60, 9.50), (5.70, 7.87, 7.05, 7.87), (7.20, 7.97, 7.20, 9.55),    # salón <-> sala, y entrada <-> sala (paso libre de 1,58 m)
+           (3.85, 11.80, 5.45, 11.80)]                                                                 # sala de estar <-> cocina: paso libre de 1,60 m entre los pilares x=3,10 y x=5,55
+VENTANAS = [(0.75, 15.75, 1.10), (2.35, 15.75, 1.10), (5.05, 15.75, 1.00), (6.45, 15.75, 1.00)]      # (x, y de la cara interior del muro, ancho)
 VENTANAS_E = []                                                                                         # medianeras este y oeste: sin ventanas
 VENTANAS_W = []                                                                      # ventana de cocina al este
 
-PA = [("Terraza sobre el salón", "terraza", SALON_PA), ("Entrada", "circ", R(7.25, 7.87, 9.00, 8.95)), ("Escalera (hueco)", "esc", R(7.25, 8.95, 9.00, 11.75)),
+PA = [("Terraza sobre el salón", "terraza", SALON_PA), ("Entrada", "circ", R(7.25, 7.87, 9.00, Y_HALL_PA)), ("Escalera (hueco)", "esc", HUECO_PA, (8.15, 11.55)),
       ("Baño", "humedo", R(9.10, 8.85, 10.55, 11.25)), ("Sala familiar\ny terraza", "sala", R(4.05, 7.87, 7.15, 11.75)),
-      ("Dormitorio 1", "priv", R(0.55, 7.87, 3.95, 11.75)), ("Dormitorio 2", "priv", R(0.55, 11.85, 4.65, 15.75)),
-      ("Dormitorio 3\n(o despacho)", "priv", R(4.75, 11.85, 9.00, 15.75))]
-PA_DOORS = [(3.95, 9.50, "V", 0.90, 0, -1), (4.20, 11.75, "H", 0.80, 0, -1), (5.00, 11.75, "H", 0.80, 0, 1), (9.05, 9.20, "V", 0.80, 0, 1)]
-PA_OPEN = [(7.20, 7.97, 7.20, 8.90)]
+      ("Dormitorio 1", "priv", R(0.55, 7.87, 3.95, 11.75)), ("Dormitorio 2", "priv", R(0.55, 11.85, 4.85, 15.75)),
+      ("Dormitorio 3\n(o despacho)", "priv", [(4.95, 11.85), (7.15, 11.85), (7.15, Y_FIN + 0.10), (9.00, Y_FIN + 0.10), (9.00, 15.75), (4.95, 15.75)], (7.0, 14.2))]
+PA_DOORS = [(3.95, 9.50, "V", 0.90, 0, -1), (4.05, 11.75, "H", 0.80, 0, -1), (5.80, 11.75, "H", 0.80, 0, 1), (9.05, 8.90, "V", 0.75, 0, 1)]
+PA_OPEN = [(7.20, 7.97, 7.20, 9.80)]
 
 
 def area(poly): return Polygon(poly).area
@@ -85,13 +95,25 @@ def muebles_pb(ax):
     # despacho íntimo pegado al vestidor: mesa contra el muro del baño, silla, estantería al este y cristal fijo hacia el salón
     r(ax, 3.20, 8.05, 0.60, 1.40, "#e8d5c0"); r(ax, 3.90, 8.45, 0.45, 0.45, "#c7a7d9"); r(ax, 5.22, 8.10, 0.28, 1.35, "#e8d5c0", "||")
     ax.add_patch(Rectangle((3.45, 7.84), 2.0, 0.10, fc="#bfe3f8", ec="#2f8fd0", lw=1.0, zorder=7))   # cristal fijo
-    # dormitorio 2: cama de 1,50 con cabecero al oeste, mesitas y armario
-    r(ax, 3.80, 13.55, 1.90, 1.50, "#f7b98a"); r(ax, 3.80, 13.07, .40, .40); r(ax, 3.80, 15.12, .40, .40)
-    r(ax, 0.55, 9.55, 0.55, 2.05, "#e8d5c0", "||"); r(ax, 1.10, 11.20, 1.90, 0.50, "#e8d5c0", "||")              # vestidor: armarios en L
-    r(ax, 1.20, 9.55, 0.85, 0.30, "#f6f1e8")                                                                     # alfombra / banco
-    r(ax, 0.60, 8.42, 0.90, 0.90, "#eef"); r(ax, 1.75, 8.85, 0.40, 0.40); r(ax, 2.20, 7.92, 0.80, 0.50); r(ax, 2.20, 8.47, 0.80, 0.50)   # ducha, inodoro, doble lavabo
-    # cocina: isla y fregadero junto a la fachada del fondo
-    r(ax, 6.45, 15.15, 2.55, 0.60, "#eadcc4"); r(ax, 8.40, 12.60, 0.60, 2.55, "#eadcc4"); r(ax, 6.45, 11.95, 0.60, 1.60, "#eadcc4")   # cocina en U: sur, este y un tramo al oeste; pasillo central de 1,35 m
+    # dormitorio 2 (este): cama de 1,50 con cabecero contra la medianera, mesitas, armario en el rincón junto a la escalera
+    r(ax, 7.05, 13.80, 1.95, 1.50, "#f7b98a"); r(ax, 8.60, 13.32, .40, .40); r(ax, 8.60, 15.32, .40, .40); r(ax, 7.40, 12.50, 1.60, 0.60, "#e8d5c0", "||")
+    r(ax, 0.55, 9.55, 0.60, 2.10, "#e8d5c0", "||"); r(ax, 2.45, 9.50, 0.60, 0.65, "#e8d5c0", "||")              # vestidor: armarios al oeste y junto a la puerta de la sala; las puertas de la suite y del baño quedan libres
+    r(ax, 0.60, 8.42, 0.90, 0.90, "#eef"); r(ax, 1.75, 7.92, 0.40, 0.40); r(ax, 2.50, 7.92, 0.50, 0.65); r(ax, 2.50, 8.62, 0.50, 0.65)   # ducha, inodoro contra el muro norte, doble lavabo contra el muro este: la puerta del vestidor queda libre
+    # cocina abierta a la sala: dos hileras paralelas (nevera y columnas contra el tabique de la suite, fuegos al este) y fregadero bajo la ventana
+    r(ax, 3.80, 12.40, 0.60, 2.75, "#eadcc4"); r(ax, 5.55, 12.40, 0.60, 2.75, "#eadcc4"); r(ax, 5.05, 15.15, 1.10, 0.60, "#eadcc4")                 # pasillo central de 1,15 m
+
+
+def escalera(ax, planta):
+    """Peldaños de la escalera en U (v8). PB: tramo de subida por el lado este desde y=9,65, meseta al sur y tramo de vuelta por el oeste.
+    Bajo el tramo de vuelta (altura libre > 2,05 m hasta y=10,85) queda un rincón con el armario técnico del agua caliente y la aerotermia."""
+    if planta == "PB":
+        for i in range(9): ax.plot([X_LANE, 9.00], [Y0_ESC + i * T_ESC] * 2, color="#555", lw=.6, zorder=6)
+        for j in range(8): ax.plot([7.25, X_LANE], [Y0_ESC + 8 * T_ESC - j * T_ESC] * 2, color="#555", lw=.6, zorder=6, ls=":")
+        ax.plot([X_LANE, X_LANE], [Y0_ESC, Y_FIN], color="#555", lw=.6, zorder=6)
+        ax.annotate("", xy=(8.56, Y0_ESC + 1.5), xytext=(8.56, Y0_ESC + 0.1), arrowprops=dict(arrowstyle="-|>", color="#222", lw=1), zorder=9); ax.text(8.56, Y0_ESC - 0.12, "SUBE", fontsize=5.8, ha="center", va="top", zorder=9)
+        ax.add_patch(Rectangle((7.30, 10.85), 0.75, 1.30, fc="#dcdcdc", ec="#333", lw=.8, zorder=7)); ax.text(7.675, 11.5, "armario\ntécnico", fontsize=4.9, ha="center", va="center", zorder=9)
+    else:
+        ax.plot([X_LANE, X_LANE, 9.00], [Y_HALL_PA, Y_PAD, Y_PAD], color="#222", lw=2.4, zorder=8, solid_capstyle="butt"); ax.text(8.55, 10.45, "barandilla", fontsize=4.8, ha="center", va="center", zorder=9)
 
 
 def dibujar(ax, rooms, doors, planta, abiertos=()):
@@ -110,13 +132,13 @@ def dibujar(ax, rooms, doors, planta, abiertos=()):
         ax.text(cx_, cy_, f"{nombre}\n{a:.1f} m²", ha="center", va="center", fontsize=6.6 if pequeno else 8, zorder=9, linespacing=1.15)
         if tipo == "circ": circ += a
         if tipo not in ("terraza", "esc"): total += a
+    escalera(ax, planta)
     if planta == "PA":
-        for (x, y, dx, dy) in ((0.60, 11.15, 2.60, 0.60), (0.60, 11.85, 0.60, 2.40), (4.75, 11.85, 0.60, 2.40)): r(ax, x, y, dx, dy, "#e8d5c0", "||")   # armarios empotrados
-        r(ax, 1.3, 8.0, 1.5, 2.0, "#f7b98a"); r(ax, 1.6, 13.3, 1.6, 2.0, "#f7b98a"); r(ax, 6.6, 13.3, 1.6, 2.0, "#f7b98a"); r(ax, 4.1, 10.6, 2.4, 0.9, "#c9b79c")
+        for (x, y, dx, dy) in ((0.60, 11.15, 2.60, 0.60), (0.60, 11.85, 0.60, 2.40), (4.95, 11.85, 0.60, 2.40)): r(ax, x, y, dx, dy, "#e8d5c0", "||")   # armarios empotrados
+        r(ax, 1.3, 8.0, 1.5, 2.0, "#f7b98a"); r(ax, 1.6, 13.3, 1.6, 2.0, "#f7b98a"); r(ax, 6.6, 13.3, 1.6, 2.0, "#f7b98a"); r(ax, 6.30, 9.90, 0.85, 1.20, "#c9b79c")
         ax.add_patch(Rectangle((2.95, 7.32), 6.05, 0.55, fc="#bfe3f8", ec="#2f8fd0", lw=1.0, zorder=6)); ax.add_patch(Rectangle((5.68, 7.32), 1.42, 0.55, fc="white", ec="#2f8fd0", lw=1.0, zorder=7))
         ax.plot([5.68, 5.68 + 0.7], [7.32, 7.32 - 0.5], color="#333", lw=1, zorder=8); ax.plot([7.10, 7.10 - 0.7], [7.32, 7.32 - 0.5], color="#333", lw=1, zorder=8); ax.text(6.4, 7.05, "corredera 1,42 a la terraza", fontsize=5.6, ha="center", va="top", color="#1f6fa8", zorder=9)
     if planta == "PB":
-        r(ax, 3.80, 11.95, 0.50, 1.00, "#e8d5c0", "||")
         muebles_pb(ax)
         ax.add_patch(Rectangle((7.75, 0.25), 0.10, 7.07, fc="#666", ec="#222", zorder=4)); ax.text(7.65, 3.6, "murete media altura", rotation=90, ha="right", va="center", fontsize=6.5, zorder=9)
         ax.add_patch(Rectangle((3.55, 0.0), 4.00, 0.25, fc="#bfe3f8", ec="#2f8fd0", lw=1.4, zorder=6))
@@ -133,9 +155,9 @@ def dibujar(ax, rooms, doors, planta, abiertos=()):
     return circ, total
 
 
-IDEAS = ["Suite como la referencia: vestidor con armarios en L (por eso el dormitorio no lleva armario), baño con ducha, inodoro y lavabo doble, y en el dormitorio un rincón de lectura junto a la ventana (sillón, mesita y estantería).",
-         "Cocina de 10 m² en U (sin isla), puerta de servicio al patio sur y ventana sobre la encimera. Las paredes este y oeste son medianeras (casas vecinas pegadas): sin ventanas; los baños se ventilan con extractor. Salón con comedor, sofá en U, pantalla grande y chimenea en la esquina oeste.",
-         "Abajo dos dormitorios: la suite y el Dormitorio 2 (10 m², con ventana al fondo). Despacho íntimo de 3,8 m² pegado al vestidor (junto a la sala de estar), con cristal hacia el salón. La chimenea queda dentro del salón. Arriba sin pasillo: la escalera da a una sala familiar acristalada hacia la terraza (corredera de 1,42) y 3 dormitorios parejos (13-17 m²) con armarios empotrados."]
+IDEAS = ["Suite como la referencia: vestidor con armarios (por eso el dormitorio no lleva armario), baño con ducha, inodoro y lavabo doble, y en el dormitorio un rincón de lectura junto a la ventana. Las puertas del vestidor (suite, baño y sala) quedan libres.",
+         "Cocina de 9,4 m² abierta a la sala de estar por un paso libre de 1,60 m entre los pilares (se puede cerrar con una corredera), con puerta de servicio y ventana al patio sur. Las paredes este y oeste son medianeras (casas vecinas pegadas): sin ventanas; los baños se ventilan con extractor. Salón con comedor, sofá en U, pantalla grande y chimenea en la esquina oeste.",
+         "Escalera en U de 17 peldaños (19,2 x 22 cm, 87,5 cm de ancho) con el pie junto a la entrada: ya no tapa la cocina ni el baño grande. Bajo el tramo de vuelta queda un paso libre y el armario técnico (agua caliente y aerotermia). Abajo: suite, dormitorio 2 al este y despacho íntimo junto al vestidor; arriba: sala familiar con salida a la terraza y 3 dormitorios."]
 
 if __name__ == "__main__":
     fig = plt.figure(figsize=(13, 9.5)); fig.suptitle("Distribución propuesta", fontsize=14, weight="bold", x=0.02, ha="left")

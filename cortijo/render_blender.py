@@ -1,6 +1,6 @@
-"""Render realista con Blender (módulo bpy, Cycles CPU): materiales procedurales (ladrillo, enfoscado, hormigón, vidrio, acero, madera) sobre casa_v7.glb."""
+"""Render realista con Blender (módulo bpy, Cycles CPU): materiales procedurales (ladrillo, enfoscado, hormigón, vidrio, acero, madera) sobre casa_v8.glb."""
 import bpy, math, sys
-import os; D = os.path.dirname(os.path.abspath(__file__)); GLB, OUT = os.path.join(D, "casa_v7.glb"), os.path.join(D, "render_")
+import os; D = os.path.dirname(os.path.abspath(__file__)); GLB, OUT = os.path.join(D, "casa_v8.glb"), os.path.join(D, "render_")
 bpy.ops.wm.read_factory_settings(use_empty=True)
 bpy.ops.import_scene.gltf(filepath=GLB)
 import mathutils
@@ -51,7 +51,7 @@ BRICK.node_tree.nodes[[n.bl_idname for n in BRICK.node_tree.nodes].index("Shader
 MATS = {"muros_salon": BRICK, "parapeto_terraza": BRICK, "muros": PLASTER, "parapeto": PLASTER, "forjado": mat("hormigon", concrete), "zuncho": mat("zuncho", concrete), "riostra": mat("riostra", concrete), "cimentacion": mat("cim", concrete),
         "tabique": mat("tabique", solid((0.93, 0.93, 0.90), 0.8)), "murete": mat("murete", solid((0.90, 0.88, 0.80), 0.8)), "escalera": mat("madera_esc", wood), "mobiliario": mat("madera", wood),
         "cristal": mat("vidrio", solid((0.75, 0.88, 0.95), alpha=0.25)), "lucernario": mat("vidrio2", solid((0.75, 0.88, 0.95), alpha=0.3)), "acero": mat("acero", solid((0.18, 0.25, 0.40), 0.45, 0.8)),
-        "chimenea": mat("chimenea", solid((0.93, 0.92, 0.88), 0.9)), "carpinteria": mat("madera_oscura", solid((0.25, 0.15, 0.08), 0.55)), "puerta": mat("madera_puerta", solid((0.28, 0.17, 0.09), 0.5)), "vidrios": mat("vidrio3", solid((0.75, 0.88, 0.95), alpha=0.3)), "solado": mat("barro", solid((0.62, 0.36, 0.22), 0.85)), "paneles": mat("paneles", solid((0.05, 0.08, 0.18), 0.15, 0.3)), "aerotermia": mat("aero", solid((0.82, 0.82, 0.84), 0.4, 0.6))}
+        "chimenea": mat("chimenea", solid((0.93, 0.92, 0.88), 0.9)), "carpinteria": mat("madera_oscura", solid((0.25, 0.15, 0.08), 0.55)), "puerta": mat("madera_puerta", solid((0.28, 0.17, 0.09), 0.5)), "vidrios": mat("vidrio3", solid((0.75, 0.88, 0.95), alpha=0.3)), "solado": mat("barro", solid((0.62, 0.36, 0.22), 0.85)), "barandillas": mat("hierro_negro", solid((0.08, 0.08, 0.09), 0.5, 0.8)), "paneles": mat("paneles", solid((0.05, 0.08, 0.18), 0.15, 0.3)), "aerotermia": mat("aero", solid((0.82, 0.82, 0.84), 0.4, 0.6))}
 for ob in bpy.data.objects:
     if ob.type != "MESH": continue
     key = next((k for k in MATS if ob.name.lower().startswith(k)), None)
@@ -64,8 +64,11 @@ w.node_tree.links.new(sky.outputs[0], w.node_tree.nodes["Background"].inputs[0])
 bpy.ops.object.light_add(type="SUN", location=(0, 0, 20)); sun = bpy.context.object; sun.data.energy = 3.5; sun.rotation_euler = (math.radians(42), 0, math.radians(-25))
 cam = bpy.data.cameras.new("c"); co = bpy.data.objects.new("cam", cam); sc.collection.objects.link(co); sc.camera = co; cam.lens = 30
 
-def shoot(name, loc, target, hide=(), exposure=-0.9, world=0.06):
-    sc.view_settings.exposure = exposure; w.node_tree.nodes["Background"].inputs[1].default_value = world
+ONLY = os.environ.get('SHOTS')                                    # SHOTS=sala_a_cocina,entrada_escalera para repetir solo esos
+
+def shoot(name, loc, target, hide=(), exposure=-0.9, world=0.06, lens=30):
+    if ONLY and name not in ONLY.split(','): return
+    cam.lens = lens; sc.view_settings.exposure = exposure; w.node_tree.nodes["Background"].inputs[1].default_value = world
     for ob in bpy.data.objects:
         if ob.type == "MESH" and ob.name not in ("Plane",): ob.hide_render = any(ob.name.startswith(h) for h in hide) or ob.name.startswith(("cimentacion", "riostras"))
     co.location = loc; d = [t - l for t, l in zip(target, loc)]
@@ -77,3 +80,7 @@ shoot("exterior_norte", (-6, -14, 7), (5, 7, 2.5))
 shoot("exterior_sur", (18, 24, 9), (5, 9, 2.5))
 shoot("planta_baja_abierta", (-2, -4, 16), (5, 8.5, 0.5), hide=("muros_PA", "forjado_PB_PA", "forjado_salon", "forjado_cubierta", "parapeto", "lucernario", "tabiques_PA", "cristal_PA", "acero_vigas_cubierta", "zuncho_cubierta", "paneles", "acero_pilares", "carpinteria_PA", "vidrios_PA", "puertas_PA", "vidrios_terraza", "carpinteria_terraza", "cristal_PA", "acero_dinteles"))
 shoot("salon_interior", (5.2, 1.2, 1.6), (4.2, 7.5, 1.3), hide=("muros_PA", "forjado_cubierta", "parapeto", "lucernario", "tabiques_PA", "cristal_PA", "acero_vigas_cubierta", "zuncho_cubierta", "paneles"), exposure=0.9, world=0.5)
+
+INT = ("muros_PA", "forjado_PB_PA", "forjado_cubierta", "parapeto", "lucernario", "tabiques_PA", "cristal_PA", "acero_vigas_cubierta", "zuncho_cubierta", "zuncho_forjado", "paneles", "aerotermia", "carpinteria_PA", "vidrios_PA", "puertas_PA", "vidrios_terraza", "carpinteria_terraza", "barandillas")
+shoot("sala_a_cocina", (5.25, 9.85, 1.55), (4.65, 14.0, 1.05), hide=INT, exposure=-0.35, world=0.22, lens=20)         # desde la sala de estar: paso libre de 1,60 m a la cocina
+shoot("entrada_escalera", (7.65, 8.05, 1.60), (8.65, 10.3, 1.25), hide=INT, exposure=-0.35, world=0.22, lens=20)      # desde la entrada: pie de la escalera, puerta del baño grande y paso bajo el tramo de vuelta

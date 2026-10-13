@@ -2,7 +2,7 @@
 import matplotlib; matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from matplotlib.patches import Polygon as MPoly, Rectangle
-import casa_v3 as h
+import casa_v8 as h
 from perfiles import SECC
 
 COLOR = {"IPE 100": "#7fbf7f", "IPE 120": "#2e9d5f", "IPE 240": "#0b6e4f", "HEB 120": "#e0952b", "HEB 140": "#d9601e", "HEB 160": "#b02a1a"}
@@ -11,8 +11,9 @@ VIGAS = {"forjado": ["viguetas_salon", "viguetas_casa", "vigas_forjado", "dintel
 
 def panel(ax, nivel, titulo):
     ax.add_patch(MPoly(h.PTS if nivel == "forjado" else h.NB_PA, closed=True, fc="#f3f0ea", ec="#222", lw=1.4, zorder=1))
-    x0, y0, x1, y1 = h.VOID; ax.add_patch(Rectangle((x0, y0), x1 - x0, y1 - y0, fc="none", ec="#555", hatch="//", lw=.8, zorder=2))
-    ax.text((x0 + x1) / 2, (y0 + y1) / 2, "hueco\nescalera", ha="center", va="center", fontsize=6.5, color="#555")
+    x0, y0, x1, y1 = h.VOID
+    for (a_, b_, c_, d_) in (h.HUECO_BOXES if nivel == "forjado" else [h.VOID]): ax.add_patch(Rectangle((a_, b_), c_ - a_, d_ - b_, fc="none", ec="#555", hatch="//", lw=.8, zorder=2))   # forjado: hueco en L; cubierta: lucernario completo
+    ax.text((x0 + x1) / 2, (y0 + y1) / 2, "hueco\nescalera\n(en L)" if nivel == "forjado" else "lucernario", ha="center", va="center", fontsize=6.0, color="#555")
     for lx, cy, sec in h.STEEL["pilares"]:
         z = h.ZAP / 2; ax.add_patch(Rectangle((lx - z, cy - z), 2 * z, 2 * z, fc="none", ec="#999", ls="--", lw=.7, zorder=2))
     for cat in VIGAS[nivel]:

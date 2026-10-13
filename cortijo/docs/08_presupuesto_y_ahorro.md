@@ -1,4 +1,4 @@
-# Presupuesto orientativo y plan de ahorro (v7, 12-10-2026)
+# Presupuesto orientativo y plan de ahorro (v7; la v8 mueve la escalera y la cocina pero no cambia las partidas, 13-10-2026)
 
 Rangos de referencia en España 2026 para unos 172 m² construidos (109 m² útiles abajo + 63 arriba + terraza de 43 m²). **No es un presupuesto de contratista**: sirve para ordenar decisiones y pedir ofertas comparables. IVA no incluido (en rehabilitación de vivienda puede aplicarse el 10 %: consúltalo).
 
@@ -18,7 +18,7 @@ Rangos de referencia en España 2026 para unos 172 m² construidos (109 m² úti
 | Solera + suelo radiante PB (109 m²) + mortero | Tubo PE-X paso 15 cm, 3 cm aislante | 6.000–9.000 | — |
 | Aerotermia 8 kW + acumulador ACS 200 L + colector | Unidad exterior en la cubierta | 8.000–12.000 | Caldera de gasóleo + depósito |
 | Multisplit planta alta (1 exterior + 4 interiores 2,5 kW) | Inverter A++ | 3.500–5.500 | Suelo radiante arriba (+6.000) |
-| Fotovoltaica 7,6 kWp (17 paneles) + inversor 6 kW + batería opcional | Sin batería al principio | 7.000–10.000 (batería +4.000–6.000) | — |
+| Fotovoltaica 7,2 kWp (16 paneles) + inversor 6 kW + batería opcional | Sin batería al principio | 7.000–10.000 (batería +4.000–6.000) | — |
 | Electricidad completa (9,2 kW, 13 circuitos, red Cat 6, TV) | Mecanismos de gama media | 7.000–11.000 | Domótica (+3.000–8.000) |
 | Fontanería y saneamiento (PPR, PVC, 3 húmedos, fosa) | Baño sobre baño: una columna | 5.000–8.000 | Fosa nueva si no vale (+3.000–5.000) |
 | Chimenea insert 7 kW + humero doble pared | Leña | 3.000–5.000 | — |
@@ -35,7 +35,7 @@ Con mano de obra propia en muros, pérgola, pintura y montaje de ventanas se pue
 1. Estructura: −3 t de acero respecto al primer diseño (≈ 6.000–16.000 €).
 2. Ventanas a coste (≈ 6.000–8.000 €).
 3. Cocina de serie en U, sin isla (≈ 5.000 €).
-4. Baño sobre baño y cocina pegada al baño grande: una sola columna de bajantes y montantes cortos (≈ 1.500 €).
+4. Baño sobre baño: una sola columna de bajantes y montantes cortos (≈ 1.000 €). Desde la v8 la cocina ya no está pegada al baño grande: su bajante va aparte al colector enterrado (unos 300 € más de tubería, estimación mía).
 5. Splits arriba en vez de suelo radiante (≈ 6.000 €).
 6. Sedum en vez de césped natural (≈ 5.000 € y sin riego).
 7. SATE solo donde no hay vecino (≈ 4.000 €).

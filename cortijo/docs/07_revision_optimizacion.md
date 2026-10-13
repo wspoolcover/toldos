@@ -18,7 +18,7 @@ Acero total: 3.698 kg (antes 3.628: +70 kg por la viga del saliente, que estaba 
 ## 2. Comprobado y descartado (no mejora)
 
 - **Dos líneas de vigas en vez de tres** (x = 3,10 y 6,35): ahorraría ≈ 550 kg de acero, 2 pilares y 2 zapatas (≈ 2.000–3.000 €), pero el pilar central caería en medio del paso abierto entre la sala de estar y el salón (5,70–7,05) y las vigas HEB 140 quedarían al 90 % de su capacidad. No lo recomiendo salvo que se acepte un pilar visto en ese paso.
-- **Mover la escalera**: ni la recta ni la en L ahorran superficie; la U actual comparte bajantes con los baños y sube a la sala familiar (ver `06_escalera.md`).
+- **Mover la escalera**: ni la recta ni la en L ahorran superficie. **Corrección (13-10-2026)**: en la v7 la U tapaba la cocina y el baño grande; la v8 la recoloca y abre la cocina a la sala (ver `14_escalera_cocina_v8.md`).
 - **Pasillo de entrada de 1,45 m**: bajarlo a 1,20 m daría 1,9 m² al salón, pero el murete bajo ya hace que el pasillo se viva como parte del salón. Lo dejo.
 
 ## 3. Opciones que cambian el diseño (decides tú)
