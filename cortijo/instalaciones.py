@@ -1,4 +1,5 @@
 """Esquemas de instalaciones sobre la distribución v8: fontanería y saneamiento, electricidad, climatización (aerotermia, suelo radiante, splits) y cubierta solar."""
+import os
 import matplotlib; matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle, Circle, Polygon as MPoly
@@ -116,6 +117,6 @@ if __name__ == "__main__":
     pos = [[.02, .52, .31, .44], [.35, .52, .31, .44], [.68, .52, .31, .44], [.02, .04, .31, .44], [.35, .04, .31, .44], [.68, .04, .31, .44]]
     fns = [lambda a: fontaneria(a, "PB"), lambda a: electricidad(a, "PB"), lambda a: clima(a, "PB"), lambda a: fontaneria(a, "PA"), lambda a: electricidad(a, "PA"), lambda a: clima(a, "PA")]
     for p, f in zip(pos, fns): f(fig.add_axes(p))
-    fig.savefig("instalaciones.png", dpi=105)
+    fig.savefig("instalaciones.png", dpi=int(os.environ.get("DPI", 105)))
     fig2, ax = plt.subplots(figsize=(8, 10)); cubierta(ax); fig2.savefig("cubierta_solar.png", dpi=110, bbox_inches="tight")
     print("ok")

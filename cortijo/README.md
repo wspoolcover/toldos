@@ -18,8 +18,12 @@ Proyecto personal. Polígono 33, parcela 198, San Roque (Albox). Arquitecto de l
 
 - Estado real (fotos del 12-10-2026): `docs/11_estado_real_fotos.md`.
 
+- **Propuestas para la planta baja (14-10-2026)**: tres modelos A, B y C con cocina más amplia y salida de aluminio, puerta del vestidor, muros y puertas de seguridad y asientos en las ventanas del sur: `docs/15_propuestas_planta_baja.md`, `modelos_planta_baja.png` (se generan con `python modelos_pb.py`). A la espera de elegir uno para hacer el modelo 3D v9 y los renders.
+- **PDF**: `pdf/Cortijo_Albox_Dossier.pdf` (todo en uno), `pdf/docs/*.pdf` (un PDF por documento) y `pdf/planos/*.pdf` (planos DXF en vectorial). Se regeneran con `python generar_pdf.py`.
+- **Muebles libres** (CC0, Poly Haven) para los renders: `python descargar_muebles.py` los baja a `assets/` (no se suben al repositorio); vista previa en `muebles_disponibles.png`.
+
 ## Pendiente
-- Actualizar el visor y el dossier PDF a la v8 (el dossier para albañiles sigue con una distribución anterior).
+- Elegir el modelo de planta baja y pasarlo al modelo 3D (v9), renders con muebles, DXF, visor y PDF. El `dossier_obra.pdf` antiguo (cimentación y estructura para albañiles) sigue con una distribución anterior.
 - Estudio geotécnico y catas de cimentación.
 
 ## Versiones antiguas

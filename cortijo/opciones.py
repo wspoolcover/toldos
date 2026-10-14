@@ -1,6 +1,6 @@
 """Distribución propuesta (esquema en planta). Coordenadas del croquis en metros; muros existentes de 0,55 m.
 Abajo del croquis = NORTE (acceso por el camino, puerta corredera de 7 m, acometida de agua; entrada y salón); arriba = SUR (fachada ancha con la CGP, hacia la rambla de Albox: cocina y dormitorio principal)."""
-import math
+import math, os
 import matplotlib; matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from matplotlib.patches import Polygon as MPoly, Rectangle, Arc
@@ -166,7 +166,7 @@ if __name__ == "__main__":
     import textwrap
     fig.text(0.02, 0.075, "\n".join(textwrap.fill("• " + t, 150, subsequent_indent="  ") for t in IDEAS), fontsize=8.2, va="top")
     fig.text(0.98, 0.955, f"Circulación: {c1 + c2:.1f} m² · Norte abajo (acceso y agua) · sur arriba (CGP, rambla) · Medidas orientativas", fontsize=8, va="top", ha="right", color="#555")
-    fig.savefig("distribucion.png", dpi=110)
+    fig.savefig("distribucion.png", dpi=int(os.environ.get("DPI", 110)))
     for room in PB:
         b=Polygon(room[2]).bounds; print(f"{room[0].splitlines()[0]:22s} {b[2]-b[0]:.2f} x {b[3]-b[1]:.2f} = {area(room[2]):.1f} m²")
     print(f"circulación {c1 + c2:.1f} m²; útil PB {t1:.1f}, PA {t2:.1f}")
