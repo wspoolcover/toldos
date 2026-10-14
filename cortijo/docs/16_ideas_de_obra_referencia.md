@@ -51,3 +51,19 @@ La misma técnica del vídeo sirve para apoyar la placa del forjado superior: la
 | Forjado de la planta alta y cubierta de la casa (luces de 1,65 a 2,83 m entre vigas) | Con luces tan cortas la placa alveolar no compensa: lo normal es seguir con vigueta y bovedilla, más barato y sin grúa. Si se quisiera placa, apoya en las mismas vigas HEB y en un zuncho de coronación sobre los muros de tapial, para repartir la carga | Precio de la grúa frente al ahorro; estado de los muros de tapial de 55 cm |
 
 En resumen: placas alveolares **para el salón** (donde hay una luz grande y la grúa se justifica) y vigueta y bovedilla **para el resto**, salvo que el presupuesto diga otra cosa.
+
+## 6. Vigas de hormigón hechas con bloque en U
+Es el sistema de la hilada superior de las capturas: un bloque de hormigón en forma de U se coloca en hilada, se arma por dentro y se rellena de hormigón. El bloque hace de encofrado y queda como parte de la viga. Esquema en `viga_bloque_u.png`. Es una técnica habitual de obra; el armado y el hormigón los define el técnico.
+
+| Elemento | ¿Con bloque en U? | Comentario |
+|---|---|---|
+| Zuncho de coronación de los muros nuevos del salón (25 cm) | **Sí** | Es su mejor uso: la U del ancho del muro, hormigonada a la vez que la capa de compresión del forjado |
+| Zuncho de las paredes de seguridad de los dormitorios (15–20 cm) | **Sí** | Con el mismo bloque relleno y armado de la pared |
+| Dinteles de puertas y ventanas de los muros nuevos | **Sí, hasta unos 2 m de hueco** | Apoyo de 20 cm o más por lado y puntales hasta que cure. Sirven la puerta de entrada de 1,40 m y las ventanas. Ahorran los perfiles IPE de los muros de 25 cm |
+| Huecos entre la sala y la cocina (1,45 y 1,60 m) | **Sí** | Cada hueco queda entre pilares de acero (x = 3,10, 5,55 y 7,20), así que ninguno pasa de 1,60 m |
+| Zuncho sobre los muros de tapial de 55 cm | **Con dos U en paralelo o con encofrado** | Una sola U de 25 cm no cubre el ancho del muro; conviene que el zuncho lo reparta |
+| Cristalera del salón (4,40 m con la carga del forjado) | **No** | Se queda en la viga de acero HEB 160. Una viga de hormigón para esa luz sería mucho más gruesa y pesada; si la prefieres de hormigón, la calcula el ingeniero |
+| Vigas N–S de 7–8 m y pilares | **No** | Acero |
+| Riostras y zapatas | **No** | Se hormigonan en zanja |
+
+Ventajas: no hace falta madera de encofrado, el albañil lo hace con material que ya conoce y el acabado queda igual que el del muro de bloque. Hay que cuidar el solape de las armaduras en las esquinas, el vibrado del hormigón y el puente térmico del borde de forjado en las fachadas (aislar por fuera).

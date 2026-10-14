@@ -245,7 +245,7 @@ def main():
           figura("cimentacion_planos.png", "Cimentación y zunchos (propuesta).", wl, hl - 12, 2400), NextPageTemplate("port"), PageBreak()]
     h += md(por_nombre("10"), wp, desplazar=1) + md(por_nombre("04"), wp, desplazar=1)
     # 7 envolvente y decisiones
-    h += [PageBreak(), Paragraph("7. Envolvente, ahorro y revisión del diseño", EST["H1"])] + md(por_nombre("03"), wp, desplazar=1) + md(por_nombre("05"), wp, desplazar=1) + md(por_nombre("07"), wp, desplazar=1) + md(por_nombre("16"), wp, desplazar=1) + [Spacer(1, 6), figura("detalles_apoyo_placa.png", "Apoyo de la placa superior: sobre el zuncho del muro, sobre una viga de acero y viga sobre pilarete de bloque (esquemas sin escala).", wp, hp / 2.4, 2000)]
+    h += [PageBreak(), Paragraph("7. Envolvente, ahorro y revisión del diseño", EST["H1"])] + md(por_nombre("03"), wp, desplazar=1) + md(por_nombre("05"), wp, desplazar=1) + md(por_nombre("07"), wp, desplazar=1) + md(por_nombre("16"), wp, desplazar=1) + [Spacer(1, 6), figura("detalles_apoyo_placa.png", "Apoyo de la placa superior: sobre el zuncho del muro, sobre una viga de acero y viga sobre pilarete de bloque (esquemas sin escala).", wp, hp / 2.4, 2000), figura("viga_bloque_u.png", "Viga o dintel de hormigón hecho con bloque en U (esquemas sin escala).", wp, hp / 2.4, 2000)]
     # 8 presupuesto y proveedores
     h += [PageBreak(), Paragraph("8. Presupuesto y proveedores", EST["H1"])] + md(por_nombre("08"), wp, desplazar=1) + md(por_nombre("09"), wp, desplazar=1) + tablas_proveedores(wp)
     # 9 terreno

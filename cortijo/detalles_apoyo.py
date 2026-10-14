@@ -50,3 +50,30 @@ nota(ax, 45, 111, "viga de acero (dintel de la cristalera)", 85, 108); nota(ax, 
 fig.suptitle("Apoyo de la placa superior (esquemas sin escala; armados y medidas: los define el técnico)", fontsize=11, weight="bold", x=.01, ha="left")
 fig.tight_layout(); fig.savefig("detalles_apoyo_placa.png", dpi=int(os.environ.get("DPI", 130)), bbox_inches="tight")
 print("ok")
+
+
+# ---------------------------------------------------------------- segunda lámina: viga o dintel de hormigón hecho con bloque en U
+fig, axs = plt.subplots(1, 2, figsize=(14, 5.2), gridspec_kw=dict(width_ratios=[1, 1.5]))
+ax = axs[0]
+r(ax, 0, 0, 25, 20, BLOQ); r(ax, 3, 3, 19, 17, HORM, "//")                                   # bloque en U y hormigón de relleno
+r(ax, 0, 0, 3, 20, BLOQ, z=4); r(ax, 22, 0, 3, 20, BLOQ, z=4)
+ax.plot([5, 20, 20, 5, 5], [5, 5, 17, 17, 5], color="#222", lw=.8, zorder=6)                  # cerco
+for (x, y) in ((6.5, 6.5), (18.5, 6.5), (6.5, 15.5), (18.5, 15.5)): ax.add_patch(plt.Circle((x, y), 1.1, fc="#222", zorder=7))   # barras longitudinales
+r(ax, -2, 20, 29, 5, HORM, "//")                                                             # capa de compresión del forjado por encima
+ajustar(ax, "Sección de la viga", (-15, 150), (-14, 35))
+nota(ax, 12, 3, "bloque en U: hace de encofrado\ny queda como parte de la viga", 40, -8); nota(ax, 6.5, 6.5, "barras longitudinales y cercos", 40, 8)
+nota(ax, 12.5, 12, "hormigón de relleno (vibrado)", 40, 21); nota(ax, 12.5, 22.5, "capa de compresión del forjado", 40, 32)
+
+ax = axs[1]
+r(ax, 0, 0, 40, 90, LADR, "..."); r(ax, 160, 0, 40, 90, LADR, "...")                         # muros a los lados del hueco
+r(ax, 0, 90, 40, 20, BLOQ); r(ax, 160, 90, 40, 20, BLOQ); r(ax, 20, 90, 160, 20, BLOQ, z=2)   # hilada de bloque en U sobre el hueco, apoyada 20 cm por lado
+for k in range(1, 10): ax.plot([20 + k * 16, 20 + k * 16], [90, 110], color="#777", lw=.6, zorder=4)   # juntas entre bloques
+r(ax, 4, 92, 192, 16, HORM, "//", z=5, lw=.4); ax.plot([6, 194], [96, 96], color="#222", lw=1.6, zorder=7); ax.plot([6, 194], [104, 104], color="#222", lw=1.6, zorder=7)
+for x in (60, 100, 140): ax.plot([x, x], [0, 88], color="#e0a800", lw=3.2, zorder=6); ax.plot([x - 8, x + 8], [88, 88], color="#e0a800", lw=3.2, zorder=6)  # puntales
+ajustar(ax, "Dintel sobre un hueco (alzado)", (-10, 290), (-10, 135))
+nota(ax, 170, 102, "apoyo de 20 cm o más a cada lado\n(lo fija el técnico)", 215, 122); nota(ax, 150, 106, "hilada de bloques en U, armada y rellena", 215, 100)
+nota(ax, 140, 40, "puntales hasta que el hormigón\nalcance la resistencia (plazo del técnico)", 215, 55); nota(ax, 180, 30, "muro de ladrillo o de bloque", 215, 20)
+ax.text(100, -5, "hueco libre: hasta unos 2 m con este sistema; más luz, viga de acero o de hormigón calculada", ha="center", fontsize=7.5)
+fig.suptitle("Viga o dintel de hormigón hecho con bloque en U (esquemas sin escala; armado y hormigón: los define el técnico)", fontsize=11, weight="bold", x=.01, ha="left")
+fig.tight_layout(); fig.savefig("viga_bloque_u.png", dpi=int(os.environ.get("DPI", 130)), bbox_inches="tight")
+print("ok 2")
