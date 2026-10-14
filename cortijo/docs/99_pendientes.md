@@ -1,8 +1,8 @@
 # Pendientes y decisiones
 
 ## Para decidir (tú)
-1. **Modelo de planta baja** A, B o C (o una mezcla): ver `15_propuestas_planta_baja.md`.
-2. **Puerta del vestidor**: confirmar que es la que da a la sala (pegada al dormitorio, bisagra a la derecha al entrar, puerta de seguridad).
+1. **Modelo de planta baja**: has pedido la opción C (cocina central) con el despacho girado, que es el modelo C2 de `15_propuestas_planta_baja.md`. Falta tu OK para pasarlo al modelo 3D.
+2. **Puerta del vestidor**: queda la que da a la sala (pegada al dormitorio, bisagra a la derecha al entrar, puerta de seguridad), que es la que citas para el despacho.
 3. **Salida de la cocina**: aluminio (así lo he entendido) o simplemente una salida grande y luminosa.
 4. **Planta alta**: si también quieres asientos en las ventanas del sur y paredes de seguridad.
 5. Piedra marés en el salón o todo encalado; color de la carpintería (madera oscura, media o blanco); pérgola de aluminio sobre parte de la terraza; patio sur cubierto.

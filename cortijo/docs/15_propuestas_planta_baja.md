@@ -31,6 +31,12 @@ Las búsquedas dieron poco sobre casos concretos; lo que sigue es lo aprovechabl
 | Ventaja | Cumple tu petición al pie de la letra | La cocina que pides: amplia y abierta | Cocina de cortijo con despensa y lavadero; el lavadero puede ser un cuarto de plancha o, más adelante, una habitación pequeña |
 | Inconveniente | La cocina crece solo un 20 % (la escalera y el dormitorio 2 limitan) | Pierdes el dormitorio 2 de abajo | Pierdes el dormitorio 2 de abajo; menos «comedor» |
 
+### Opción C2: el modelo C con el despacho girado (14-10-2026)
+Pedido: cocina central y despacho girado, de la puerta del vestidor hasta la chimenea. Plano: `modelo_C2_planta_baja.png`; PDF de la opción: `pdf/Opcion_C_cocina_central.pdf`.
+- **Cocina central** de 13,4 m² abierta a la sala por dos pasos libres (1,60 y 1,45 m), con mesa, salida de aluminio de 1,60 m al patio sur y asiento de lectura en la ventana; despensa de 2,0 m² y lavadero de 3,7 m² al este.
+- **Despacho girado**: pasa de 2,40 × 1,58 m (3,8 m²) a **1,80 × 2,65 m (4,8 m²)**, a lo largo de la pared del vestidor, desde la puerta del vestidor hasta la chimenea. Mesa larga contra la pared del vestidor, estantería y sillón de lectura junto a la puerta, y cristal fijo en el extremo norte hacia el salón y la chimenea. La puerta es desde la sala de estar, que baja de 11,1 a 10,1 m².
+- Si quieres ver el fuego desde el despacho, la chimenea se gira o se hace de dos caras con cristal; lo dejo como opción.
+
 **Por qué no hay un modelo con la cocina en medio mucho más grande y el dormitorio 2 en el este:** el único acceso a esa zona desde la sala es un paso de 0,9 m (entre el pilar de x = 7,20 y el final del hueco de la escalera). Si la cocina avanza hacia el este, el dormitorio 2 se queda sin puerta. Por eso en el modelo A el dormitorio 2 pasa al centro y la cocina al este.
 
 **Mi recomendación**: **B** si prefieres una cocina de verdad grande y puedes renunciar al dormitorio 2 de abajo (arriba ya hay tres dormitorios); **A** si quieres conservar cinco dormitorios. Cualquiera de los dos mantiene el paso libre de la sala a la cocina.

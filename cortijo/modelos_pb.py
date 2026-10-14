@@ -77,15 +77,16 @@ def encimera(ax, x, y, dx, dy, nombre=None):
     if nombre: txt(ax, x + dx / 2, y + dy / 2, nombre, 4.6, "#6a4d2a", rot=90 if dy > dx else 0)
 
 
-def muebles_comunes(ax):
+def muebles_comunes(ax, despacho_h=True):
     # salón: sofá en U, mesa baja, pantalla, chimenea y comedor
     rect(ax, 6.75, 1.05, .75, 3.30, TELA); rect(ax, 5.35, 3.65, 1.40, .70, TELA); rect(ax, 5.35, 1.05, 1.40, .70, TELA); rect(ax, 5.65, 2.05, .80, 1.35, "#efe6d6")
     rect(ax, 3.60, 1.60, .16, 1.90, "#222"); txt(ax, 3.98, 3.60, "pantalla", 6.3, ha="left", va="bottom")
     rect(ax, 3.30, 6.20, .85, 1.30, "#d8d0c8"); rect(ax, 3.45, 6.45, .45, .80, "#f4a742"); txt(ax, 3.75, 5.95, "chimenea", 6.3, "#a33", va="top")
     mesa(ax, 5.95, 5.25, 1.00, 2.05, [(5.78, y) for y in (5.6, 6.3, 7.0)] + [(7.12, y) for y in (5.6, 6.3, 7.0)])
-    # despacho íntimo y cristal fijo hacia el salón
-    rect(ax, 3.20, 8.05, .60, 1.40, MADERA); silla(ax, 4.10, 8.65); rect(ax, 5.22, 8.10, .28, 1.35, MADERA, "||")
-    ax.add_patch(Rectangle((3.45, 7.84), 2.0, 0.10, fc=VIDRIO, ec=VIDRIO_EC, lw=1.0, zorder=7))
+    # despacho íntimo y cristal fijo hacia el salón (versión horizontal de la v8)
+    if despacho_h:
+        rect(ax, 3.20, 8.05, .60, 1.40, MADERA); silla(ax, 4.10, 8.65); rect(ax, 5.22, 8.10, .28, 1.35, MADERA, "||")
+        ax.add_patch(Rectangle((3.45, 7.84), 2.0, 0.10, fc=VIDRIO, ec=VIDRIO_EC, lw=1.0, zorder=7))
     # vestidor: armarios al oeste y junto a la puerta de la sala; puertas libres
     rect(ax, 0.55, 9.55, .60, 2.10, MADERA, "||"); rect(ax, 2.40, 9.50, .60, .65, MADERA, "||")
     # baño de la suite: ducha, inodoro contra el muro norte y doble lavabo contra el muro este
@@ -102,7 +103,8 @@ def dibujar(ax, m, recorte=False):
     for g in getattr(INN, "geoms", [INN]): ax.add_patch(MPoly(list(g.exterior.coords), closed=True, fc="white", ec="none", zorder=2))
     ax.add_patch(Rectangle((10.85, 8.30), 1.20, 3.50, fc="none", ec="#a33", ls="--", lw=.9, zorder=4)); txt(ax, 11.45, 8.05, "casa vecina\n(1.ª planta)\nencima de esta mitad", 5.4, "#a33", va="top")
     tot = {}
-    for room in COMUN + m["rooms"]:
+    sust = m.get("sustituye", {})
+    for room in [sust.get(r[0], r) for r in COMUN] + m["rooms"]:
         nombre, tipo, poly = room[:3]; lpos = room[3] if len(room) > 3 else None
         pol = Polygon(poly); a = pol.area; cx, cy = lpos or pol.centroid.coords[0]
         ax.add_patch(MPoly(poly, closed=True, fc=COL[tipo], ec="#222", lw=1.3, zorder=3, hatch="//" if tipo == "esc" else None))
@@ -110,14 +112,14 @@ def dibujar(ax, m, recorte=False):
         ax.text(cx, cy, f"{nombre}\n{a:.1f} m²", ha="center", va="center", fontsize=6.3 if peq else 7.8, zorder=9, linespacing=1.15); tot[nombre.splitlines()[0]] = a
     for (x0, y0, x1, y1) in m["seg"] + SEG_COMUN: ax.add_patch(Rectangle((x0, y0), x1 - x0, y1 - y0, fc="#5b5b5b", ec="#111", lw=.8, hatch="xx", zorder=4))
     escalera(ax, "PB")
-    muebles_comunes(ax); m["muebles"](ax)
+    muebles_comunes(ax, not m.get("despacho_v")); m["muebles"](ax)
     ax.add_patch(Rectangle((7.75, 0.25), 0.10, 7.07, fc="#666", ec="#222", zorder=4)); txt(ax, 7.65, 3.6, "murete media altura", 6.0, ha="right", rot=90)
     ax.add_patch(Rectangle((3.55, 0.0), 4.00, 0.25, fc=VIDRIO, ec=VIDRIO_EC, lw=1.4, zorder=6)); txt(ax, 5.5, -0.15, "cristalera de suelo a techo (4,00 m) junto a la puerta", 6.2, "#1f6fa8", va="top")
     for (x, w) in m["ventanas"]: ventana(ax, x, w)
     for (x, w) in m["asientos"]: asiento_ventana(ax, x, w)
     for (x, w) in m["correderas"]: corredera_aluminio(ax, x, w)
-    for (x0, y0, x1, y1) in ABIERTOS_COMUN + m["abiertos"]: ax.plot([x0, x1], [y0, y1], color="white", lw=5, solid_capstyle="butt", zorder=7)
-    for d in PUERTAS_COMUN + m["puertas"]: door(ax, d)
+    for (x0, y0, x1, y1) in [a for a in ABIERTOS_COMUN if a not in m.get("quita_abiertos", [])] + m["abiertos"]: ax.plot([x0, x1], [y0, y1], color="white", lw=5, solid_capstyle="butt", zorder=7)
+    for d in [p for p in PUERTAS_COMUN if p not in m.get("quita_puertas", [])] + m["puertas"]: door(ax, d)
     txt(ax, 3.55, 11.33, "puerta de\nseguridad", 4.4, "#7a1f1f")
     ax.annotate("", xy=(-0.1, -0.6), xytext=(-0.1, 1.6), arrowprops=dict(arrowstyle="-|>", color="#222", lw=1.6), annotation_clip=False); ax.text(-0.1, 1.85, "N", ha="center", fontsize=11, weight="bold")
     ax.text(11.9, -0.4, "norte · acceso por el camino", ha="right", fontsize=6.5, color="#555"); ax.text(11.9, 17.05, "sur · patio y rambla de Albox", ha="right", fontsize=6.5, color="#555")
@@ -173,13 +175,30 @@ MODELO_C = dict(
     ventanas=[(2.55, 0.90), (7.70, 0.90)], asientos=[(0.70, 1.30), (3.95, 0.90)], correderas=[(5.30, 1.60)],
     abiertos=[(3.85, 11.82, 5.45, 11.82), (5.65, 11.82, 7.10, 11.82)], puertas=[(7.15, 12.65, "V", 0.80, 0, 1), (7.15, 14.45, "V", 0.80, 0, 1)])
 
+# ---------------------------------------------------------------- modelo C2: el C con el despacho girado, de la puerta del vestidor a la chimenea
+DESP_V = R(3.15, 7.97, 4.95, 10.62)                                                         # 1,80 x 2,65 m, a lo largo de la pared del vestidor
+HUB_V = [(5.05, 7.87), (7.15, 7.87), (7.15, 11.75), (3.15, 11.75), (3.15, 10.72), (5.05, 10.72)]
+
+
+def muebles_C2(ax):
+    muebles_C(ax)
+    rect(ax, 3.20, 8.15, .65, 1.55, MADERA); silla(ax, 4.20, 8.95, .42)                                 # mesa larga contra la pared del vestidor y silla
+    rect(ax, 4.65, 8.05, .28, 1.30, MADERA, "||"); rect(ax, 3.25, 9.88, .62, .55, "#c7a7d9"); txt(ax, 3.56, 9.52, "sillón", 4.6)   # estantería junto a la puerta y sillón de lectura
+    ax.add_patch(Rectangle((3.25, 7.84), 1.60, 0.10, fc=VIDRIO, ec=VIDRIO_EC, lw=1.0, zorder=7)); txt(ax, 4.05, 7.62, "cristal fijo hacia el salón y la chimenea", 4.6, "#1f6fa8")
+
+MODELO_C2 = dict(MODELO_C, titulo="MODELO C2 · cocina central de 13 m² y despacho girado hasta la chimenea", muebles=muebles_C2, despacho_v=True,
+                 sustituye={"Despacho": ("Despacho", "priv", DESP_V, (4.05, 9.3)), "Sala de estar\ny paso": ("Sala de estar\ny paso", "sala", HUB_V, (6.15, 9.2))},
+                 quita_puertas=[(4.35, 9.55, "H", 0.85, 0, 1)], quita_abiertos=[(5.60, 7.95, 5.60, 9.50)],
+                 puertas=MODELO_C["puertas"] + [(4.95, 9.70, "V", 0.85, 0, 1)])
+
 MODELOS = {"A": MODELO_A, "B": MODELO_B, "C": MODELO_C}
+EXTRA = {"C2": MODELO_C2}
 
 if __name__ == "__main__":
     res = {}
-    for k, m in MODELOS.items():
+    for k, m in list(MODELOS.items()) + list(EXTRA.items()):
         fig, ax = plt.subplots(figsize=(7.2, 9.4)); res[k] = dibujar(ax, m); fig.tight_layout(); fig.savefig(f"modelo_{k}_planta_baja.png", dpi=int(os.environ.get("DPI", 130))); plt.close(fig)
     fig, axs = plt.subplots(1, 3, figsize=(21, 7.4))                      # comparación: solo la mitad sur, que es la que cambia
     for ax, (k, m) in zip(axs, MODELOS.items()): dibujar(ax, m, recorte=True)
     fig.tight_layout(); fig.savefig("modelos_planta_baja.png", dpi=int(os.environ.get("DPI", 105)), bbox_inches="tight"); plt.close(fig)
-    for k, t in res.items(): print(k, {n: round(a, 1) for n, a in t.items() if n in ("Cocina-comedor", "Cocina", "Dormitorio 2", "Despensa", "Lavadero")})
+    for k, t in res.items(): print(k, {n: round(a, 1) for n, a in t.items() if n in ("Cocina-comedor", "Cocina", "Dormitorio 2", "Despensa", "Lavadero", "Despacho", "Sala de estar")})
