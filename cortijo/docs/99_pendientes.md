@@ -14,6 +14,10 @@
 4. Si se conserva la puerta doble vieja de la fachada sur.
 5. Distancia a la rambla de Albox y si hay zona inundable.
 
+## Para consultar con tu proveedor o constructor
+1. Precio y plazo de **placas alveolares** (terraza del salón y cubierta) frente a vigueta y bovedilla; ver `16_ideas_de_obra_referencia.md`.
+2. Bloque de hormigón relleno y armado para los muros de seguridad.
+
 ## Para encargar (técnicos)
 1. **Estudio geotécnico**: el terreno parece arcilla agrietada; catas de la cimentación existente de la casa.
 2. **Ingeniero de estructuras**: perfiles, brochales del hueco de la escalera (en L), uniones, sismo NCSE-02, resistencia al fuego, refuerzo de los muros de tapial por tramos.
