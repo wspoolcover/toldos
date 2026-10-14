@@ -1,4 +1,4 @@
-"""Pasa el proyecto a PDF: dossier completo (pdf/Cortijo_Albox_Dossier.pdf), un PDF por documento (pdf/docs/), y los planos DXF en PDF vectorial (pdf/planos/).
+"""Pasa el proyecto a PDF: proyecto completo en un solo PDF (pdf/Cortijo_Albox_Proyecto_completo.pdf), un PDF por documento (pdf/docs/), y los planos DXF en PDF vectorial (pdf/planos/).
 Uso: python generar_pdf.py        (regenera antes las imágenes a más resolución si hace falta; tarda un par de minutos)"""
 import glob, io, os, re, subprocess, sys, shutil
 from PIL import Image
@@ -221,13 +221,17 @@ def main():
     for k, t in (("A", "Modelo A"), ("B", "Modelo B"), ("C", "Modelo C"), ("C2", "Modelo C2 (C con el despacho girado)")):
         h += [NextPageTemplate("port"), PageBreak(), figura(f"modelo_{k}_planta_baja.png", f"{t}: planta baja completa (muros de seguridad rayados).", wp, hp - 12, 2000)]
     h += [NextPageTemplate("land"), PageBreak(), Paragraph("Muebles libres disponibles (Poly Haven, licencia CC0)", EST["H2"]), figura("muebles_disponibles.png", "Piezas ya descargadas para los renders. Los armarios de cocina y las camas se modelan aparte.", wl, hl - 75, 1750)]
-    # 3 distribución actual
-    h += [NextPageTemplate("land"), PageBreak(), Paragraph("3. Distribución actual (v8)", EST["H1"]),
+    # 3 versión económica
+    h += [NextPageTemplate("port"), PageBreak(), Paragraph("3. Versión económica y rápida", EST["H1"])] + md("docs/17_version_economica.md", wp, desplazar=1, titulo=False)
+    h += [PageBreak(), figura("version_economica_costes.png", "Coste orientativo por grupo de partidas: versión completa (azul) y versión económica (naranja). IVA no incluido.", wp, hp - 30, 1600),
+          PageBreak(), figura("modelo_C2E_planta_baja.png", "Versión económica de la opción C2: una despensa-lavadero, salida de PVC de 1,40 m y rejas en las ventanas bajas.", wp, hp - 12, 2000)]
+    # distribución actual
+    h += [NextPageTemplate("land"), PageBreak(), Paragraph("4. Distribución actual (v8)", EST["H1"]),
           figura("distribucion.png", "Plantas baja y alta, norte abajo (acceso por el camino) y sur arriba (patio hacia la rambla de Albox).", wl, hl - 55, 2800)]
     h += [NextPageTemplate("port"), PageBreak(), Paragraph("Suite principal", EST["H2"]), figura("suite.png", "Suite: dormitorio, vestidor y baño; despacho junto a la sala de estar.", wp, hp - 60, 1500), Spacer(1, 6)]
     h += md(por_nombre("14"), wp, desplazar=1) + md(por_nombre("06"), wp, desplazar=1)
     # 4 renders
-    h += [PageBreak(), Paragraph("4. Renders", EST["H1"])]
+    h += [PageBreak(), Paragraph("5. Renders", EST["H1"])]
     rr = [("render_exterior_norte.png", "Fachada norte: salón de piedra marés con cristalera, puerta de entrada y terraza."), ("render_exterior_sur.png", "Fachada sur, hacia la rambla: casa encalada, ventanas con contraventanas de madera, paneles solares."),
           ("render_salon_interior.png", "Salón: muro de piedra, chimenea, comedor y, al fondo, la sala de estar."), ("render_planta_baja_abierta.png", "Planta baja abierta, vista desde arriba."),
           ("render_sala_a_cocina.png", "De la sala de estar a la cocina: paso libre."), ("render_entrada_escalera.png", "Entrada con el pie de la escalera, el baño grande y el paso bajo la escalera.")]
@@ -236,35 +240,35 @@ def main():
         for a, b in rr[i:i + 2]: h += [figura(a, b, wp, hp / 2 - 22, 1700), Spacer(1, 6)]
     h += [Paragraph("Los muebles y materiales de estos renders son los de la v8 (representativos). Los renders con los muebles nuevos se harán con el modelo elegido.", EST["small"])]
     # 5 instalaciones
-    h += [NextPageTemplate("port"), PageBreak(), Paragraph("5. Instalaciones", EST["H1"])] + md(por_nombre("02"), wp, desplazar=1, titulo=False)
+    h += [NextPageTemplate("port"), PageBreak(), Paragraph("6. Instalaciones", EST["H1"])] + md(por_nombre("02"), wp, desplazar=1, titulo=False)
     h += [NextPageTemplate("land"), PageBreak(), figura("instalaciones.png", "Fontanería, electricidad y climatización de las dos plantas (esquema de intenciones, no proyecto de ejecución).", wl, hl - 12, 2800),
           PageBreak(), figura("cubierta_solar.png", "Cubierta: 16 paneles solares, lucernario de la escalera, aerotermia y sumideros.", wl, hl - 12, 1800)]
     # 6 estructura y cimentación
-    h += [NextPageTemplate("port"), PageBreak(), Paragraph("6. Estructura y cimentación", EST["H1"])] + md("memoria_estructura.md", wp, desplazar=1, titulo=False)
+    h += [NextPageTemplate("port"), PageBreak(), Paragraph("7. Estructura y cimentación", EST["H1"])] + md("memoria_estructura.md", wp, desplazar=1, titulo=False)
     h += [NextPageTemplate("land"), PageBreak(), figura("estructura_planos.png", "Estructura: vigas de acero, pilares y forjados (predimensionado).", wl, hl - 12, 2400), PageBreak(),
           figura("cimentacion_planos.png", "Cimentación y zunchos (propuesta).", wl, hl - 12, 2400), NextPageTemplate("port"), PageBreak()]
     h += md(por_nombre("10"), wp, desplazar=1) + md(por_nombre("04"), wp, desplazar=1)
     # 7 envolvente y decisiones
-    h += [PageBreak(), Paragraph("7. Envolvente, ahorro y revisión del diseño", EST["H1"])] + md(por_nombre("03"), wp, desplazar=1) + md(por_nombre("05"), wp, desplazar=1) + md(por_nombre("07"), wp, desplazar=1) + md(por_nombre("16"), wp, desplazar=1) + [Spacer(1, 6), figura("detalles_apoyo_placa.png", "Apoyo de la placa superior: sobre el zuncho del muro, sobre una viga de acero y viga sobre pilarete de bloque (esquemas sin escala).", wp, hp / 2.4, 2000), figura("viga_bloque_u.png", "Viga o dintel de hormigón hecho con bloque en U (esquemas sin escala).", wp, hp / 2.4, 2000)]
+    h += [PageBreak(), Paragraph("8. Envolvente, ahorro y revisión del diseño", EST["H1"])] + md(por_nombre("03"), wp, desplazar=1) + md(por_nombre("05"), wp, desplazar=1) + md(por_nombre("07"), wp, desplazar=1) + md(por_nombre("16"), wp, desplazar=1) + [Spacer(1, 6), figura("detalles_apoyo_placa.png", "Apoyo de la placa superior: sobre el zuncho del muro, sobre una viga de acero y viga sobre pilarete de bloque (esquemas sin escala).", wp, hp / 2.4, 2000), figura("viga_bloque_u.png", "Viga o dintel de hormigón hecho con bloque en U (esquemas sin escala).", wp, hp / 2.4, 2000)]
     # 8 presupuesto y proveedores
-    h += [PageBreak(), Paragraph("8. Presupuesto y proveedores", EST["H1"])] + md(por_nombre("08"), wp, desplazar=1) + md(por_nombre("09"), wp, desplazar=1) + tablas_proveedores(wp)
+    h += [PageBreak(), Paragraph("9. Presupuesto y proveedores", EST["H1"])] + md(por_nombre("08"), wp, desplazar=1) + md(por_nombre("09"), wp, desplazar=1) + tablas_proveedores(wp)
     # 9 terreno
-    h += [PageBreak(), Paragraph("9. Estado real, terreno y ubicación", EST["H1"])] + md(por_nombre("11"), wp, desplazar=1) + md(por_nombre("12"), wp, desplazar=1) + md(por_nombre("13"), wp, desplazar=1) + md(por_nombre("01"), wp, desplazar=1)
+    h += [PageBreak(), Paragraph("10. Estado real, terreno y ubicación", EST["H1"])] + md(por_nombre("11"), wp, desplazar=1) + md(por_nombre("12"), wp, desplazar=1) + md(por_nombre("13"), wp, desplazar=1) + md(por_nombre("01"), wp, desplazar=1)
     # 10 pendientes
-    h += [PageBreak(), Paragraph("10. Pendientes y decisiones", EST["H1"])] + md("docs/99_pendientes.md", wp, desplazar=1, titulo=False)
+    h += [PageBreak(), Paragraph("11. Pendientes y decisiones", EST["H1"])] + md("docs/99_pendientes.md", wp, desplazar=1, titulo=False)
     # anexo planos
     planos = planos_vectoriales()
     h += [PageBreak(), Paragraph("Anexo. Planos DXF en PDF vectorial", EST["H1"]), Paragraph("Cada plano DXF del proyecto está en PDF vectorial en la carpeta <font face=\"LM\">pdf/planos/</font> (ampliable sin perder calidad). Los DXF originales (AutoCAD o FreeCAD) están en la carpeta del proyecto:", EST["body"])]
     h += [Paragraph(f"<font face=\"LM\" size=\"8.4\">{n}.pdf</font> — {d}", EST["li"]) for n, d in planos]
-    construir("pdf/Cortijo_Albox_Dossier.pdf", "Dossier del proyecto", h,
-              portada=(jpg("render_exterior_norte.png", 1600)[0], "Cortijo de Albox", ["Dossier del proyecto de reforma y ampliación", "Diseño v8 y propuestas para la planta baja", FECHA],
+    construir("pdf/Cortijo_Albox_Proyecto_completo.pdf", "Proyecto completo", h,
+              portada=(jpg("render_exterior_norte.png", 1600)[0], "Cortijo de Albox", ["Proyecto de reforma y ampliación: todo en un PDF", "Opción C2 (cocina central), versión económica y propuestas", FECHA],
                        ["Polígono 33, parcela 198 · San Roque, Albox (Almería)", "Borrador preliminar: no sustituye un proyecto visado. La estructura, la cimentación, el sismo, la seguridad", "y las uniones los define un técnico competente. Medidas del croquis a mano del propietario."]))
     # un PDF por documento
     for d in docs + ["memoria_estructura.md"]:
         nombre = os.path.splitext(os.path.basename(d))[0]
         construir(f"pdf/docs/{nombre}.pdf", nombre.replace("_", " "), md(d, wp, desplazar=0))
     shutil.rmtree(TMP, ignore_errors=True)
-    print("ok", round(os.path.getsize("pdf/Cortijo_Albox_Dossier.pdf") / 1e6, 1), "MB")
+    print("ok", round(os.path.getsize("pdf/Cortijo_Albox_Proyecto_completo.pdf") / 1e6, 1), "MB")
 
 
 if __name__ == "__main__":

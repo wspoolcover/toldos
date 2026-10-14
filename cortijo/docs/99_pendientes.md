@@ -7,6 +7,8 @@
 4. **Planta alta**: si también quieres asientos en las ventanas del sur y paredes de seguridad.
 5. Piedra marés en el salón o todo encalado; color de la carpintería (madera oscura, media o blanco); pérgola de aluminio sobre parte de la terraza; patio sur cubierto.
 
+6. **Versión completa o económica** (`17_version_economica.md`): qué partidas de la económica aceptas (climatización con splits, 8 a 10 paneles, puerta de PVC en la cocina, grava en la cubierta) y cuáles prefieres subir.
+
 ## Para completar (datos)
 1. **Croquis de la finca** (aunque sea a mano): contorno, camino y acequia, puerta de 7 m, contador de agua, poste, fosa, caja general, vecinos y rambla; y el rumbo de la fachada ancha con la brújula del móvil. Así se calcula el sol real de los paneles y la terraza.
 2. Si los muros de hormigón y la losa que se ven en las fotos son la cimentación del salón, y a qué altura sobre el terreno queda su suelo.

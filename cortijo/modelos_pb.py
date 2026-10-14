@@ -72,6 +72,19 @@ def corredera_aluminio(ax, x, w, y0=15.75):
     txt(ax, x + w / 2, y0 + .78, f"corredera de aluminio {w:.2f} m".replace(".", ","), 5.0, "#1f6fa8", va="bottom")
 
 
+def puerta_pvc(ax, x, w, y0=15.75):
+    """Salida de la cocina en PVC de dos hojas (versión económica)."""
+    ax.add_patch(Rectangle((x, y0), w, 0.55, fc="#d6eefc", ec=VIDRIO_EC, lw=1.4, zorder=6)); ax.plot([x + w / 2] * 2, [y0, y0 + .55], color="#0b4f7a", lw=1.2, zorder=8)
+    txt(ax, x + w / 2, y0 + .78, f"puerta de PVC {w:.2f} m".replace(".", ","), 5.0, "#1f6fa8", va="bottom")
+
+
+def reja(ax, x, w, y0=15.75):
+    """Reja de hierro sencilla en el exterior de una ventana de la planta baja."""
+    n = max(3, int(w / 0.14))
+    for k in range(n + 1): ax.plot([x + w * k / n] * 2, [y0 + .43, y0 + .64], color="#222", lw=.9, zorder=9)
+    ax.plot([x, x + w], [y0 + .50, y0 + .50], color="#222", lw=.7, zorder=9); ax.plot([x, x + w], [y0 + .60, y0 + .60], color="#222", lw=.7, zorder=9)
+
+
 def encimera(ax, x, y, dx, dy, nombre=None):
     rect(ax, x, y, dx, dy, "#eadcc4", z=6)
     if nombre: txt(ax, x + dx / 2, y + dy / 2, nombre, 4.6, "#6a4d2a", rot=90 if dy > dx else 0)
@@ -118,6 +131,10 @@ def dibujar(ax, m, recorte=False):
     for (x, w) in m["ventanas"]: ventana(ax, x, w)
     for (x, w) in m["asientos"]: asiento_ventana(ax, x, w)
     for (x, w) in m["correderas"]: corredera_aluminio(ax, x, w)
+    for (x, w) in m.get("pvc", []): puerta_pvc(ax, x, w)
+    if m.get("rejas"):
+        for (x, w) in m["ventanas"] + m["asientos"]: reja(ax, x, w)
+        txt(ax, 10.6, 16.55, "rejas de hierro en las ventanas de la planta baja", 5.2, "#222")
     for (x0, y0, x1, y1) in [a for a in ABIERTOS_COMUN if a not in m.get("quita_abiertos", [])] + m["abiertos"]: ax.plot([x0, x1], [y0, y1], color="white", lw=5, solid_capstyle="butt", zorder=7)
     for d in [p for p in PUERTAS_COMUN if p not in m.get("quita_puertas", [])] + m["puertas"]: door(ax, d)
     txt(ax, 3.55, 11.33, "puerta de\nseguridad", 4.4, "#7a1f1f")
@@ -191,8 +208,13 @@ MODELO_C2 = dict(MODELO_C, titulo="MODELO C2 · cocina central de 13 m² y despa
                  quita_puertas=[(4.35, 9.55, "H", 0.85, 0, 1)], quita_abiertos=[(5.60, 7.95, 5.60, 9.50)],
                  puertas=MODELO_C["puertas"] + [(4.95, 9.70, "V", 0.85, 0, 1)])
 
+# versión económica del C2: una sola despensa-lavadero con una puerta, salida de la cocina en PVC de 1,40 m y rejas de hierro en las ventanas bajas
+MODELO_C2E = dict(MODELO_C2, titulo="MODELO C2 · versión económica: una despensa-lavadero, puerta de PVC y rejas", correderas=[], pvc=[(5.40, 1.40)], rejas=True,
+                  rooms=[("Cocina", "cocina", R(3.80, 11.75, 7.15, 15.75), (5.5, 12.4)), ("Despensa-lavadero", "humedo", R(7.25, NY, 9.00, 15.75), (8.12, 13.9))],
+                  puertas=[(7.15, 13.4, "V", 0.80, 0, 1), (4.95, 9.70, "V", 0.85, 0, 1)])
+
 MODELOS = {"A": MODELO_A, "B": MODELO_B, "C": MODELO_C}
-EXTRA = {"C2": MODELO_C2}
+EXTRA = {"C2": MODELO_C2, "C2E": MODELO_C2E}
 
 if __name__ == "__main__":
     res = {}
