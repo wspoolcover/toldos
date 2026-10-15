@@ -10,6 +10,7 @@ from matplotlib.patches import Polygon as MPoly, Rectangle, Circle
 from shapely.geometry import Polygon
 import opciones as o
 from opciones import R, door, escalera, COL, OUT, INN, HUB, SALON_PB, ESC_PB, Y0_ESC, Y_FIN
+X_LANE_ = o.X_LANE
 
 NY = Y_FIN + 0.10                                   # 12,39: tabique sur del cierre de la escalera
 MADERA, TELA, CAMA, PIEDRA = "#e8d5c0", "#c9b79c", "#f7b98a", "#cfc8bd"
@@ -124,7 +125,7 @@ def dibujar(ax, m, recorte=False):
         peq = pol.bounds[2] - pol.bounds[0] < 2.2
         ax.text(cx, cy, f"{nombre}\n{a:.1f} m²", ha="center", va="center", fontsize=6.3 if peq else 7.8, zorder=9, linespacing=1.15); tot[nombre.splitlines()[0]] = a
     for (x0, y0, x1, y1) in m["seg"] + SEG_COMUN: ax.add_patch(Rectangle((x0, y0), x1 - x0, y1 - y0, fc="#5b5b5b", ec="#111", lw=.8, hatch="xx", zorder=4))
-    escalera(ax, "PB")
+    escalera(ax, "PB", m.get("armario_tec", "tecnico"))
     muebles_comunes(ax, not m.get("despacho_v")); m["muebles"](ax)
     ax.add_patch(Rectangle((7.75, 0.25), 0.10, 7.07, fc="#666", ec="#222", zorder=4)); txt(ax, 7.65, 3.6, "murete media altura", 6.0, ha="right", rot=90)
     ax.add_patch(Rectangle((3.55, 0.0), 4.00, 0.25, fc=VIDRIO, ec=VIDRIO_EC, lw=1.4, zorder=6)); txt(ax, 5.5, -0.15, "cristalera de suelo a techo (4,00 m) junto a la puerta", 6.2, "#1f6fa8", va="top")
@@ -213,8 +214,26 @@ MODELO_C2E = dict(MODELO_C2, titulo="MODELO C2 · versión económica: una despe
                   rooms=[("Cocina", "cocina", R(3.80, 11.75, 7.15, 15.75), (5.5, 12.4)), ("Despensa-lavadero", "humedo", R(7.25, NY, 9.00, 15.75), (8.12, 13.9))],
                   puertas=[(7.15, 13.4, "V", 0.80, 0, 1), (4.95, 9.70, "V", 0.85, 0, 1)])
 
+# ---------------------------------------------------------------- opción D: suite a la izquierda, cocina en medio y dormitorio pequeño a la derecha con el armario bajo la escalera
+ARMARIO_ESC = [(7.25, 10.85), (X_LANE_, 10.85), (X_LANE_, 11.41), (9.00, 11.41), (9.00, 12.29), (7.25, 12.29)]      # bajo el tramo de vuelta y bajo la meseta (altura libre 1,5 a 2,1 m)
+
+
+def muebles_D(ax):
+    encimera(ax, 3.85, 12.40, .60, 2.70, "nevera, columnas y fuegos"); encimera(ax, 5.55, 12.40, .55, 2.30, "fregadero")           # cocina en paralelo con pasillo de 1,10 m
+    cama(ax, 7.00, 13.55, 2.00, 1.50, "e"); rect(ax, 8.55, 13.05, .42, .42); rect(ax, 8.55, 15.12, .42, .42); silla(ax, 7.0, 15.42, .34)   # cama de 1,50 con cabecero contra la medianera
+    ax.add_patch(MPoly(ARMARIO_ESC, closed=True, fc="#e8d5c0", ec="#333", lw=.9, hatch="||", zorder=7)); txt(ax, 8.40, 11.95, "armario bajo\nla escalera", 4.8)
+    txt(ax, 8.05, 12.62, "puertas correderas", 4.4, "#555")
+
+MODELO_D = dict(MODELO_C2, titulo="OPCIÓN D · suite, cocina en medio y dormitorio pequeño\ncon armario incorporado bajo la escalera", muebles=muebles_D,
+                sustituye={**MODELO_C2["sustituye"], "Escalera": ("Escalera", "esc", ESC_PB, (8.62, 10.1))},
+                rooms=[("Cocina", "cocina", R(3.80, 11.75, 6.15, 15.75), (4.98, 13.4)), ("Dormitorio 2", "priv", [(6.30, 11.90), (7.15, 11.90), (7.15, NY), (9.00, NY), (9.00, 15.75), (6.30, 15.75)], (7.95, 14.1))],
+                seg=[(0.55, 11.75, 3.80, 11.90), (6.15, 11.75, 7.15, 11.90), (6.15, 11.90, 6.30, 15.75)],
+                ventanas=[(2.55, 0.90)], asientos=[(0.70, 1.30), (6.40, 1.10)], correderas=[(4.40, 1.40)], pvc=[],
+                abiertos=[(3.85, 11.82, 5.45, 11.82), (7.40, 12.34, 8.90, 12.34)], puertas=[(6.30, 11.75, "H", 0.85, 0, 1), (4.95, 9.70, "V", 0.85, 0, 1)],
+                armario_tec=(7.30, 9.72, 0.75, 1.05, "armario\ntécnico"))
+
 MODELOS = {"A": MODELO_A, "B": MODELO_B, "C": MODELO_C}
-EXTRA = {"C2": MODELO_C2, "C2E": MODELO_C2E}
+EXTRA = {"C2": MODELO_C2, "C2E": MODELO_C2E, "D": MODELO_D}
 
 if __name__ == "__main__":
     res = {}

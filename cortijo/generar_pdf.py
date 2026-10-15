@@ -218,7 +218,7 @@ def main():
     # 2 propuestas
     h += [Paragraph("2. Propuestas para la planta baja", EST["H1"])] + md("docs/15_propuestas_planta_baja.md", wp, desplazar=1, titulo=False)
     h += [NextPageTemplate("land"), PageBreak(), Paragraph("Comparación de los tres modelos (mitad sur de la planta baja)", EST["H2"]), figura("modelos_planta_baja.png", "A: dormitorio 2 pequeño y cocina-comedor al este · B: cocina-comedor grande · C: cocina central con despensa y lavadero. Muros de seguridad rayados.", wl, hl - 75, 2600)]
-    for k, t in (("A", "Modelo A"), ("B", "Modelo B"), ("C", "Modelo C"), ("C2", "Modelo C2 (C con el despacho girado)")):
+    for k, t in (("A", "Modelo A"), ("B", "Modelo B"), ("C", "Modelo C"), ("C2", "Modelo C2 (C con el despacho girado)"), ("D", "Opción D (suite, cocina en medio y dormitorio pequeño con armario bajo la escalera)")):
         h += [NextPageTemplate("port"), PageBreak(), figura(f"modelo_{k}_planta_baja.png", f"{t}: planta baja completa (muros de seguridad rayados).", wp, hp - 12, 2000)]
     h += [NextPageTemplate("land"), PageBreak(), Paragraph("Muebles libres disponibles (Poly Haven, licencia CC0)", EST["H2"]), figura("muebles_disponibles.png", "Piezas ya descargadas para los renders. Los armarios de cocina y las camas se modelan aparte.", wl, hl - 75, 1750)]
     # 3 versión económica

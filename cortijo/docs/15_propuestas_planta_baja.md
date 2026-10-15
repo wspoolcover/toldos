@@ -37,6 +37,13 @@ Pedido: cocina central y despacho girado, de la puerta del vestidor hasta la chi
 - **Despacho girado**: pasa de 2,40 × 1,58 m (3,8 m²) a **1,80 × 2,65 m (4,8 m²)**, a lo largo de la pared del vestidor, desde la puerta del vestidor hasta la chimenea. Mesa larga contra la pared del vestidor, estantería y sillón de lectura junto a la puerta, y cristal fijo en el extremo norte hacia el salón y la chimenea. La puerta es desde la sala de estar, que baja de 11,1 a 10,1 m².
 - Si quieres ver el fuego desde el despacho, la chimenea se gira o se hace de dos caras con cristal; lo dejo como opción.
 
+### Opción D: suite a la izquierda, cocina en medio y dormitorio pequeño con armario bajo la escalera (15-10-2026)
+Plano: `modelo_D_planta_baja.png`; PDF: `pdf/Opcion_D_suite_cocina_dormitorio.pdf`. Mantiene el despacho girado del C2.
+- **Suite grande** (11,9 m²) a la izquierda, con el vestidor y su puerta de seguridad pegada al dormitorio y el asiento de lectura en la ventana.
+- **Cocina en medio** de 9,4 m², abierta a la sala por un paso libre de 1,60 m, con salida de aluminio de 1,40 m al patio sur.
+- **Dormitorio 2 pequeño** (9,5 m²) a la derecha, con puerta de seguridad desde la sala, cama de 1,50 m y asiento en la ventana.
+- **Armario incorporado bajo la escalera** de unos 2,0 m², que se abre desde el dormitorio 2 con puertas correderas. Altura libre de 1,5 m bajo la meseta y de 1,5 a 2,1 m bajo el tramo de vuelta (prendas largas en la parte norte). Para ello la meseta pasa a ser losa y el armario técnico se traslada al rincón bajo el tramo de vuelta, junto a la entrada.
+
 **Por qué no hay un modelo con la cocina en medio mucho más grande y el dormitorio 2 en el este:** el único acceso a esa zona desde la sala es un paso de 0,9 m (entre el pilar de x = 7,20 y el final del hueco de la escalera). Si la cocina avanza hacia el este, el dormitorio 2 se queda sin puerta. Por eso en el modelo A el dormitorio 2 pasa al centro y la cocina al este.
 
 **Mi recomendación**: **B** si prefieres una cocina de verdad grande y puedes renunciar al dormitorio 2 de abajo (arriba ya hay tres dormitorios); **A** si quieres conservar cinco dormitorios. Cualquiera de los dos mantiene el paso libre de la sala a la cocina.

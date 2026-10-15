@@ -103,7 +103,7 @@ def muebles_pb(ax):
     r(ax, 3.80, 12.40, 0.60, 2.75, "#eadcc4"); r(ax, 5.55, 12.40, 0.60, 2.75, "#eadcc4"); r(ax, 5.05, 15.15, 1.10, 0.60, "#eadcc4")                 # pasillo central de 1,15 m
 
 
-def escalera(ax, planta):
+def escalera(ax, planta, armario="tecnico"):
     """Peldaños de la escalera en U (v8). PB: tramo de subida por el lado este desde y=9,65, meseta al sur y tramo de vuelta por el oeste.
     Bajo el tramo de vuelta (altura libre > 2,05 m hasta y=10,85) queda un rincón con el armario técnico del agua caliente y la aerotermia."""
     if planta == "PB":
@@ -111,7 +111,8 @@ def escalera(ax, planta):
         for j in range(8): ax.plot([7.25, X_LANE], [Y0_ESC + 8 * T_ESC - j * T_ESC] * 2, color="#555", lw=.6, zorder=6, ls=":")
         ax.plot([X_LANE, X_LANE], [Y0_ESC, Y_FIN], color="#555", lw=.6, zorder=6)
         ax.annotate("", xy=(8.56, Y0_ESC + 1.5), xytext=(8.56, Y0_ESC + 0.1), arrowprops=dict(arrowstyle="-|>", color="#222", lw=1), zorder=9); ax.text(8.56, Y0_ESC - 0.12, "SUBE", fontsize=5.8, ha="center", va="top", zorder=9)
-        ax.add_patch(Rectangle((7.30, 10.85), 0.75, 1.30, fc="#dcdcdc", ec="#333", lw=.8, zorder=7)); ax.text(7.675, 11.5, "armario\ntécnico", fontsize=4.9, ha="center", va="center", zorder=9)
+        if armario == "tecnico": armario = (7.30, 10.85, 0.75, 1.30, "armario\ntécnico")                 # por defecto: bajo el tramo de vuelta, junto a la meseta
+        if armario: ax.add_patch(Rectangle((armario[0], armario[1]), armario[2], armario[3], fc="#dcdcdc", ec="#333", lw=.8, zorder=7)); ax.text(armario[0] + armario[2] / 2, armario[1] + armario[3] / 2, armario[4], fontsize=4.9, ha="center", va="center", zorder=9)
     else:
         ax.plot([X_LANE, X_LANE, 9.00], [Y_HALL_PA, Y_PAD, Y_PAD], color="#222", lw=2.4, zorder=8, solid_capstyle="butt"); ax.text(8.55, 10.45, "barandilla", fontsize=4.8, ha="center", va="center", zorder=9)
 
