@@ -23,6 +23,7 @@ Proyecto personal. Polígono 33, parcela 198, San Roque (Albox). Arquitecto de l
 - **Opción C2 (cocina central con el despacho girado)**: `pdf/Opcion_C_cocina_central.pdf` y `modelo_C2_planta_baja.png` (`python pdf_opcion_c.py`).
 - **Opción D (suite, cocina en medio y dormitorio pequeño con armario bajo la escalera)**: `pdf/Opcion_D_suite_cocina_dormitorio.pdf` y `modelo_D_planta_baja.png` (`python pdf_opcion_d.py`).
 - **Versión económica y rápida (14-10-2026)**: `docs/17_version_economica.md`, `version_economica_costes.png` y `modelo_C2E_planta_baja.png` (`python economica.py`; `python modelos_pb.py`). Ahorro estimado 30–53 mil € sin recortar estructura, cimentación, aislamiento ni seguridad.
+- **Fosa séptica y pozo filtrante (28-10-2026)**: `docs/18_fosa_septica_y_pozo_filtrante.md`, `fosa_septica_esquema.png` y `pozo_filtrante_5m.png` (`python fosa_esquema.py`). Cómo funciona, normativa comprobada, pozo de 5 m con anillos (diámetros, pesos, tasa de infiltración que necesita), qué pedir al proveedor y por qué todavía no conviene comprar los anillos.
 - **PDF**: `pdf/Cortijo_Albox_Proyecto_completo.pdf` (todo en uno, con la versión económica), `pdf/docs/*.pdf` (un PDF por documento) y `pdf/planos/*.pdf` (planos DXF en vectorial). Se regeneran con `python generar_pdf.py`.
 - **Muebles libres** (CC0, Poly Haven) para los renders: `python descargar_muebles.py` los baja a `assets/` (no se suben al repositorio); vista previa en `muebles_disponibles.png`.
 
