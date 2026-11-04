@@ -2,17 +2,26 @@
 
 El proyecto visado (PL-04 a PL-11, 22-09-2025) es el punto de partida. La casa que se construye es la del modelo v8, con las medidas del propietario y ampliada. Este documento lista **qué hay que cambiar en cada lámina** y **con qué datos**. No sustituye al arquitecto: es el material de trabajo para pasárselo.
 
-## 1. Muros caídos (aviso del propietario, 04-11-2026)
-Sobre la lámina PL-05 (fase 3, «consolidación estructural y recrecido de muros») el propietario marca:
-- **Dos muros que han caído**: el **muro norte de la casa** (el que separa el porche de la casa) y el **muro central** («muro existente» de PL-11), por lo que dibuja la marca.
-- En una segunda marca, el **muro este y el muro sur**. **Pendiente de confirmar**: no sé si también han caído o si son los que siguen en pie.
+## 1. Estado de obra: muros, forjado y tejado caídos (aviso del propietario, 04-11-2026)
+Sobre la lámina PL-05 (fase 3) el propietario marca, y confirma por escrito:
+- **Han caído**: el **muro norte de la casa** (el que separa el porche de la casa), el **muro central** («muro existente» de PL-11), el **forjado de la planta alta** (suelo de la planta 1, techo de la planta 0) y el **tejado**.
+- **Siguen en pie solo dos muros**: el **muro este** y el **muro sur**, formando una L.
+- **Pendiente de confirmar**: el **muro oeste** (no está marcado), la escalera y los muros nuevos del salón, si ya estaban levantados.
 
-Lo que implica, sea cual sea el caso:
-- **Seguridad primero**: nadie debe pasar bajo los muros que quedan ni cerca de ellos hasta que los revise un técnico. Las casas vecinas están pegadas (este y oeste). PL-05 (ADD-13) dice que al interrumpir la jornada no se dejen muros sin arriostrar de más de 7 veces su espesor: con muros de 55 cm, unos 3,85 m. Hay que **apuntalar** los que sigan en pie y **no retirar escombros** antes de fotografiarlo y de que lo vea el arquitecto.
-- **Avisar al arquitecto** (director de obra), y al seguro de obra si lo hay. Si hay daños en las casas vecinas o personas afectadas, es un asunto aparte que no sé valorar.
-- **El proyecto visado se apoyaba en el muro central** (PL-11: viguetas T-20 a cada lado del «muro existente»), así que ya no se puede construir tal cual.
-- **Nuestra estructura no depende de esos dos muros**: la línea norte (y ≈ 7,60) y la central (y = 11,80) llevan pilares HEB 120 y vigas, con zapatas y riostras. Sí depende de los **muros laterales** (este y oeste), que arriostraban los muros caídos, y del **muro sur**: hay que comprobar que no están inclinados ni dañados.
-- **Cimentación**: bajo los muros caídos puede seguir su zapata. Hay que verla con una cata antes de hormigonar la línea y = 7,60 (ver `19_comprobacion_cimentacion.md`), y comprobar también la de los muros que sigan en pie.
+**Riesgo principal: los dos muros en pie están sueltos.** Con unos 6 m de altura (dos plantas) y 55 cm de espesor, la esbeltez es de 10–11, casi el doble del límite de 7 que fija el propio proyecto (PL-05, ADD-13: unos 3,85 m para muros de 55 cm sin arriostrar). Han perdido el forjado y los muros que los sujetaban. El muro este es medianera con la casa vecina.
+1. **Zona de exclusión**: nadie a una distancia menor que la altura del muro (unos 6 m), por ninguno de los dos lados, hasta que lo revise un técnico. Con viento o lluvia, más.
+2. **No tocar ni empujar** esos muros, ni trabajar en su base, ni sacar escombros pegados a ellos.
+3. **Apeo provisional** (puntales inclinados con su anclaje) diseñado por el arquitecto o un ingeniero, o derribo controlado si lo decide. Lo hace una empresa con técnico.
+4. **Avisar ya al arquitecto** (director de obra) y al seguro de obra, si lo hay. Si los muros se inclinan, se abren grietas o hay personas viviendo en las casas pegadas, avisar a la Policía Local o al 112. Esto último es una precaución; no sé valorar el riesgo real sin verlos.
+5. **Documentar**: fotos de todos los lados y de las grietas, fecha y hora, qué pasaba (obra, lluvia, viento). No retirar escombros sin fotos.
+6. **Cubierta**: si el tejado llevaba placas onduladas de fibrocemento, no se rompen ni se barren; las retira una empresa autorizada.
+
+Lo que cambia en el proyecto:
+- **PL-05**: las fases 1 y 2 (demolición de la cubierta y del forjado) ya han pasado, pero sin control. La fase 3 («consolidación y recrecido de muros») pasa a ser **reconstrucción de los muros caídos y consolidación de los dos que quedan**.
+- **PL-11**: el proyecto visado se apoyaba en el muro central, que ya no existe. Nuestra estructura (pilares HEB 120, vigas y forjados nuevos) no depende de los dos muros caídos, pero sí del **muro este y el sur**, que hay que comprobar, y del **oeste**, que hay que ver.
+- **Encaje urbanístico**: es una pregunta para el arquitecto: si haber perdido los muros, el forjado y la cubierta cambia la naturaleza de la obra (de rehabilitación a reconstrucción) y qué tramitación exige. No sé responderla.
+- **Cimentación**: bajo los muros caídos puede seguir su zapata, y hay que ver también la de los dos muros en pie. Cata antes de hormigonar la línea y = 7,60 (ver `19_comprobacion_cimentacion.md`).
+- **Pedido 1 de hierro**: las cantidades de zapatas, riostras y zanja perimetral siguen valiendo. La zanja perimetral supone muros exteriores en todo el perímetro; si hay que reconstruir los del norte y el oeste, hay que decidir antes con qué.
 
 ## 2. Superficies de la casa que se construye (modelo v8)
 Superficies útiles por estancia. La planta baja cambia algo según la opción elegida (A, B, C, C2 o D; ver `15_propuestas_planta_baja.md`); aquí va la base v8.
@@ -58,7 +67,7 @@ La superficie construida es mía, por las huellas exteriores; el arquitecto la c
 | **PL-11** cimentación y estructura | Cimentación nueva (zapatas, riostras, zanja perimetral), pilares y vigas de acero en lugar del muro central, forjados, zunchos, escalera de hormigón y losa sobre el salón | `cimentacion_planos.png`, `cimentacion_anillos.png`, `lamina_A1_v8_estructura.dxf`, `estructura_planos.png`, `memoria_estructura.md`, `19_comprobacion_cimentacion.md` |
 
 ## 4. Lo que condiciona el proyecto adaptado
-1. **Estado de los muros** que quedan, y qué ha caído exactamente (fotos y medidas).
+1. **Estado de los dos muros que quedan** (este y sur) y del oeste: inclinación, grietas, altura y qué los sujeta (fotos y medidas).
 2. **Elección de la distribución de la planta baja** (A, B, C, C2, D o la económica).
 3. **Estudio geotécnico**: el 130 kPa de PL-11 es supuesto. Recomiendo una calicata en una zapata y otra en el pozo filtrante, el mismo día.
 4. **Cálculo de la estructura** de acero y de la losa sobre el salón (5,75 m), con ficha del fabricante, por un técnico competente.
@@ -66,7 +75,7 @@ La superficie construida es mía, por las huellas exteriores; el arquitecto la c
 6. **Comunicación con el arquitecto** sobre qué documentación necesita (modificado o proyecto nuevo).
 
 ## 5. Orden que propongo
-1. **Asegurar y documentar** los muros: apeos, fotos y medidas, sin retirar escombros todavía.
+1. **Asegurar y documentar**: zona de exclusión, apeo de los dos muros en pie, fotos y medidas, sin retirar escombros todavía.
 2. **Avisar al arquitecto** y ver con él cómo se adapta el proyecto.
 3. **Catas y estudio geotécnico**, y ver las cimentaciones bajo los muros caídos.
 4. **Cálculo de la estructura** con la realidad de obra.

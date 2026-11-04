@@ -1,6 +1,6 @@
 # El proyecto original, firmado y visado, frente al diseño actual (04-11-2026)
 
-> Aclaración del propietario (04-11-2026): el proyecto visado es el **punto de partida**; la casa que he modelado, con las medidas que me diste, es la que se prepara para construir y está **ampliada**. El proyecto se adapta a esa realidad. Cómo hacerlo, en `21_adaptar_el_proyecto_a_la_realidad.md`. Además, **han caído dos muros** (el muro norte de la casa y el muro central): ver ese documento.
+> Aclaración del propietario (04-11-2026): el proyecto visado es el **punto de partida**; la casa que he modelado, con las medidas que me diste, es la que se prepara para construir y está **ampliada**. El proyecto se adapta a esa realidad. Cómo hacerlo, en `21_adaptar_el_proyecto_a_la_realidad.md`. Además, **han caído el muro norte de la casa, el muro central, el forjado de la planta alta y el tejado**; solo siguen en pie los muros este y sur (el oeste, por confirmar): ver ese documento.
 
 ## 1. Qué es el documento que me has pasado
 `PLANOS_A1_R01_F_signed3.pdf`: **8 láminas (PL-04 a PL-11)** con el **visado estatutario del Colegio Oficial de Arquitectos de Almería del 22-09-2025** (arquitecto Andrés Oller Rodríguez, expediente 25-029). El título de las láminas es «PBE de reforma de vivienda unifamiliar».
@@ -52,11 +52,11 @@
 2. **El diseño**: salón cerrado en lugar del porche, cubierta plana con paneles, distribución nueva (v8, C2, D), estructura de acero sin el muro central y cimentación con zanja perimetral. Todo eso es nuevo respecto a lo visado.
 3. **La estructura sobre el salón** es la parte más delicada: el proyecto la resuelve con una losa de 40 cm para 2,90 m de luz y la nuestra salva 5,75 m con viguetas de 25+5; solo la respalda la ficha de un fabricante.
 4. **El acero y el armado**: B400S en el proyecto frente a B500S en el nuestro (B500S es lo que se vende, pero lo tiene que aprobar la dirección de obra).
-5. **Los muros caídos** (norte y central, ver `21`): el proyecto visado se apoyaba en el muro central, así que de todos modos no se puede construir tal cual.
+5. **Los muros, el forjado y el tejado caídos** (ver `21`): el proyecto visado se apoyaba en el muro central, así que de todos modos no se puede construir tal cual.
 
 ## 6. Qué le preguntaría al arquitecto
 1. ¿Qué documentación hace falta para adaptar el proyecto a las medidas reales y al diseño nuevo (salón cerrado, cubierta plana)?
-2. ¿Qué hay que hacer ya con los dos muros caídos y con los que quedan en pie?
+2. ¿Qué hay que hacer ya con lo que ha caído y con los dos muros que quedan en pie, y cómo afecta al encaje de la obra?
 3. ¿Aprueba B500S y los armados de zunchos y riostras, y la zanja perimetral de 40 × 40?
 4. La estructura sobre el salón (5,75 m) y la sustitución del muro central por pilares y vigas: ¿la calcula él o un ingeniero?
 5. Posición, capacidad y tipo de la fosa y del pozo filtrante (`18_fosa_septica_y_pozo_filtrante.md`).
