@@ -1,5 +1,7 @@
 # El proyecto original, firmado y visado, frente al diseño actual (04-11-2026)
 
+> Aclaración del propietario (04-11-2026): el proyecto visado es el **punto de partida**; la casa que he modelado, con las medidas que me diste, es la que se prepara para construir y está **ampliada**. El proyecto se adapta a esa realidad. Cómo hacerlo, en `21_adaptar_el_proyecto_a_la_realidad.md`. Además, **han caído dos muros** (el muro norte de la casa y el muro central): ver ese documento.
+
 ## 1. Qué es el documento que me has pasado
 `PLANOS_A1_R01_F_signed3.pdf`: **8 láminas (PL-04 a PL-11)** con el **visado estatutario del Colegio Oficial de Arquitectos de Almería del 22-09-2025** (arquitecto Andrés Oller Rodríguez, expediente 25-029). El título de las láminas es «PBE de reforma de vivienda unifamiliar».
 - Las copias que había en la carpeta «CORTIJO PISICA» de tu Drive (PL-01 a PL-10) son **una versión anterior**: el título era «Proyecto de legalización y ejecución de obras de rehabilitación en vivienda». En PL-06 la superficie construida de la planta alta pasa de 80,13 m² a **84,65 m²** y el total, de 195,48 m² a **200,00 m²**. Vale la versión visada.
@@ -22,13 +24,13 @@
 | Tema | Proyecto visado | Nuestro diseño | ¿Coincide? |
 |---|---|---|---|
 | Porche del norte | **Porche abierto de 23,49 m² útiles, de 6,81 m de ancho y 2,90 m de fondo** (cotas de PL-07), con terraza de 23,00 m² encima | **Salón cerrado** de 41,2 m² útiles, de unos 6,4–6,7 m de ancho y 7,3 m de fondo, con terraza encima | **No**: el porche pasa a salón y tiene 2,5 veces el fondo |
-| Superficie construida | **200,00 m²** (PB 115,35 + PA 84,65) | Unos 237 m² por las huellas (PB ≈ 142, PA ≈ 95) | **No** (cálculo mío, a ojo) |
+| Superficie construida | **200,00 m²** (PB 115,35 + PA 84,65) | Unos 233 m² por las huellas (PB 142,4 + PA 90,3) | **No**: es la ampliación (cálculo mío por huellas) |
 | Superficie útil de planta baja | 91,45 m² | 113,8 m² | **No** |
 | Cubierta | Inclinada, cuatro faldones; altura total de 6,60 m | Plana, con parapeto y paneles solares; unos 6,5 m con parapeto | **No** en el tipo; la altura no supera los 6,60 m |
 | Alturas libres | 3,01 m en planta baja y 2,70 m en la alta | Igual: forjado a 3,26 m y 2,70 m arriba | Sí |
 | Ancho del bloque principal | 9,68 m (fachada norte) y 9,88 m (sur) | 9,55 m | Casi: 13–33 cm menos en el modelo |
 | Estructura sobre el porche | Losa maciza L1 de 40 cm, luz de 2,90 m; HEB-160 y HEB-220 | Forjado (25+5) con viguetas de 5,75 m de luz; pilares HEB 120 y vigas HEB 120–160 | **No**: la luz es el doble y nadie la ha calculado con el arquitecto |
-| Muro central de la casa | **Se mantiene** («muro existente»), con viguetas T-20 a cada lado | Se sustituye por pilares HEB 120 y vigas HEB 140 | **No** |
+| Muro central de la casa | **Se mantiene** («muro existente»), con viguetas T-20 a cada lado | Se sustituye por pilares HEB 120 y vigas HEB 140 | **No**; además **ese muro ha caído** (04-11-2026) |
 | Zunchos | Z-1 de 40 × 30 con 4Ø12 + 4Ø12, cercos Ø8/20, B400S, a nivel de forjado | ZH-1 de 55 × 30 y ZH-2 de 25 × 30 con 4Ø16 + 4Ø16, cercos Ø8/15, B500S | Nuestro armado es mayor (2,2 veces la capacidad y 1,7 veces el peso) |
 | Cimentación | No se proyecta; 130 kPa supuestos | Zapatas, riostras y zanja perimetral nuevas | **No**: son un añadido que el proyecto no recoge |
 | Hormigón | HA-25/F/32/XC2 en cimentación, HM-20 en masa y solera | HA-25 y HL-150 de limpieza | Sí en lo esencial; pedir la tipificación completa |
@@ -45,16 +47,16 @@
 - **Zunchos de forjado**: si se hicieran como el Z-1 del proyecto (8Ø12, cercos Ø8/20), pesarían unos 9,7 kg/m frente a 16,9 kg/m (ZH-1) o 15,3 kg/m (ZH-2) de nuestro armado. En los 89 m de zuncho de forjados y cubierta serían unos 870 kg en lugar de unos 1.480 kg.
 - **Correcciones mías**: en documentos anteriores escribí que el Z-1 tenía «4Ø12 en total» (eran 4Ø12 arriba y 4Ø12 abajo) y daba 195,48 m² (la versión visada dice 200,00 m²).
 
-## 5. Lo que veo
-1. **Las medidas no coinciden.** El porche visado tiene 2,90 m de fondo, y tu salón, 7,3 m. Ya me dijiste que tus medidas a mano prevalecen sobre el contorno del arquitecto; si son las reales, el proyecto visado **no refleja la casa tal como es**.
-2. **Hay cambios de diseño que el proyecto no recoge**: salón cerrado y más grande, cubierta plana, estructura de acero distinta (se quita el muro central), distribución nueva (v8, C2, D) y una cimentación nueva con zanja perimetral.
-3. **La estructura sobre el salón es la parte más delicada**: el proyecto la resuelve con una losa de 40 cm para 2,90 m de luz y la nuestra salva 5,75 m con viguetas de 25+5; solo la respalda la ficha de un fabricante.
-4. **El acero y el armado cambian**: B400S en el proyecto frente a B500S en el nuestro (B500S es lo que se vende, pero lo tiene que aprobar la dirección de obra).
-5. **No sé** si ya has hablado con el arquitecto de estos cambios ni si hay modificado. Conviene hacerlo **antes** de hormigonar más y de comprar las vigas de acero.
+## 5. Lo que hay que adaptar
+1. **Las medidas**: el proyecto recoge el porche de 6,81 × 2,90 m y la casa de partida. La casa que se construye es más grande (salón de unos 7,3 m de fondo, superficies del apartado 3). Hay que redibujar las láminas con las medidas reales.
+2. **El diseño**: salón cerrado en lugar del porche, cubierta plana con paneles, distribución nueva (v8, C2, D), estructura de acero sin el muro central y cimentación con zanja perimetral. Todo eso es nuevo respecto a lo visado.
+3. **La estructura sobre el salón** es la parte más delicada: el proyecto la resuelve con una losa de 40 cm para 2,90 m de luz y la nuestra salva 5,75 m con viguetas de 25+5; solo la respalda la ficha de un fabricante.
+4. **El acero y el armado**: B400S en el proyecto frente a B500S en el nuestro (B500S es lo que se vende, pero lo tiene que aprobar la dirección de obra).
+5. **Los muros caídos** (norte y central, ver `21`): el proyecto visado se apoyaba en el muro central, así que de todos modos no se puede construir tal cual.
 
 ## 6. Qué le preguntaría al arquitecto
-1. ¿El proyecto recoge las medidas reales del salón y de la casa? Si no, ¿puede corregirlas?
-2. ¿Qué hace falta para cerrar el porche como salón y para cambiar la cubierta inclinada por una plana?
+1. ¿Qué documentación hace falta para adaptar el proyecto a las medidas reales y al diseño nuevo (salón cerrado, cubierta plana)?
+2. ¿Qué hay que hacer ya con los dos muros caídos y con los que quedan en pie?
 3. ¿Aprueba B500S y los armados de zunchos y riostras, y la zanja perimetral de 40 × 40?
 4. La estructura sobre el salón (5,75 m) y la sustitución del muro central por pilares y vigas: ¿la calcula él o un ingeniero?
 5. Posición, capacidad y tipo de la fosa y del pozo filtrante (`18_fosa_septica_y_pozo_filtrante.md`).
