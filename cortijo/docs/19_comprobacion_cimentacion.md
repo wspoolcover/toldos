@@ -53,7 +53,7 @@ En esa línea se quita el muro viejo entre x = 3,45 y x = 9,00 (5,55 m) y lo sus
 - **Nivel del agua subterránea** y cota de apoyo (por lo menos 1,00 m bajo el terreno natural, en terreno firme).
 
 ## 5. Incoherencias en documentos antiguos
-- **`dossier_obra.pdf`** (primer borrador) habla de 6 zapatas de 1,50 m y riostras de 40 × 40 con 4Ø12. Vale lo de `docs/10`: **4 zapatas** (2 de 1,60 × 1,60 y 2 combinadas de 3,25 × 1,60) y riostras de 40 × 50 con 4Ø16.
+- **`dossier_obra.pdf`** (primer borrador) habla de 6 zapatas de 1,50 m y riostras de 40 × 40 con 4Ø12. Nada de eso viene del proyecto visado, que no proyecta cimentación nueva. Vale lo de `docs/10`: **4 zapatas** (2 de 1,60 × 1,60 y 2 combinadas de 3,25 × 1,60) y riostras de 40 × 50 con 4Ø16.
 - **Pilares de atado**: el DXF dibuja 10 (los del salón); la imagen del plano, 22 (13 del salón y 9 de la casa); `docs/10` dice «≈ 20». El pedido los deja aparte.
 - El plano y el DXF se llaman «v7»; los pilares y las zapatas son los mismos en la v8. Lo que cambió en la v8 es la escalera, y por eso falta el punto c.
 
@@ -61,12 +61,13 @@ En esa línea se quita el muro viejo entre x = 3,45 y x = 9,00 (5,55 m) y lo sus
 Se hace una zanja de 40 × 40 cm junto a los muros exteriores de la casa, con el zuncho dentro y hormigonada, y unida a las riostras para que todo quede en recintos cerrados. Plano: `cimentacion_anillos.png` (`python anillos_cimentacion.py`).
 - **Zanja perimetral**: 30,9 m (el lado norte, y = 7,60, ya lo hace la riostra RI-1) más **3,0 m de cierre en la boca del saliente**, donde no hay muro. Total 33,9 m, unos 5,4 m³ de hormigón. Son los «unos 30 m para el muro exterior» que se pedían.
 - **Recintos cerrados**: R1 a R4 (entre riostras y muros), R5 (la zona sur, cerrada por la riostra de y = 11,80) y R6 (el saliente, cerrado por el cierre de 3,0 m). Todos quedan rodeados por zanja o riostra.
-- **Armado**: el mismo que las riostras, 4Ø16 arriba + 4Ø16 abajo, con cercos Ø8 cada 15 cm y 3 cm de recubrimiento (cerco de 34 × 34 cm por dentro). Pesa unos 672 kg; con el armado del arquitecto en PL-11 (4Ø12 en total) serían unos 262 kg. Lo decide el técnico.
+- **Armado**: el mismo que las riostras, 4Ø16 arriba + 4Ø16 abajo, con cercos Ø8 cada 15 cm. Con los recubrimientos de PL-11 (80 mm contra el terreno, 40 mm sobre hormigón de limpieza) el cerco mide 24 × 32 cm por dentro. Pesa unos 639 kg; con el armado del Z-1 de PL-11 (4Ø12 arriba + 4Ø12 abajo, cercos Ø8/20) serían unos 361 kg. Lo decide el técnico.
 - **Cruces**: las barras de las riostras entran 40 cm en la zanja con gancho; los cruces se hormigonan en una sola tanda con la zanja y las zapatas.
 - **Una zanja de 40 cm de hondo es un atado, no una zapata**: no sustituye la cimentación de los muros de 55 cm, cuyo ancho y profundidad siguen pendientes de catas. Y las riostras tienen 50 cm de canto, así que conviene que las caras superiores queden al mismo nivel (diez centímetros de diferencia por abajo).
 - **Cobre de la toma de tierra**: puede ir dentro de la zanja antes de hormigonar.
 
 ## 7. Qué se puede pedir ya
-**El hierro del Pedido 1** (zapatas, riostras y zanja perimetral): 22 barras de Ø12, 55 de Ø16 y 58 de Ø8 para cercos (404 cercos), unos **1.550 kg**. Las cantidades no dependen de los tres puntos del apartado 3, salvo los cortes de las zapatas de la línea y = 7,60. Si quieres curarte en salud, pide esas barras sin cortar.
+(Los recubrimientos, los hormigones y los solapes salen del PDF visado; ver `20_proyecto_original_y_diseno_actual.md`.)
+**El hierro del Pedido 1** (zapatas, riostras y zanja perimetral): 21 barras de Ø12, 55 de Ø16 y 48 de Ø8 para cercos (404 cercos), unos **1.490 kg**, con los recubrimientos de PL-11. Las cantidades no dependen de los tres puntos del apartado 3, salvo los cortes de las zapatas de la línea y = 7,60. Si quieres curarte en salud, pide esas barras sin cortar.
 
 **Lo que no se debe hormigonar todavía**: la línea y = 7,60 (zapatas Z-1 y Z-2 de ese lado y su riostra), hasta resolver a) y b).

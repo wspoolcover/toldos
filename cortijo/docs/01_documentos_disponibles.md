@@ -2,7 +2,7 @@
 
 Revisado en tu Drive el 12-10-2026. Carpeta **CORTIJO PISICA**: solo contiene los 10 planos del proyecto del arquitecto (Andrés Oller Rodríguez, expediente 25-029, julio 2025). No he abierto ni usado el contrato de arras ni ningún documento de la empresa.
 
-> Las superficies de PL-04 y PL-06 son las del proyecto original. La casa **se ha agrandado**: las medidas válidas son las del croquis a mano del propietario, que son las que usa el modelo.
+> Las copias de la carpeta de Drive son una **versión anterior** al visado del 22-09-2025: en la versión visada la superficie construida total es de 200,00 m² (PL-06: PB 115,35 + PA 84,65). Las superficies de PL-04 y PL-06 son las del proyecto original. La casa **se ha agrandado**: las medidas válidas son las del croquis a mano del propietario, que son las que usa el modelo.
 
 ## Lo que hay (PL-01 a PL-10)
 | Plano | Contenido | Para qué lo usamos |
@@ -17,7 +17,7 @@ Revisado en tu Drive el 12-10-2026. Carpeta **CORTIJO PISICA**: solo contiene lo
 | PL-08 | Fontanería: PPR, termo de 100 L, intercambiador solar | Base de la red de agua |
 | PL-09 | Saneamiento y pluviales: conexión a **fosa séptica** | Base de la red de desagües |
 | PL-10 | Electricidad: esquema unifilar y circuitos | Base de la red eléctrica |
-| PL-11 | **Cimentación y estructura** del arquitecto: forjados de vigueta T-20 con bovedilla de 20 cm (canto 25+5), vigas HEB-160 / HEB-220 / IPE-240, muro existente central, zunchos Z-1 de 40×30 con 4Ø12, hormigón HA-25, acero B400S, NCSE-02 ductilidad baja, **tensión admisible del terreno 0,13 MPa (130 kPa)** | Dato de terreno y secciones de referencia (está en el PDF completo, no en la carpeta de Drive) |
+| PL-11 | **Cimentación y estructura** del arquitecto: forjados de vigueta T-20 con bovedilla de 20 cm (canto 25+5), vigas HEB-160 / HEB-220 / IPE-240, muro existente central, zunchos Z-1 de 40×30 con 4Ø12 arriba y 4Ø12 abajo y cercos Ø8/20, hormigón HA-25/F/32/XC2 en cimentación, acero B400S, recubrimiento de 80 mm contra el terreno, NCSE-02 ductilidad baja, **tensión admisible del terreno 0,13 MPa (130 kPa)** | Dato de terreno y secciones de referencia (está en el PDF visado `PLANOS_A1_R01_F_signed3.pdf`, no en la carpeta de Drive; ver `20_proyecto_original_y_diseno_actual.md`, donde se compara con la versión visada del 22-09-2025) |
 
 ## Lo que NO tenemos (hay que conseguirlo)
 1. **Estudio geotécnico**: el único dato de terreno es el de PL-11 (130 kPa, «considerado», no medido). Hay que confirmarlo con un estudio.
