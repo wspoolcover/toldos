@@ -5,7 +5,8 @@ El proyecto visado (PL-04 a PL-11, 22-09-2025) es el punto de partida. La casa q
 ## 1. Estado de obra: muros, forjado y tejado caídos (aviso del propietario, 04-11-2026)
 Sobre la lámina PL-05 (fase 3) el propietario marca, y confirma por escrito:
 - **Han caído**: el **muro norte de la casa** (el que separa el porche de la casa), el **muro central** («muro existente» de PL-11), el **forjado de la planta alta** (suelo de la planta 1, techo de la planta 0) y el **tejado**.
-- **Siguen en pie solo dos muros**: el **muro este** y el **muro sur**, formando una L.
+- **Según la marca del propietario, siguen en pie el muro este y el muro sur**, formando una L.
+- **Foto interior (04-11-2026, mirando al sur desde dentro)**: se ve el suelo de tierra, sin solera; el **muro sur** al fondo, con dos ventanas y una puerta de doble hoja, en planta baja y con un tramo más alto en el centro; un **muro alto a la derecha**, con restos de tejas del vecino en lo alto; y un **muro alto a la izquierda**, con el conducto oscuro de una chimenea y el borde superior inclinado con restos de teja. En la base del muro de la izquierda hay huecos y falta revoco. Al pie del muro de la derecha hay una pequeña armadura en espera. **Pendiente**: confirmar cuál es cada muro (este, oeste, vecinos) y si el de la izquierda sigue en pie.
 - **Pendiente de confirmar**: el **muro oeste** (no está marcado), la escalera y los muros nuevos del salón, si ya estaban levantados.
 
 **Riesgo principal: los dos muros en pie están sueltos.** Con unos 6 m de altura (dos plantas) y 55 cm de espesor, la esbeltez es de 10–11, casi el doble del límite de 7 que fija el propio proyecto (PL-05, ADD-13: unos 3,85 m para muros de 55 cm sin arriostrar). Han perdido el forjado y los muros que los sujetaban. El muro este es medianera con la casa vecina.
