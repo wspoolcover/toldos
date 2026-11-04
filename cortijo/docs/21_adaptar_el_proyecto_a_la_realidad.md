@@ -75,10 +75,13 @@ La superficie construida es mía, por las huellas exteriores; el arquitecto la c
 5. **Fosa y pozo filtrante**: posición, capacidad y autorización de vertido.
 6. **Comunicación con el arquitecto** sobre qué documentación necesita (modificado o proyecto nuevo).
 
-## 5. Orden que propongo
-1. **Asegurar y documentar**: zona de exclusión, apeo de los dos muros en pie, fotos y medidas, sin retirar escombros todavía.
-2. **Avisar al arquitecto** y ver con él cómo se adapta el proyecto.
-3. **Catas y estudio geotécnico**, y ver las cimentaciones bajo los muros caídos.
-4. **Cálculo de la estructura** con la realidad de obra.
-5. **Proyecto adaptado** con las láminas de la tabla anterior.
-6. **Pedidos de hierro** (el Pedido 1 sigue valiendo para la parte de cimentación que no depende de las catas) y de las vigas de acero.
+## 5. Orden que propongo (el propietario quiere empezar ya con la cimentación y el hormigón)
+Decisión del propietario (04-11-2026): empezar cuanto antes la cimentación y el hormigón, porque eso es lo que afianza los muros existentes. Es una secuencia razonable, con una precisión: **lo de abajo (zanja, zapatas) no sujeta la parte alta de los muros**; la sujetan los puntales ahora y el zuncho de arriba con los pilares y el forjado después. Además, abrir zanjas al pie de un muro suelto es el momento más peligroso. Por eso:
+1. **Apeo mínimo de los muros altos antes de que entre nadie a trabajar** en la zona de peligro (en el plano cubre el 93 % del interior). Puntales inclinados; los define el arquitecto o un ingeniero.
+2. **Cata puntual** para ver la zapata de cada muro antes de abrir la primera zanja junto a él: no se baja de la cota de su base.
+3. **Zanja perimetral por bataches alternos** (`cimentacion_bataches.png`, 23 bataches de ≈ 1,5 m): uno sí y uno no, y cada uno se abre, se arma y se hormigona el mismo día. La segunda tanda, cuando la primera haya endurecido. HA-25/F/32/XC2 con limpieza de HM-20.
+4. **Pedido 1 de hierro ya** (`pedido_1_hierro_cimentacion.xlsx`). Las barras de las zapatas y riostras de la línea y = 7,60, sin cortar hasta ver qué hay debajo.
+5. **Riostras y zapatas** en el interior, donde ya no hay muros: es el tajo menos expuesto, pero sigue dentro de la zona de peligro hasta el apeo.
+6. **Pilares de atado y zuncho de coronación** en los muros que queden, junto con los pilares HEB y las vigas: aquí es donde los muros quedan atados de verdad. El apeo se mantiene hasta entonces.
+7. **Forjado y cubierta**. Los apeos se quitan solo cuando el técnico lo diga.
+8. En paralelo: aviso al arquitecto, fotos y medidas de los muros, catas y estudio geotécnico.
