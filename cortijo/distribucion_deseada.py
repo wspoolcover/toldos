@@ -17,7 +17,8 @@ import plano_realidad as PR
 
 H = 3.0                 # altura de muros y tabiques de planta baja (libre 3,01 m en PL-11)
 XP = PR.XM              # tabique N-S de la suite/cocina y de la oficina, sobre el zuncho central N-S (x ≈ 4,40 m, aproximada)
-X2 = 2.50               # tabique N-S entre vestidor/baño y oficina
+XPN = 5.40              # en la mitad norte el tabique de la oficina y la escalera van 1 m más al este (decisión del propietario)
+X2 = 3.10               # tabique N-S entre vestidor/baño y oficina
 Y3, Y4 = 5.485, 6.335   # tabique S de la oficina y tabique vestidor | baño
 X6 = 9.27               # tabique del baño grande (saliente)
 YN = 8.82               # línea norte del bloque
@@ -30,9 +31,9 @@ EXIST += [("norte, al oeste del salón", [(0, 8.80), (2.97, YN)], 0.29)]
 PROP29 = [("norte del bloque (propuesto)", [(2.97, YN), (XN, YN)], 0.29),
           ("salón, norte (supuesto)", [(2.97, 15.55), (9.27, 15.55)], 0.29)]
 TAB = [("T1 suite | cocina", [(XP, 0.07), (XP, 4.055)]),
-       ("T5 oficina, este", [(XP, 5.52), (XP, 8.675)]),
+       ("T5 oficina, este", [(XPN, 5.52), (XPN, 8.675)]),
        ("T2 vestidor-baño | oficina", [(X2, 4.345), (X2, 8.675)]),
-       ("T3 oficina, sur", [(X2 + .035, Y3), (XP - .035, Y3)]),
+       ("T3 oficina, sur", [(X2 + .035, Y3), (XPN - .035, Y3)]),
        ("T4 vestidor | baño", [(0.07, Y4), (X2 - .035, Y4)]),
        ("T6 baño grande", [(X6, 4.345), (X6, 7.055)])]
 
@@ -40,7 +41,7 @@ TAB = [("T1 suite | cocina", [(XP, 0.07), (XP, 4.055)]),
 HUECOS = [("V2", "ventana", "h", 0.0, 1.90, 1.30, 1.00, 2.20), ("V1", "ventana", "h", 0.0, 5.90, 1.30, 1.00, 2.20),
           ("P1", "puerta", "h", 0.0, 8.50, 1.10, 0, 2.10),
           ("D1", "puerta", "h", YC, 3.825, 0.85, 0, 2.05), ("D5", "puerta", "h", YC, 8.625, 0.85, 0, 2.05),
-          ("D7", "puerta", "h", YC, 2.05, 0.80, 0, 2.05), ("D3", "puerta", "h", Y3, 3.45, 0.80, 0, 2.05),
+          ("D7", "puerta", "h", YC, 2.05, 0.80, 0, 2.05), ("D3", "puerta", "h", Y3, 4.60, 0.80, 0, 2.05),
           ("D4", "puerta", "h", Y4, 2.05, 0.80, 0, 2.05), ("D6", "puerta", "v", X6, 6.55, 0.80, 0, 2.05),
           ("PE", "puerta", "h", 15.55, 8.55, 1.00, 0, 2.10)]
 # puertas: nombre -> (bisagra 'lo'|'hi', hacia dónde abre (dx, dy), hoja doble)
@@ -64,18 +65,18 @@ def poligonos(g):
 # ----------------------------------------------------------------- estancias (caras interiores)
 S = [("Dormitorio suite", 0.07, 0.07, XP - .035, 4.055), ("Cocina", XP + .035, 0.07, 9.14, 4.055),
      ("Vestidor", 0.07, 4.345, X2 - .035, Y4 - .035), ("Baño suite", 0.07, Y4 + .035, X2 - .035, 8.675),
-     ("Oficina", X2 + .035, Y3 + .035, XP - .035, 8.675), ("Baño grande", X6 + .035, 4.345, 11.48, 7.055),
+     ("Oficina", X2 + .035, Y3 + .035, XPN - .035, 8.675), ("Baño grande", X6 + .035, 4.345, 11.48, 7.055),
      ("Salón", 3.115, 8.965, 9.125, 15.405)]
-ESC = (XP + .035, 4.40, XP + .035 + 0.955, 8.675)              # escalera: tramo recto + descansillo
-ESC_IZQ = (XP + .035 + 0.955, 7.72, XP + .035 + 0.955 + 0.765, 8.675)   # 3 peldaños de arranque hacia el este
+ESC = (XPN + .035, 4.40, XPN + .035 + 0.955, 8.675)              # escalera: tramo recto + descansillo
+ESC_IZQ = (XPN + .035 + 0.955, 7.72, XPN + .035 + 0.955 + 0.765, 8.675)   # 3 peldaños de arranque hacia el este
 AREA_ESC = (ESC[2] - ESC[0]) * (ESC[3] - ESC[1]) + (ESC_IZQ[2] - ESC_IZQ[0]) * (ESC_IZQ[3] - ESC_IZQ[1])
-PASILLO = (X2 + .035, 4.345, XP + .035 + 0.955, 5.45)         # pasillo hacia suite, vestidor, oficina; bajo la escalera
-DISTR = (XP + .035 + 0.955, 4.345, X6 - .035, 8.675)
+PASILLO = (X2 + .035, 4.345, XPN + .035 + 0.955, 5.45)         # pasillo hacia suite, vestidor, oficina; bajo la escalera
+DISTR = (XPN + .035 + 0.955, 4.345, X6 - .035, 8.675)
 AREA_DISTR = (DISTR[2] - DISTR[0]) * (DISTR[3] - DISTR[1]) - (ESC_IZQ[2] - ESC_IZQ[0]) * (ESC_IZQ[3] - ESC_IZQ[1])
 AREAS = {n: (x1 - x0) * (y1 - y0) for n, x0, y0, x1, y1 in S}
 AREAS["Pasillo (bajo la escalera)"] = (PASILLO[2] - PASILLO[0]) * (PASILLO[3] - PASILLO[1])
 AREAS["Escalera"] = AREA_ESC
-AREAS["Distribuidor / entrada"] = AREA_DISTR
+AREAS["Comedor / distribuidor"] = AREA_DISTR
 
 # ----------------------------------------------------------------- mobiliario (nombre, x0, y0, x1, y1, alto, color)
 MUEBLES = [
@@ -83,16 +84,17 @@ MUEBLES = [
     ("mesilla", 0.07, 2.80, 0.52, 3.25, 0.50, "#c9b48f"),
     ("encimera", XP + .035, 1.40, XP + .035 + 0.60, 3.455, 0.90, "#bdbdbd"), ("encimera", XP + .035, 3.455, 7.30, 4.055, 0.90, "#bdbdbd"),
     ("columna nevera", 7.30, 3.40, 7.90, 4.055, 2.00, "#9e9e9e"), ("barra bajo V1", 5.25, 0.07, 6.85, 0.57, 0.95, "#c9a46b"),
-    ("armario", 0.07, 4.345, 0.62, 6.265, 2.40, "#c9b48f"), ("armario", 0.62, 4.345, 1.65, 4.895, 2.40, "#c9b48f"),
+    ("armario", 0.07, 4.345, 0.62, 6.265, 2.40, "#c9b48f"), ("armario", 0.62, 4.345, 1.65, 4.895, 2.40, "#c9b48f"), ("armario", X2 - .035 - 0.50, 4.345, X2 - .035, 6.265, 2.40, "#c9b48f"),
     ("ducha", 0.07, 7.175, 0.97, 8.675, 0.05, "#90caf9"), ("inodoro", 1.20, 8.20, 1.58, 8.675, 0.40, "#eeeeee"),
     ("lavabo", X2 - .035 - 0.50, 6.65, X2 - .035, 8.05, 0.85, "#eeeeee"),
-    ("escritorio", 2.80, 8.025, 4.20, 8.675, 0.75, "#c9a46b"), ("estantería", XP - .035 - 0.30, 6.00, XP - .035, 7.80, 1.80, "#c9b48f"),
+    ("escritorio", 3.50, 8.025, 4.90, 8.675, 0.75, "#c9a46b"), ("estantería", XPN - .035 - 0.30, 6.00, XPN - .035, 7.80, 1.80, "#c9b48f"),
     ("ducha", 10.58, 4.345, 11.48, 5.745, 0.05, "#90caf9"), ("inodoro", 9.70, 4.345, 10.10, 5.045, 0.40, "#eeeeee"),
     ("lavabo doble", 10.98, 5.90, 11.48, 7.055, 0.85, "#eeeeee"),
     ("mueble TV", 3.115, 11.00, 3.615, 12.90, 0.50, "#c9a46b"),
     ("sofá en C", 6.80, 10.40, 7.40, 13.60, 0.85, "#a1887f"), ("sofá en C", 5.60, 10.40, 6.80, 11.20, 0.85, "#a1887f"),
     ("sofá en C", 5.60, 12.80, 6.80, 13.60, 0.85, "#a1887f"), ("mesa de centro", 5.80, 11.55, 6.50, 12.45, 0.40, "#c9a46b"),
-    ("mueble de entrada", 7.70, 10.60, 7.85, 15.20, 1.00, "#c9b48f")]
+    ("mueble de entrada", 7.70, 10.60, 7.85, 15.20, 1.00, "#c9b48f"),
+    ("mesa comedor", 6.75, 5.95, 8.35, 6.85, 0.75, "#c9a46b")] + [("silla", 6.65 + .70 * i, y0, 6.65 + .70 * i + .40, y0 + .40, 0.45, "#b08d57") for i in range(3) for y0 in (5.50, 6.95)]
 CHIMENEA = [(3.115, 8.965), (4.30, 8.965), (3.115, 10.15)]
 CONDUCTO = (3.115, 8.965, 3.565, 9.415)
 TABURETES = [(5.45 + .55 * i, 0.95) for i in range(3)]
@@ -181,13 +183,13 @@ def dibujo():
     for h in HUECOS: (puerta if h[1] == "puerta" else ventana)(ax, h)
     ax.plot([2.97, 9.27], [15.55, 15.55], color="#1a3fbf", lw=0)           # fuerza el encuadre
     POS = {"Dormitorio suite": (3.3, 1.9, True), "Cocina": (7.7, 2.2, True), "Vestidor": (1.1, 5.6, False),
-           "Baño suite": (1.1, 6.85, False), "Oficina": (3.3, 6.9, True), "Baño grande": (9.85, 5.6, False), "Salón": (5.3, 14.55, True)}
+           "Baño suite": (1.1, 6.85, False), "Oficina": (4.1, 6.9, True), "Baño grande": (9.85, 5.6, False), "Salón": (5.3, 14.55, True)}
     for n, x0, y0, x1, y1 in S:
         a = AREAS[n]; px, py, dims = POS[n]
         txt = f"{n}\n{x1 - x0:.2f} × {y1 - y0:.2f} m\n{a:.1f} m²" if dims else f"{n}\n{a:.1f} m²"
         ax.text(px, py, txt, ha="center", va="center", fontsize=8.5 if dims else 7.8, weight="bold", color="#222", zorder=8)
-    ax.text(7.5, 6.2, f"Distribuidor / entrada\n{AREA_DISTR:.1f} m²", ha="center", fontsize=8, color="#222", zorder=8)
-    ax.text(3.6, 4.9, "pasillo\n(bajo la escalera)", ha="center", va="center", fontsize=6.8, color="#222", zorder=8)
+    ax.text(7.45, 4.95, f"Comedor /\ndistribuidor\n{AREA_DISTR:.1f} m²", ha="center", va="center", fontsize=7.8, weight="bold", color="#222", zorder=8)
+    ax.text(4.1, 4.9, "pasillo\n(bajo la escalera)", ha="center", va="center", fontsize=6.8, color="#222", zorder=8)
     ax.text(8.25, 14.1, "entrada", ha="center", fontsize=8, color="#222", rotation=90, zorder=8)
     ax.text(8.55, 16.2, "Puerta de entrada", ha="center", fontsize=8, weight="bold", zorder=8)
     ax.text(4.40, 9.45, "chimenea\nde esquina", fontsize=6.8, color="#e65100", zorder=8)
