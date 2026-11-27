@@ -42,12 +42,12 @@ Los tabiques salen de la cara del muro al otro, así que están descontados los 
 2. **Baños, vestidor y oficina sin ventana exterior.** El muro oeste y el este son medianeras y el norte da al salón. En el plano no hay ventilación natural en esas cuatro estancias: harán falta extractores y decidir la luz (una ventana alta hacia el salón en la oficina, vidrio en una puerta…).
 3. **Tabiques de 7 cm en los baños.** No admiten rozas para las tuberías. Lo normal es poner las instalaciones por el tabique de 14 cm o por trasdós. Con 3,0 m de altura el arriostramiento en cabeza lo define el técnico.
 4. **Tabique sobre el zuncho central** (decisión del propietario, 27-11-2026). Está en x = 4,40 m, que es la posición aproximada del zuncho en el croquis de medidas (sale entre 4,4 y 4,6 m). Con una medición real hay que mover ese tabique la diferencia. Con esto la suite queda en 17,1 m² y la cocina en 18,7 m². En la mitad norte el tabique de la oficina y la escalera están 1 m más al este (x = 5,40 m), **fuera del zuncho**: un tabique de 7 cm no lo necesita, pero el zuncho central pasa por debajo de la oficina y del pasillo.
-5. **Escalera** (dibujada con 3 peldaños de arranque hacia el este, descansillo cuadrado y tramo recto de 13 peldaños hacia el sur): el tramo alto llega encima del pasillo y entra en la planta alta por el sur. Esa planta no está pensada.
+5. **Escalera** (el propietario confirma el 27-11-2026 que sube hacia el sur; dibujada con 3 peldaños de arranque hacia el este, descansillo cuadrado y tramo recto de 13 peldaños hacia el sur): el tramo alto llega encima del pasillo y entra en la planta alta por el sur. Esa planta no está pensada.
 6. **Chimenea**: el conducto sube por la esquina del salón a través de la terraza de encima. Hay que verlo con el diseño de la cubierta y de los paneles solares.
 7. **Comedor-distribuidor de 11,6 m²** con la mesa y la circulación: la salida del pasillo bajo la escalera, la puerta de la cocina (D5), la puerta del baño grande (D6), el arranque de la escalera y el paso desde el pasillo de entrada. El paso libre junto a la mesa es de unos 0,9 m. Es ajustado para 6 sillas; con 4 sillas se despeja.
 
 ## 5. Lo que necesito de ti
-1. ¿La escalera sube hacia el sur como la he dibujado? ¿Qué quieres en la planta alta?
+1. ¿Qué quieres en la planta alta? La escalera sube hacia el sur (confirmado) y llega encima del pasillo.
 2. ¿Ventanas o puertas acristaladas en el salón? Ahora solo hay la puerta de entrada.
 3. ¿La línea norte del bloque y el lado norte del salón van de 29 cm?
 4. ¿Qué es la línea diagonal dentro de la suite en tu croquis? No la he dibujado.
