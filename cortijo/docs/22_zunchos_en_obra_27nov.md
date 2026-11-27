@@ -76,3 +76,18 @@ Leyenda del propietario: rayado = **ladrillo de 14 cm**; trazo macizo = **ladril
 - **Corrijo un dato mío**: la esbeltez de 10–11 que te di para los muros en pie era con 55 cm. Con 29 cm es de unas 21 (6 m de altura) y con 14 cm, de unas 43. Si los muros que siguen en pie tienen esos espesores, están todavía más sueltos de lo que te dije.
 
 **Pendiente de confirmar**: si el rayado y el macizo son el espesor de los muros que **siguen en pie** (o fueron), o el de los muros **por construir**; el espesor real del muro sur y de los laterales que se ven en las fotos; y si el lado norte del salón llevará 29 cm.
+
+## 8. Distribución interior (croquis con leyenda y habitaciones, 27-11-2026)
+Plano: `plano_realidad_27nov.png` (`python plano_realidad.py`). Esquema con las cifras del croquis; las posiciones de los tabiques son aproximadas y faltan los huecos.
+
+Leyenda completa del propietario: rayado = ladrillo de 14 cm; macizo = ladrillo de 29 cm; rectángulo vacío = **ladrillo de 7 cm** (tabiques).
+
+Lo que leo:
+- **Mitad sur del bloque** (entre el muro sur y el muro central): dos estancias separadas por un **tabique de 7 cm** en el zuncho central N-S (4,20 m): **«b1»** al oeste y **«Cocina»** al este. Una flecha del croquis apunta a la unión del tabique con el muro central; no sé si marca una puerta.
+- **Mitad norte del bloque** (entre el muro central y la línea norte): al oeste, un **rectángulo largo de tabiques de 7 cm** de 4,00 m de largo, pegado al muro oeste (la cota «400»); en el centro, un **recinto de tabiques de 7 cm** sin etiqueta, junto al zuncho central N-S (el de 4,60 m). El resto está abierto hacia el salón y el saliente.
+- **Salón**: muros de 29 cm al oeste y al este; el lado norte sin marcar, con unos trazos finos y un cuadrado macizo que no sé interpretar (¿pilar, hueco o puerta?).
+- **Muro sur**: el rayado lleva marcas verticales a lo largo, que leo como huecos de ventanas y puertas.
+
+**Frente a nuestro diseño (v8)**: la distribución es distinta. En la v8, la cocina está en el centro con la escalera al este, el dormitorio principal con vestidor y baño al oeste y el baño grande en el saliente. Aquí hay «b1» y «Cocina» en el frente sur y recintos de tabique en la parte central.
+
+**Pendiente de confirmar**: qué es «b1» (¿baño 1?, ¿b = baño?), qué son el rectángulo de 4,00 m y el recinto central, si la flecha es una puerta, qué marcas hay en el lado norte del salón, y dónde van las escaleras. La planta alta no está en ningún croquis.
