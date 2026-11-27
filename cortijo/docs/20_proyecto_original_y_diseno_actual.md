@@ -1,5 +1,7 @@
 # El proyecto original, firmado y visado, frente al diseño actual (04-11-2026)
 
+> **Nota (27-11-2026):** los espesores de muro de 55 cm y 25 cm que usa este documento vienen del modelo. El croquis del propietario con leyenda dice **ladrillo de 14 cm y de 29 cm** (ver `22_zunchos_en_obra_27nov.md`, apartado 7).
+
 > Aclaración del propietario (04-11-2026): el proyecto visado es el **punto de partida**; la casa que he modelado, con las medidas que me diste, es la que se prepara para construir y está **ampliada**. El proyecto se adapta a esa realidad. Cómo hacerlo, en `21_adaptar_el_proyecto_a_la_realidad.md`. Además, **han caído el muro norte de la casa, el muro central, el forjado de la planta alta y el tejado**; solo siguen en pie los muros este y sur (el oeste, por confirmar): ver ese documento.
 
 ## 1. Qué es el documento que me has pasado

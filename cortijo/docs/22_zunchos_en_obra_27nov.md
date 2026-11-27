@@ -58,3 +58,21 @@ Incluye +10 % en barras por solapes y esquinas, y +5 % en cercos.
 2. **Qué son las X**: ¿pilares? ¿De qué (hormigón o acero)?
 3. **Espesores de los muros** (los que dijiste que me pasarías).
 4. **Hierro ya comprado** (barras y cercos), para calcular lo que falta.
+
+## 7. Espesores de los muros (croquis con leyenda, 27-11-2026)
+Leyenda del propietario: rayado = **ladrillo de 14 cm**; trazo macizo = **ladrillo de 29 cm**. Mi lectura del croquis:
+
+| Espesor | Muros | Largo aproximado |
+|---|---|---|
+| **14 cm** | Lado sur; lado oeste; lado este, tramo de 4,10 m al sur del saliente; lado este del saliente | ≈ 25,1 m |
+| **29 cm** | Muro central E-O (11,55 m, incluye el lado sur del saliente); muro norte al oeste del salón (≈ 2,97 m); lados oeste y este del salón (6,70 m cada uno); lado este entre el saliente y el salón (≈ 1,80 m); lado norte del saliente (≈ 2,28 m) | ≈ 32,0 m |
+| Sin marcar | Lado norte del salón; boca del saliente y el tramo norte entre el salón y el este | |
+
+**El croquis cuadra con estos espesores**: interior 8,90 + 2 × 0,14 = 9,18 m (zuncho sur: 9,20); lado oeste 8,40 + 0,14 + 0,29 = 8,83 m (zuncho oeste: 8,80); salón 5,70 + 2 × 0,29 = 6,28 m (zuncho norte: 6,30). Es decir, **las longitudes de los zunchos son las medidas exteriores de los muros**.
+
+**Lo que cambia**:
+- El modelo usaba **55 cm** en la casa y 25 cm en el salón. Las medidas reales son un bloque exterior de unos **9,20 × 8,80 m** y un interior de 8,90 × 8,40 m (≈ 74,8 m²), más el salón (≈ 40 m² de interior) y el saliente (≈ 1,9 × 3,0 m). Hay que rehacer el modelo con ellas.
+- Con muros de 14 y 29 cm, **los zunchos y los pilares (las X) son la estructura** y los muros son cerramiento; los de 14 cm no pueden cargar forjados por sí solos.
+- **Corrijo un dato mío**: la esbeltez de 10–11 que te di para los muros en pie era con 55 cm. Con 29 cm es de unas 21 (6 m de altura) y con 14 cm, de unas 43. Si los muros que siguen en pie tienen esos espesores, están todavía más sueltos de lo que te dije.
+
+**Pendiente de confirmar**: si el rayado y el macizo son el espesor de los muros que **siguen en pie** (o fueron), o el de los muros **por construir**; el espesor real del muro sur y de los laterales que se ven en las fotos; y si el lado norte del salón llevará 29 cm.

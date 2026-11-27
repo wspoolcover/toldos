@@ -1,5 +1,7 @@
 # Adaptar el proyecto visado a la casa que se construye (04-11-2026)
 
+> **Nota (27-11-2026):** los espesores de muro de 55 cm y 25 cm que usa este documento vienen del modelo. El croquis del propietario con leyenda dice **ladrillo de 14 cm y de 29 cm** (ver `22_zunchos_en_obra_27nov.md`, apartado 7).
+
 El proyecto visado (PL-04 a PL-11, 22-09-2025) es el punto de partida. La casa que se construye es la del modelo v8, con las medidas del propietario y ampliada. Este documento lista **qué hay que cambiar en cada lámina** y **con qué datos**. No sustituye al arquitecto: es el material de trabajo para pasárselo.
 
 ## 1. Estado de obra: muros, forjado y tejado caídos (aviso del propietario, 04-11-2026)

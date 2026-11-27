@@ -1,5 +1,7 @@
 # Comprobación de la cimentación, tal como está en el proyecto (04-11-2026)
 
+> **Nota (27-11-2026):** los espesores de muro de 55 cm y 25 cm que usa este documento vienen del modelo. El croquis del propietario con leyenda dice **ladrillo de 14 cm y de 29 cm** (ver `22_zunchos_en_obra_27nov.md`, apartado 7).
+
 Qué he comprobado: el plano de cimentación (`cimentacion_plano.py`, `cimentacion_v7.dxf`), las cargas de `estructura.json`, la escalera del modelo v8 (`casa_v8.py`) y la circulación del modelo (`verificar_circulacion.py`). El cálculo es sencillo y orientativo (script: `comprobar_cimentacion.py`); **no sustituye al técnico**. Pedido de hierro resultante: `pdf/Pedido_1_hierro_cimentacion.pdf`. El proyecto original del arquitecto se compara en `20_proyecto_original_y_diseno_actual.md`.
 
 ## 1. Resumen
