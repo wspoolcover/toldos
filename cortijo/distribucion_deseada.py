@@ -16,8 +16,8 @@ from shapely.ops import unary_union
 import plano_realidad as PR
 
 H = 3.0                 # altura de muros y tabiques de planta baja (libre 3,01 m en PL-11)
-XP = 5.40               # tabique N-S de la suite/cocina y de la oficina (croquis del propietario: ≈ 60 % del ancho)
-X2 = 3.10               # tabique N-S entre vestidor/baño y oficina
+XP = PR.XM              # tabique N-S de la suite/cocina y de la oficina, sobre el zuncho central N-S (x ≈ 4,40 m, aproximada)
+X2 = 2.50               # tabique N-S entre vestidor/baño y oficina
 Y3, Y4 = 5.485, 6.335   # tabique S de la oficina y tabique vestidor | baño
 X6 = 9.27               # tabique del baño grande (saliente)
 YN = 8.82               # línea norte del bloque
@@ -37,11 +37,11 @@ TAB = [("T1 suite | cocina", [(XP, 0.07), (XP, 4.055)]),
        ("T6 baño grande", [(X6, 4.345), (X6, 7.055)])]
 
 # huecos: (nombre, tipo, orientación del muro, coordenada fija, centro, ancho, z0, z1)
-HUECOS = [("V2", "ventana", "h", 0.0, 2.35, 1.30, 1.00, 2.20), ("V1", "ventana", "h", 0.0, 6.40, 1.30, 1.00, 2.20),
+HUECOS = [("V2", "ventana", "h", 0.0, 1.90, 1.30, 1.00, 2.20), ("V1", "ventana", "h", 0.0, 5.90, 1.30, 1.00, 2.20),
           ("P1", "puerta", "h", 0.0, 8.50, 1.10, 0, 2.10),
-          ("D1", "puerta", "h", YC, 4.725, 0.85, 0, 2.05), ("D5", "puerta", "h", YC, 8.625, 0.85, 0, 2.05),
-          ("D2", "puerta", "v", X2, 4.90, 0.80, 0, 2.05), ("D3", "puerta", "h", Y3, 3.85, 0.80, 0, 2.05),
-          ("D4", "puerta", "h", Y4, 2.65, 0.80, 0, 2.05), ("D6", "puerta", "v", X6, 6.55, 0.80, 0, 2.05),
+          ("D1", "puerta", "h", YC, 3.825, 0.85, 0, 2.05), ("D5", "puerta", "h", YC, 8.625, 0.85, 0, 2.05),
+          ("D2", "puerta", "v", X2, 4.90, 0.80, 0, 2.05), ("D3", "puerta", "h", Y3, 3.45, 0.80, 0, 2.05),
+          ("D4", "puerta", "h", Y4, 2.05, 0.80, 0, 2.05), ("D6", "puerta", "v", X6, 6.55, 0.80, 0, 2.05),
           ("PE", "puerta", "h", 15.55, 8.55, 1.00, 0, 2.10)]
 # puertas: nombre -> (bisagra 'lo'|'hi', hacia dónde abre (dx, dy), hoja doble)
 ABRE = {"D1": ("hi", (0, -1)), "D5": ("hi", (0, 1)), "D2": ("lo", (-1, 0)), "D3": ("hi", (0, 1)), "D4": ("hi", (0, -1)),
@@ -79,14 +79,14 @@ AREAS["Distribuidor / entrada"] = AREA_DISTR
 
 # ----------------------------------------------------------------- mobiliario (nombre, x0, y0, x1, y1, alto, color)
 MUEBLES = [
-    ("cama 1,80×2,00", 1.60, 2.055, 3.40, 4.055, 0.50, "#d7c7a8"), ("mesilla", 1.15, 3.60, 1.60, 4.055, 0.50, "#c9b48f"),
-    ("mesilla", 3.40, 3.60, 3.85, 4.055, 0.50, "#c9b48f"),
+    ("cama 1,80×2,00", 1.00, 2.055, 2.80, 4.055, 0.50, "#d7c7a8"), ("mesilla", 0.55, 3.60, 1.00, 4.055, 0.50, "#c9b48f"),
+    ("mesilla", 2.80, 3.60, 3.25, 4.055, 0.50, "#c9b48f"),
     ("encimera", XP + .035, 1.40, XP + .035 + 0.60, 3.455, 0.90, "#bdbdbd"), ("encimera", XP + .035, 3.455, 7.30, 4.055, 0.90, "#bdbdbd"),
-    ("columna nevera", 7.30, 3.40, 7.90, 4.055, 2.00, "#9e9e9e"), ("barra bajo V1", 5.75, 0.07, 7.35, 0.57, 0.95, "#c9a46b"),
-    ("armario", 0.07, 4.345, 0.62, 6.265, 2.40, "#c9b48f"), ("armario", 0.62, 4.345, 2.20, 4.895, 2.40, "#c9b48f"),
+    ("columna nevera", 7.30, 3.40, 7.90, 4.055, 2.00, "#9e9e9e"), ("barra bajo V1", 5.25, 0.07, 6.85, 0.57, 0.95, "#c9a46b"),
+    ("armario", 0.07, 4.345, 0.62, 6.265, 2.40, "#c9b48f"), ("armario", 0.62, 4.345, 1.65, 4.895, 2.40, "#c9b48f"),
     ("ducha", 0.07, 7.175, 0.97, 8.675, 0.05, "#90caf9"), ("inodoro", 1.20, 8.20, 1.58, 8.675, 0.40, "#eeeeee"),
-    ("lavabo", 2.565, 6.65, X2 - .035, 8.05, 0.85, "#eeeeee"),
-    ("escritorio", 3.50, 8.025, 4.90, 8.675, 0.75, "#c9a46b"), ("estantería", XP - .035 - 0.30, 6.00, XP - .035, 7.80, 1.80, "#c9b48f"),
+    ("lavabo", X2 - .035 - 0.50, 6.65, X2 - .035, 8.05, 0.85, "#eeeeee"),
+    ("escritorio", 2.80, 8.025, 4.20, 8.675, 0.75, "#c9a46b"), ("estantería", XP - .035 - 0.30, 6.00, XP - .035, 7.80, 1.80, "#c9b48f"),
     ("ducha", 10.58, 4.345, 11.48, 5.745, 0.05, "#90caf9"), ("inodoro", 9.70, 4.345, 10.10, 5.045, 0.40, "#eeeeee"),
     ("lavabo doble", 10.98, 5.90, 11.48, 7.055, 0.85, "#eeeeee"),
     ("mueble TV", 3.115, 11.00, 3.615, 12.90, 0.50, "#c9a46b"),
@@ -95,7 +95,7 @@ MUEBLES = [
     ("mueble de entrada", 7.70, 10.60, 7.85, 15.20, 1.00, "#c9b48f")]
 CHIMENEA = [(3.115, 8.965), (4.30, 8.965), (3.115, 10.15)]
 CONDUCTO = (3.115, 8.965, 3.565, 9.415)
-TABURETES = [(5.95 + .55 * i, 0.95) for i in range(3)]
+TABURETES = [(5.45 + .55 * i, 0.95) for i in range(3)]
 
 
 # ----------------------------------------------------------------- geometría 2D común
@@ -180,14 +180,14 @@ def dibujo():
     escalera_2d(ax)
     for h in HUECOS: (puerta if h[1] == "puerta" else ventana)(ax, h)
     ax.plot([2.97, 9.27], [15.55, 15.55], color="#1a3fbf", lw=0)           # fuerza el encuadre
-    POS = {"Dormitorio suite": (2.7, 1.2, True), "Cocina": (7.7, 2.2, True), "Vestidor": (1.45, 5.45, False),
-           "Baño suite": (1.8, 7.2, False), "Oficina": (4.25, 7.0, True), "Baño grande": (9.85, 5.6, False), "Salón": (5.3, 14.55, True)}
+    POS = {"Dormitorio suite": (2.2, 1.3, True), "Cocina": (7.7, 2.2, True), "Vestidor": (1.1, 5.6, False),
+           "Baño suite": (1.1, 6.85, False), "Oficina": (3.3, 6.9, True), "Baño grande": (9.85, 5.6, False), "Salón": (5.3, 14.55, True)}
     for n, x0, y0, x1, y1 in S:
         a = AREAS[n]; px, py, dims = POS[n]
         txt = f"{n}\n{x1 - x0:.2f} × {y1 - y0:.2f} m\n{a:.1f} m²" if dims else f"{n}\n{a:.1f} m²"
         ax.text(px, py, txt, ha="center", va="center", fontsize=8.5 if dims else 7.8, weight="bold", color="#222", zorder=8)
-    ax.text(7.9, 6.2, f"Distribuidor / entrada\n{AREA_DISTR:.1f} m²", ha="center", fontsize=8, color="#222", zorder=8)
-    ax.text(4.35, 4.95, "pasillo\n(bajo la escalera)", ha="center", va="center", fontsize=6.8, color="#222", zorder=8)
+    ax.text(7.5, 6.2, f"Distribuidor / entrada\n{AREA_DISTR:.1f} m²", ha="center", fontsize=8, color="#222", zorder=8)
+    ax.text(3.6, 4.9, "pasillo\n(bajo la escalera)", ha="center", va="center", fontsize=6.8, color="#222", zorder=8)
     ax.text(8.25, 14.1, "entrada", ha="center", fontsize=8, color="#222", rotation=90, zorder=8)
     ax.text(8.55, 16.2, "Puerta de entrada", ha="center", fontsize=8, weight="bold", zorder=8)
     ax.text(4.40, 9.45, "chimenea\nde esquina", fontsize=6.8, color="#e65100", zorder=8)
