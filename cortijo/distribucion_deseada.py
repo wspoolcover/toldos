@@ -101,11 +101,11 @@ TABURETES = [(5.45 + .55 * i, 0.95) for i in range(3)]
 
 
 # ----------------------------------------------------------------- geometría 2D común
-def geometria():
+def geometria(cortar=True):
     m14 = unary_union([banda(p, e) for n, p, e in EXIST if e == 0.14])
     m29 = unary_union([banda(p, e) for n, p, e in EXIST + PROP29 if e == 0.29])
     t7 = unary_union([banda(p, .07) for n, p in TAB])
-    cuts = unary_union([hueco_box(h) for h in HUECOS])
+    cuts = unary_union([hueco_box(h) for h in HUECOS]) if cortar else Polygon()
     return m14.difference(cuts), m29.difference(cuts), t7.difference(cuts)
 
 
