@@ -40,11 +40,11 @@ TAB = [("T1 suite | cocina", [(XP, 0.07), (XP, 4.055)]),
 HUECOS = [("V2", "ventana", "h", 0.0, 1.90, 1.30, 1.00, 2.20), ("V1", "ventana", "h", 0.0, 5.90, 1.30, 1.00, 2.20),
           ("P1", "puerta", "h", 0.0, 8.50, 1.10, 0, 2.10),
           ("D1", "puerta", "h", YC, 3.825, 0.85, 0, 2.05), ("D5", "puerta", "h", YC, 8.625, 0.85, 0, 2.05),
-          ("D2", "puerta", "v", X2, 4.90, 0.80, 0, 2.05), ("D3", "puerta", "h", Y3, 3.45, 0.80, 0, 2.05),
+          ("D7", "puerta", "h", YC, 2.05, 0.80, 0, 2.05), ("D3", "puerta", "h", Y3, 3.45, 0.80, 0, 2.05),
           ("D4", "puerta", "h", Y4, 2.05, 0.80, 0, 2.05), ("D6", "puerta", "v", X6, 6.55, 0.80, 0, 2.05),
           ("PE", "puerta", "h", 15.55, 8.55, 1.00, 0, 2.10)]
 # puertas: nombre -> (bisagra 'lo'|'hi', hacia dónde abre (dx, dy), hoja doble)
-ABRE = {"D1": ("hi", (0, -1)), "D5": ("hi", (0, 1)), "D2": ("lo", (-1, 0)), "D3": ("hi", (0, 1)), "D4": ("hi", (0, -1)),
+ABRE = {"D1": ("hi", (0, -1)), "D5": ("hi", (0, 1)), "D7": ("hi", (0, -1)), "D3": ("hi", (0, 1)), "D4": ("hi", (0, -1)),
         "D6": ("hi", (1, 0)), "PE": ("lo", (0, -1)), "P1": ("dbl", (0, 1))}
 
 
@@ -79,8 +79,8 @@ AREAS["Distribuidor / entrada"] = AREA_DISTR
 
 # ----------------------------------------------------------------- mobiliario (nombre, x0, y0, x1, y1, alto, color)
 MUEBLES = [
-    ("cama 1,80×2,00", 1.00, 2.055, 2.80, 4.055, 0.50, "#d7c7a8"), ("mesilla", 0.55, 3.60, 1.00, 4.055, 0.50, "#c9b48f"),
-    ("mesilla", 2.80, 3.60, 3.25, 4.055, 0.50, "#c9b48f"),
+    ("cama 1,80×2,00", 0.07, 1.00, 2.07, 2.80, 0.50, "#d7c7a8"), ("mesilla", 0.07, 0.55, 0.52, 1.00, 0.50, "#c9b48f"),
+    ("mesilla", 0.07, 2.80, 0.52, 3.25, 0.50, "#c9b48f"),
     ("encimera", XP + .035, 1.40, XP + .035 + 0.60, 3.455, 0.90, "#bdbdbd"), ("encimera", XP + .035, 3.455, 7.30, 4.055, 0.90, "#bdbdbd"),
     ("columna nevera", 7.30, 3.40, 7.90, 4.055, 2.00, "#9e9e9e"), ("barra bajo V1", 5.25, 0.07, 6.85, 0.57, 0.95, "#c9a46b"),
     ("armario", 0.07, 4.345, 0.62, 6.265, 2.40, "#c9b48f"), ("armario", 0.62, 4.345, 1.65, 4.895, 2.40, "#c9b48f"),
@@ -180,7 +180,7 @@ def dibujo():
     escalera_2d(ax)
     for h in HUECOS: (puerta if h[1] == "puerta" else ventana)(ax, h)
     ax.plot([2.97, 9.27], [15.55, 15.55], color="#1a3fbf", lw=0)           # fuerza el encuadre
-    POS = {"Dormitorio suite": (2.2, 1.3, True), "Cocina": (7.7, 2.2, True), "Vestidor": (1.1, 5.6, False),
+    POS = {"Dormitorio suite": (3.3, 1.9, True), "Cocina": (7.7, 2.2, True), "Vestidor": (1.1, 5.6, False),
            "Baño suite": (1.1, 6.85, False), "Oficina": (3.3, 6.9, True), "Baño grande": (9.85, 5.6, False), "Salón": (5.3, 14.55, True)}
     for n, x0, y0, x1, y1 in S:
         a = AREAS[n]; px, py, dims = POS[n]
@@ -313,7 +313,7 @@ def render3d():
 
 def resumen():
     tab_len = sum(LineString(p).length for n, p in TAB)
-    puertas_tab = sum(h[5] for h in HUECOS if h[0] in ("D2", "D3", "D4", "D6"))
+    puertas_tab = sum(h[5] for h in HUECOS if h[0] in ("D3", "D4", "D6"))
     print("ÁREAS (m², caras interiores):")
     for n, a in AREAS.items(): print(f"  {n:30s} {a:6.2f}")
     print(f"  {'TOTAL':30s} {sum(AREAS.values()):6.2f}")
