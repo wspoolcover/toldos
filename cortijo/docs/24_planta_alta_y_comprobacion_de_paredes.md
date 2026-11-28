@@ -5,6 +5,7 @@ Archivos: `planta_alta_27nov.png` (plano sobre la planta baja en gris), `dos_pla
 ## 1. Lo que he entendido
 - **Terraza**: «la planta alta sobre el salón es terraza». La he hecho a nivel del suelo de la planta alta (+3,30 m), sobre el forjado del salón, con antepecho de 1,0 m sobre los muros de 29 cm del salón. Lo que escribiste como «balcón sobrepuesto» lo he tomado como esta terraza. Si querías además un balcón volado en alguna fachada, dímelo.
 - **Arriba**: 3 dormitorios, 2 baños, salida a la terraza.
+- **Solo dos plantas** (confirmado el 28-11-2026): planta baja y planta 1, sin ático ni sótano. Encima de la planta 1, la cubierta (plana, con paneles solares, según la v8) y nada más. El diseño de este documento no cambia.
 - **Tabiques sobre tabiques**: todos los tabiques de arriba van encima de un tabique de abajo. Donde no había tabique abajo (el comedor-distribuidor, debajo de la sala de estar) no he puesto ninguno.
 
 ## 2. Distribución de la planta alta
