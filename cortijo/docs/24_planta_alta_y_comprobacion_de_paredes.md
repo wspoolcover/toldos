@@ -1,5 +1,7 @@
 # Planta alta: 3 dormitorios, 2 baños, terraza sobre el salón, y comprobación de las paredes (27-11-2026)
 
+> **Nota (28-11-2026):** el propietario indica que la distribución de arriba es diferente. Este documento es la primera propuesta y queda pendiente de rehacer con su croquis. La tabla de apoyo se ha vuelto a calcular con la planta baja actual (puertas D1, D2, D3, D7 y D8 nuevas).
+
 Archivos: `planta_alta_27nov.png` (plano sobre la planta baja en gris), `dos_plantas_3d.png` (vista previa; el modelo bueno es el STEP), `dos_plantas.step` y `.glb` (planta baja + forjado + planta alta + terraza, en piezas con color), `planta_alta.dxf`. Todo sale de `python planta_alta.py`, que usa la planta baja de `distribucion_deseada.py` (`23_distribucion_deseada_27nov.md`). Esquema, no al milímetro.
 
 ## 1. Lo que he entendido
@@ -37,7 +39,7 @@ Qué hay debajo de cada pared (muestreo cada 5 cm sobre su eje, comparado con lo
 | Este, tramo norte | 1.70 | 29 cm | 9 | 100 % | 0 % | 0 % | 0 % | ✓ sobre muro |
 | Norte, hasta x = 7,30 | 7.30 | 29 cm | 9 | 100 % | 0 % | 0 % | 0 % | ✓ sobre muro |
 | Norte, balconera | 1.97 | 14 cm | 19 | 8 % | 0 % | 0 % | 92 % | ✗ sin apoyo: jácena (viga) debajo |
-| Central E-O | 9.27 | 14 cm | 19 | 82 % | 0 % | 18 % | 0 % | ✓ con dintel en el hueco de abajo |
+| Central E-O | 9.27 | 14 cm | 19 | 72 % | 0 % | 28 % | 0 % | ✓ con dintel en el hueco de abajo |
 | T1 x = 4,40 (dormitorio 1 | dormitorio 2) | 3.98 | 7 cm | 39 | 0 % | 100 % | 0 % | 0 % | ✓ tabique sobre tabique; vigueta doble (las viguetas van N-S) |
 | T2 x = 3,10 (baños | dormitorio 3 y pasillo) | 4.33 | 7 cm | 39 | 0 % | 81 % | 19 % | 0 % | ✓ tabique sobre tabique; vigueta doble (las viguetas van N-S) |
 | T3 y = 5,485 (pasillo | dormitorio 3) | 2.23 | 7 cm | 39 | 0 % | 64 % | 36 % | 0 % | ✓ tabique sobre tabique |

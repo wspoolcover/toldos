@@ -35,17 +35,18 @@ TAB = [("T1 suite | cocina", [(XP, 0.07), (XP, 4.055)]),
        ("T2 vestidor-baño | oficina", [(X2, 4.345), (X2, 8.675)]),
        ("T3 oficina, sur", [(X2 + .035, Y3), (XPN - .035, Y3)]),
        ("T4 vestidor | baño", [(0.07, Y4), (X2 - .035, Y4)]),
-       ("T6 baño grande", [(X6, 4.345), (X6, 7.055)])]
+       ("T6 baño grande", [(X6, 4.345), (X6, 7.055)]),
+       ("T7 cierre del pasillo", [(4.20, 4.345), (4.20, Y3 - .035)])]
 
 # huecos: (nombre, tipo, orientación del muro, coordenada fija, centro, ancho, z0, z1)
 HUECOS = [("V2", "ventana", "h", 0.0, 1.90, 1.30, 1.00, 2.20), ("V1", "ventana", "h", 0.0, 5.90, 1.30, 1.00, 2.20),
           ("P1", "puerta", "h", 0.0, 8.50, 1.10, 0, 2.10),
-          ("D2", "puerta", "v", X2, 4.90, 0.80, 0, 2.05), ("D5", "puerta", "h", YC, 8.625, 0.85, 0, 2.05),
-          ("D7", "puerta", "h", YC, 2.05, 0.80, 0, 2.05), ("D3", "puerta", "h", Y3, 4.60, 0.80, 0, 2.05),
+          ("D1", "puerta", "h", YC, 3.75, 0.90, 0, 2.05), ("D2", "puerta", "v", X2, 4.90, 0.80, 0, 2.05), ("D8", "puerta", "v", 4.20, 4.8975, 1.00, 0, 2.05), ("D5", "puerta", "h", YC, 8.625, 0.85, 0, 2.05),
+          ("D7", "puerta", "h", YC, 2.05, 0.80, 0, 2.05), ("D3", "puerta", "h", Y3, 3.70, 0.80, 0, 2.05),
           ("D4", "puerta", "h", Y4, 2.05, 0.80, 0, 2.05), ("D6", "puerta", "v", X6, 6.55, 0.80, 0, 2.05),
           ("PE", "puerta", "h", 15.55, 8.55, 1.00, 0, 2.10)]
 # puertas: nombre -> (bisagra 'lo'|'hi', hacia dónde abre (dx, dy), hoja doble)
-ABRE = {"D2": ("hi", (-1, 0)), "D5": ("hi", (0, 1)), "D7": ("hi", (0, -1)), "D3": ("hi", (0, 1)), "D4": ("hi", (0, -1)),
+ABRE = {"D1": ("hi", (0, -1)), "D2": ("hi", (-1, 0)), "D8": ("lo", (1, 0)), "D5": ("hi", (0, 1)), "D7": ("slide_lo", (0, -1)), "D3": ("lo", (0, 1)), "D4": ("hi", (0, -1)),
         "D6": ("hi", (1, 0)), "PE": ("lo", (0, -1)), "P1": ("dbl", (0, 1))}
 
 
@@ -135,6 +136,16 @@ def puerta(ax, h):
         ax.plot([hx, tip[0]], [hy, tip[1]], color="#222", lw=1.3, zorder=7)
         ax.plot(*zip(*pts), color="#555", lw=.7, ls=(0, (3, 2)), zorder=7)
     side, d = ABRE[n]
+    if side.startswith("slide"):
+        off = 0.10
+        yy = lambda a: p(a, 0)
+        def ln(a0, a1, **kw):
+            (x0, y0), (x1, y1) = p(a0, 0), p(a1, 0)
+            ax.plot([x0 + d[0] * off, x1 + d[0] * off], [y0 + d[1] * off, y1 + d[1] * off], **kw)
+        ln(lo, hi, color="#222", lw=2.2, zorder=7)
+        g = -w if side == "slide_lo" else w
+        ln(lo + g, hi + g, color="#555", lw=1.0, ls=(0, (3, 2)), zorder=7)
+        return
     if side == "dbl":
         hoja(p(lo, 0), p(c, 0), d, w / 2); hoja(p(hi, 0), p(c, 0), d, w / 2)
     else:
@@ -315,7 +326,7 @@ def render3d():
 
 def resumen():
     tab_len = sum(LineString(p).length for n, p in TAB)
-    puertas_tab = sum(h[5] for h in HUECOS if h[0] in ("D2", "D3", "D4", "D6"))
+    puertas_tab = sum(h[5] for h in HUECOS if h[0] in ("D2", "D3", "D4", "D6", "D8"))
     print("ÁREAS (m², caras interiores):")
     for n, a in AREAS.items(): print(f"  {n:30s} {a:6.2f}")
     print(f"  {'TOTAL':30s} {sum(AREAS.values()):6.2f}")
